@@ -184,7 +184,7 @@ export class Monitoring extends Construct {
     const subscribers = alertEmail ? [{ subscriptionType: 'EMAIL', address: alertEmail }] : undefined;
     new budgets.CfnBudget(this, 'MonthlyBudget', {
       budget: {
-        budgetName: 'small-print-monthly',
+        budgetName: 'small-print-monthly-alerts',
         budgetType: 'COST',
         timeUnit: 'MONTHLY',
         budgetLimit: { amount: 10, unit: 'USD' },
