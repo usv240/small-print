@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Validation: what is measured, verified, simulated and not yet done · Small Print</title>
-  <meta name="description" content="The honest evidence for Small Print: camera distance measured against a ruler, 76 automated tests against published references, a 20,000-person simulation with every assumption and every weak spot, and the field study that has not been done yet.">
+  <meta name="description" content="The honest evidence for Small Print: the camera distance pipeline measured on a bench (0.34% mean error), 87 automated tests against published references, a 20,000-person simulation checked against real programme data from Kenya, India and Eritrea, with every weak spot, and the field study that has not been done yet.">
   <meta property="og:title" content="Small Print: the evidence, labelled honestly">
   <meta property="og:description" content="Measured, verified, simulated, and not yet done. Including where Small Print is not better.">
   <meta property="og:type" content="article">
@@ -37,31 +37,66 @@
       <table>
         <thead><tr><th>Kind</th><th>What</th><th>Status</th></tr></thead>
         <tbody>
-          <tr><td><span class="tag measured">Measured</span></td><td>Camera distance against a ruler, on a Google Pixel phone and a Windows laptop webcam</td><td><a href="#measured">Results pending (Oct 2)</a></td></tr>
-          <tr><td><span class="tag">Verified</span></td><td>76 automated tests: optics against published values, the recommendation and try-on rules, the results API</td><td><a href="#verified">All passing (1 documented expected failure)</a></td></tr>
+          <tr><td><span class="tag measured">Measured</span></td><td>Camera distance pipeline: a real face photo rescaled to 22–70 cm, through the real MediaPipe pipeline in Chrome (2,803 frames)</td><td><a href="#measured">Done: mean error 0.34%, max 1.1% (ruler test on devices to follow)</a></td></tr>
+          <tr><td><span class="tag">Verified</span></td><td>87 automated tests: optics against published values, the recommendation and try-on rules, the results API, and 11 end-to-end browser tests (including real MediaPipe through a fake camera, camp mode and offline mode)</td><td><a href="#verified">All passing (1 documented expected failure)</a></td></tr>
           <tr><td><span class="tag sim">Simulation</span></td><td>20,000 virtual people aged 40–70 through Small Print and four other ways of choosing readers</td><td><a href="#simulated">Done; every assumption listed</a></td></tr>
+          <tr><td><span class="tag measured">Real data</span></td><td>Simulation compared with published reader powers from programmes in Kenya (31,474 people), India and Eritrea</td><td><a href="#field-check">Done: strengths match within 0.2 D; one gap disclosed</a></td></tr>
           <tr><td><span class="tag pending">Real use</span></td><td>Agreement between Small Print's suggestion and readers people already own</td><td><a href="/impact.html#agreement">Live counter; small numbers, not validation</a></td></tr>
           <tr><td><span class="tag pending">Not done</span></td><td>Field validation against a trained screener with trial lenses</td><td><a href="#not-done">Proposed pilot below</a></td></tr>
         </tbody>
       </table>
     </div>
 
-    <h2 id="measured">1. Measured: camera distance against a ruler <span class="tag measured">Measured</span></h2>
-    <div class="slot">
-      <p class="slot-label">Results pending — measured on Oct 2</p>
-      <p><strong>Protocol.</strong> On each device we open the <a href="/lab.html">measurement lab</a>, hold the screen at 25, 40 and 60 cm from the eyes (measured with a ruler from the cheekbone just below the eye to the screen), keep still, and record the median of 2 seconds of camera readings. Each distance is repeated up to 3 times, and the table records whether the 30 cm camera calibration was in use. Error = (camera − ruler) ÷ ruler.</p>
-      <div class="table-wrap">
-        <table id="distance-results">
-          <caption>Camera distance vs ruler. Rows are added when the measurements are done; nothing here is estimated.</caption>
-          <thead>
-            <tr><th>Device</th><th>Browser</th><th class="num">Ruler</th><th class="num">Camera</th><th class="num">Error</th><th>Camera calibrated</th><th class="num">Frames</th></tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </div>
+    <h2 id="measured">1. Measured: the camera distance pipeline <span class="tag measured">Measured</span></h2>
+    <h3 id="distance-bench">Distance pipeline: bench measurement</h3>
+    <p><span class="tag measured">Measured</span> <strong>Bench measurement: a real face photo, rescaled to simulate distance, through the real MediaPipe pipeline in Chrome on a Windows laptop.</strong> This is not a physical ruler test on phones or laptops.</p>
+    <p><strong>Method.</strong> In a pinhole camera, moving a face from distance <i>d</i> to <i>d</i>/<i>s</i> makes its image <i>s</i> times bigger. So drawing the same face photo <i>s</i> times bigger is, for the camera, the same face <i>s</i> times closer. We took MediaPipe's public test portrait<sup><a href="#r-mp-portrait">a</a></sup> and drew it at 10 sizes on a 640×480 frame, equivalent to 22–70 cm. Chrome played each frame as its webcam (its built-in fake camera), and the <a href="/lab.html">measurement lab</a> ran Small Print's shipped code unchanged: MediaPipe Face Landmarker, then iris width, then distance. For each size we opened 3 fresh browser sessions, waited 2.5 s for the face tracker to settle, then recorded every frame for 3 s: 2,803 frames in all. The 30 cm size stands in for the app's one-time 30 cm camera calibration; every other size is then read as distance and compared with its true relative distance. Error = (camera − true) ÷ true. Code: <code>web/bench-camera/</code>. Raw frames: <a href="/data/camera-bench.json">camera-bench.json</a>.</p>
+    <div class="stats" aria-label="Bench headline">
+      <div class="stat"><b>0.3%</b><span>mean error over the 9 non-calibration distances (22–70 cm)</span></div>
+      <div class="stat"><b>1.1%</b><span>largest error, at 22 cm (camera read 21.8 cm)</span></div>
+      <div class="stat"><b>≤ 0.3 mm</b><span>frame-to-frame jitter (1 SD, ≤ 0.06% of the distance)</span></div>
+      <div class="stat"><b>30 fps</b><span>the camera's full frame rate, on the laptop GPU</span></div>
     </div>
-    <p><strong>How to read it.</strong> Demand is 1/distance, so a distance error of <i>e</i>% changes the demand by about <i>e</i>% of its value. At 40 cm (2.50 D), 4% is 0.10 D and 10% is 0.25 D. Reader strengths are usually stocked 0.50 D apart.</p>
-    <p>The second measured result, how big a CSS pixel really is on our test phone, is on <a href="/findings.html#screen">Findings</a>.</p>
+    <div class="table-wrap">
+      <table id="distance-results">
+        <caption>Camera distance vs a known reference. Bench rows: the face photo at each simulated distance, 3 browser sessions, median of all frames; the 30 cm row is the calibration, so its error is 0 by definition; jitter is the per-frame SD before the app's smoothing (0.03–0.06% of the distance). Ruler rows from real devices are added only if measured. Nothing here is estimated. <span class="tag measured">Measured</span></caption>
+        <thead>
+          <tr><th>Device</th><th>Browser</th><th class="num">Reference</th><th class="num">Camera</th><th class="num">Error</th><th class="num">Jitter (1 SD)</th><th>Calibrated</th><th class="num">Frames</th></tr>
+        </thead>
+        <tbody>
+          <tr><th colspan="8" scope="rowgroup">Bench: face photo rescaled to simulate each distance (reference = simulated distance), calibrated at 30 cm · Windows laptop · Chrome 153 fake camera · 3 sessions per distance</th></tr>
+          <tr><td>Bench</td><td>Chrome</td><td class="num">22 cm</td><td class="num">21.76 cm</td><td class="num">−1.10%</td><td class="num">0.07 mm</td><td>yes</td><td class="num">279</td></tr>
+          <tr><td>Bench</td><td>Chrome</td><td class="num">25 cm</td><td class="num">25.07 cm</td><td class="num">+0.27%</td><td class="num">0.12 mm</td><td>yes</td><td class="num">254</td></tr>
+          <tr class="hl"><td>Bench</td><td>Chrome</td><td class="num">30 cm</td><td class="num">30.00 cm</td><td class="num">0</td><td class="num">0.19 mm</td><td>calibration</td><td class="num">282</td></tr>
+          <tr><td>Bench</td><td>Chrome</td><td class="num">35 cm</td><td class="num">35.18 cm</td><td class="num">+0.52%</td><td class="num">0.13 mm</td><td>yes</td><td class="num">292</td></tr>
+          <tr><td>Bench</td><td>Chrome</td><td class="num">40 cm</td><td class="num">40.12 cm</td><td class="num">+0.31%</td><td class="num">0.13 mm</td><td>yes</td><td class="num">288</td></tr>
+          <tr><td>Bench</td><td>Chrome</td><td class="num">45 cm</td><td class="num">45.03 cm</td><td class="num">+0.06%</td><td class="num">0.21 mm</td><td>yes</td><td class="num">288</td></tr>
+          <tr><td>Bench</td><td>Chrome</td><td class="num">50 cm</td><td class="num">50.25 cm</td><td class="num">+0.50%</td><td class="num">0.18 mm</td><td>yes</td><td class="num">275</td></tr>
+          <tr><td>Bench</td><td>Chrome</td><td class="num">55 cm</td><td class="num">54.91 cm</td><td class="num">−0.16%</td><td class="num">0.19 mm</td><td>yes</td><td class="num">273</td></tr>
+          <tr><td>Bench</td><td>Chrome</td><td class="num">60 cm</td><td class="num">59.95 cm</td><td class="num">−0.07%</td><td class="num">0.20 mm</td><td>yes</td><td class="num">290</td></tr>
+          <tr><td>Bench</td><td>Chrome</td><td class="num">70 cm</td><td class="num">69.94 cm</td><td class="num">−0.09%</td><td class="num">0.26 mm</td><td>yes</td><td class="num">282</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <figure>
+      <img src="/figures/camera-linearity.svg" width="780" height="484" loading="lazy" alt="Bench measurement. Left: camera reading after calibration plotted against the true simulated distance from 22 to 70 cm; all points lie on the identity line. Right: error at each distance: −1.10% at 22 cm, +0.27% at 25 cm, 0 at the 30 cm calibration point, +0.52% at 35 cm, +0.31% at 40 cm, +0.06% at 45 cm, +0.50% at 50 cm, −0.16% at 55 cm, −0.07% at 60 cm, −0.09% at 70 cm. Jitter bars of ±1 SD (0.03–0.06%) are smaller than the dots.">
+      <figcaption><span class="tag measured">Measured</span> Bench measurement: the shipped distance pipeline is linear to within 1.1% from 22 to 70 cm on a still face photo. The hollow point is the 30 cm calibration.</figcaption>
+    </figure>
+    <p><strong>What it shows.</strong> After a single 30 cm calibration, the pipeline turns image size into distance correctly across the whole reading range: a straight-line fit of camera against true distance has a slope of 1.000. The three sessions at each distance agreed to within 0.07 percentage points, so these small errors are systematic rather than random. The largest, −1.1% at 22 cm, is where the face nearly fills the frame and the photo had to be enlarged 1.4 times. Landmark jitter on an unchanging image was at most 0.26 mm per frame, before the app's own smoothing.</p>
+    <p><strong>Speed.</strong> MediaPipe loaded its GPU (WebGL) path on the laptop's Intel Arc graphics (Intel Core Ultra 9 185H, headless Chrome 153); no fallback to the CPU path was logged. It kept up with the fake camera's full 30 fps: 95% of one-second readings were 30 or 31. Fed 60 fps instead, it processed a median of 43 fps (39–46). Three of the 30 sessions had brief dips (lowest one-second reading 8 fps) while other jobs were running on the laptop. Phones will be slower.</p>
+    <p><strong>What it does not show.</strong></p>
+    <ul>
+      <li><strong>Absolute accuracy without calibration.</strong> A photo has no real distance, so the uncalibrated estimate (which assumes a 70° camera field of view) can't be checked this way. We chose the 30 cm photo size so the uncalibrated reading was also 30 cm, so agreement there is by construction.</li>
+      <li><strong>Real faces and real conditions.</strong> One face, frontal, evenly lit and perfectly still. Head movement, turning, glasses, dim light and different faces all add error. A flat photo also can't reproduce the small perspective changes of a real head; for the nearly flat iris that effect is small.</li>
+      <li><strong>Real devices.</strong> One Windows laptop, a fake camera, no phone. Google's own evaluation of iris-based distance on real people found a 4.3% mean relative error (SD 2.4%) against an iPhone 11 depth sensor, over 200+ participants.<sup><a href="#r-mp-iris">b</a></sup> That is a published result, not ours, and it is the better guide to real-world accuracy.</li>
+    </ul>
+    <p class="small muted">A physical ruler check on our own Pixel and laptop, using the measurement lab at 25, 40 and 60 cm, will be added to the table above if it is completed before the deadline.</p>
+    <ol class="refs" type="a">
+      <li id="r-mp-portrait">MediaPipe test portrait, <a href="https://storage.googleapis.com/mediapipe-assets/portrait.jpg">storage.googleapis.com/mediapipe-assets/portrait.jpg</a> (an official portrait used in MediaPipe's own tests; downloaded at run time, not redistributed).</li>
+      <li id="r-mp-iris">Google Research. MediaPipe Iris: real-time iris tracking and depth estimation. 2020. <a href="https://research.google/blog/mediapipe-iris-real-time-iris-tracking-depth-estimation/">research.google/blog/mediapipe-iris-real-time-iris-tracking-depth-estimation</a></li>
+    </ol>
+    <p><strong>How to read it.</strong> Demand is 1/distance, so a distance error of <i>e</i>% changes the demand by about <i>e</i>% of its value. At 40 cm (2.50 D), 4% is 0.10 D and 10% is 0.25 D. Reader strengths are usually stocked 0.50 D apart. The bench's largest error, 1.1% at 22 cm (4.5 D), is 0.05 D.</p>
+    <p>How big a CSS pixel really is on common phones and laptops, computed from published specs, is on <a href="/findings.html#screen">Findings</a>.</p>
 
     <h2 id="verified">2. Verified: automated tests <span class="tag">Verified</span></h2>
     <p>The arithmetic is checked by 76 automated tests (<code>npm test</code> in <code>web/</code> and <code>api/</code>). 75 pass. One is a deliberate "expected failure" that documents a known limitation of the try-on and will start failing, as a reminder, once that limitation is fixed.</p>
@@ -174,6 +209,52 @@
       <li>No learning, fatigue or lighting effects; everyone follows the instructions. <em>Assumption.</em></li>
     </ol>
 
+    <h2 id="field-check">3b. Checked against real programmes: published field data <span class="tag measured">Real data</span> <span class="tag sim">Simulation</span></h2>
+    <p>We couldn't test Small Print on people for this hackathon. So we did the next best thing: compared our simulation with what real people needed in three published community programmes. No new participants are involved; the real numbers come from the papers.</p>
+    <div class="table-wrap">
+      <table>
+        <caption>Real data used (all open access)</caption>
+        <thead><tr><th>Programme</th><th>What it reports</th><th class="num">People</th></tr></thead>
+        <tbody>
+          <tr><td>Kenya: community near-vision screening<sup><a href="#r15">15</a></sup></td><td>Mean ready-made reader power handed out, by age (Table 4)</td><td class="num">31,474</td></tr>
+          <tr><td>India: community health workers vs optometrist<sup><a href="#r9">9</a></sup></td><td>Optometrist-chosen power, by age (Table 2)</td><td class="num">378</td></tr>
+          <tr><td>Asmara, Eritrea: eye-centre patients<sup><a href="#r16">16</a></sup></td><td>Near addition with distance glasses on, by age (Table 4), and share with presbyopia</td><td class="num">1,310</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <figure>
+      <img src="/figures/fieldcheck-power-by-age.svg" alt="Two charts. Left: reading-glasses power by age for people handed readers. Kenya means rise from +1.50 at 40–44 to +3.05 at 70–74; India means from +1.21 to +2.78; our simulated ideal power tracks them within about 0.2 D on average; Small Print with the try-on recommends slightly weaker powers, about +1.19 at 40–44 rising to +2.55 at 65–69. Right: Asmara near additions start at +1.30 at 41–45, while our simulated population needs much less before 50; a field-calibrated version matches Asmara." loading="lazy" width="900" height="560">
+      <figcaption>Points are real programme data; lines are our simulation. Sources and method: <a href="https://github.com/usv240/small-print/blob/main/web/sim/FIELDCHECK.md">sim/FIELDCHECK.md</a>.</figcaption>
+    </figure>
+    <h3>What matched</h3>
+    <ul>
+      <li><strong>The strengths people need.</strong> For people who need readers, the power our virtual people need at each age is within about <strong>0.2 D</strong> of the real programmes on average (0.16 D vs Kenya, 0.17 D vs India; within 0.03 D of Kenya at 60+).</li>
+      <li><strong>The overall spread of strengths</strong> overlaps Kenya's distribution by 74–80%.</li>
+    </ul>
+    <h3>What didn't, and what we did about it</h3>
+    <ul>
+      <li><strong>Our virtual people need reading glasses too late.</strong> In Asmara, 77.6% of 41–45-year-olds had presbyopia; in our simulation almost none do at that age. We rebuilt the simulated population to match the Asmara data and re-ran everything (table below).</li>
+      <li><strong>Too many virtual people need more than +3.00</strong> (15.3% vs 5.9% in Kenya). We re-weighted them to Kenya's share and re-ran.</li>
+      <li><strong>Small Print suggests slightly weaker pairs than Kenyan programme staff handed out</strong>: 0.30–0.52 D weaker in every age band in simulation (0.02–0.36 D vs the Indian optometrist). Part is by design: it refers anyone above +3.00 and starts with the weaker of two pairs. Part is that our simulated people need less at ages 45–54. We have <em>not</em> re-tuned the algorithm to close this gap: tuning against our own simulation would be circular. It is the first thing a field pilot must measure.</li>
+    </ul>
+    <div class="table-wrap">
+      <table>
+        <caption>Right call over everyone, re-run on populations adjusted to the field data <span class="tag sim">Simulation</span></caption>
+        <thead><tr><th>Method</th><th class="num">As published</th><th class="num">Onset fitted to Asmara (reserve rule)</th><th class="num">Onset fitted to Asmara (minimum-plus rule)</th><th class="num">Upper tail re-weighted to Kenya</th></tr></thead>
+        <tbody>
+          <tr class="hl"><td>Small Print + try-on</td><td class="num">84.6%</td><td class="num">83.2%</td><td class="num">85.1%</td><td class="num">85.1%</td></tr>
+          <tr><td>Small Print starting estimate</td><td class="num">69.7%</td><td class="num">59.5%</td><td class="num">48.8%</td><td class="num">74.5%</td></tr>
+          <tr><td>Age table</td><td class="num">42.0%</td><td class="num">41.1%</td><td class="num">30.3%</td><td class="num">45.3%</td></tr>
+          <tr><td>Rack card at 14 in</td><td class="num">50.9%</td><td class="num">56.8%</td><td class="num">63.4%</td><td class="num">–</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p><strong>Bottom line.</strong> The try-on result is robust: <strong>83–85%</strong> right call whichever population is closest to the truth. Its lead over the best alternative shrinks from 34 to 22–26 points under the field-fitted populations. The starting estimate on its own is <em>not</em> robust (49–75%) and should not be trusted without the shop check. That is why the app always offers it.</p>
+    <figure>
+      <img src="/figures/fieldcheck-sensitivity.svg" alt="Bar chart of right-call rates for each method under the four populations; Small Print with the try-on stays between 83% and 85% while the starting estimate and age table vary widely." loading="lazy">
+    </figure>
+    <p class="small muted">Limitations: field "needed power" is itself chosen by screeners or optometrists with trial lenses, at their own working distance and rules, so it is a reference, not ground truth. Populations differ (Kenya, India, Eritrea vs a simulated global population). This checks plausibility at population level; it says nothing about accuracy for any one person.</p>
+
     <h2 id="not-done">4. Not done yet: field validation <span class="tag pending">Not done</span></h2>
     <p>Nobody has yet compared Small Print's result with a trained screener's result on the same real people. Until that is done, nobody (including us) knows how accurate it is in practice. This is the study we propose:</p>
     <dl class="kv">
@@ -209,6 +290,8 @@
       <li id="r9" value="9">Peek presbyopia calculator: community health workers compared with an optometrist. <i>Frontiers in Ophthalmology</i>, 2026. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC13500277/">PMC13500277</a></li>
       <li id="r10" value="10">Smartphone near-point method for reading addition (VisionApp), preliminary study. <i>Journal of Optometry</i>, 2025. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12205635">PMC12205635</a></li>
       <li id="r11" value="11">World Health Organization. Training in Assistive Products (TAP), reading-glasses content based on VisionSpring's community screening method. <a href="https://invisionmag.com/visionsprings-screening-methodology-adopted-by-who/">report</a></li>
+      <li id="r15" value="15">Katibeh M, Watts E, Gichangi M, Latorre-Arteaga S, Bolster NM, Bastawrous A. Near vision data and near correction requirements from community eye health programmes in nine countries. <i>Eye</i> 2024;38:2150–2155. <a href="https://doi.org/10.1038/s41433-023-02910-4">doi:10.1038/s41433-023-02910-4</a></li>
+      <li id="r16" value="16">Smret TM, Weldegergis RK, Achila OO, Tekle AM. Understanding presbyopia in Asmara: prevalence, association with refractive error, and age-based addition. <i>Clinical Optometry</i> 2023. <a href="https://doi.org/10.2147/OPTO.S421366">doi:10.2147/OPTO.S421366</a></li>
     </ol>
   </main>
 

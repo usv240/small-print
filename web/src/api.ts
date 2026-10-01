@@ -48,18 +48,58 @@ export function ageBand(age: number): ResultPayload['ageBand'] {
   return `${lo}-${lo + 4}` as ResultPayload['ageBand'];
 }
 
-export async function sendResult(p: ResultPayload): Promise<void> {
+const QUEUE_KEY = 'small-print.outbox.v1';
+
+/** Results waiting to be sent, newest per session (a later answer replaces an earlier one). */
+function outbox(): Record<string, ResultPayload> {
   try {
-    await fetch('/api/v1/results', {
+    return JSON.parse(localStorage.getItem(QUEUE_KEY) ?? '{}') as Record<string, ResultPayload>;
+  } catch {
+    return {};
+  }
+}
+
+async function post(p: ResultPayload): Promise<boolean> {
+  try {
+    const r = await fetch('/api/v1/results', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(p),
       keepalive: true,
     });
+    // 4xx means the server rejected this payload for good; only network errors and 5xx are retried.
+    return r.ok || (r.status >= 400 && r.status < 500);
   } catch {
-    // Reporting is best-effort; the person's result never depends on it.
+    return false;
   }
 }
+
+/** Sends a result. If the phone is offline (camps often are), it is kept and sent when the connection returns.
+ *  Reporting is best-effort: the person's result never depends on it. */
+export async function sendResult(p: ResultPayload): Promise<void> {
+  const box = outbox();
+  box[p.sessionId] = p;
+  localStorage.setItem(QUEUE_KEY, JSON.stringify(box));
+  await flushOutbox();
+}
+
+let flushing = false;
+export async function flushOutbox(): Promise<void> {
+  if (flushing || !navigator.onLine) return;
+  flushing = true;
+  try {
+    for (const [id, p] of Object.entries(outbox())) {
+      if (!(await post(p))) break;
+      const box = outbox();
+      if (box[id] === undefined || JSON.stringify(box[id]) === JSON.stringify(p)) delete box[id];
+      localStorage.setItem(QUEUE_KEY, JSON.stringify(box));
+    }
+  } finally {
+    flushing = false;
+  }
+}
+
+export const pendingResults = () => Object.keys(outbox()).length;
 
 export interface TrafficStats {
   screenings: number;

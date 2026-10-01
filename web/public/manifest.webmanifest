@@ -1,0 +1,13 @@
+{
+  "name": "Small Print: reading glasses strength test",
+  "short_name": "Small Print",
+  "description": "A two-minute phone-camera test for choosing ready-made reading glasses. Not an eye exam.",
+  "start_url": "/test.html",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#fbf8f3",
+  "theme_color": "#b4410e",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

@@ -19,6 +19,9 @@ export default defineConfig({
     channel: 'chrome',
     locale: 'en-US',
     trace: 'retain-on-failure',
+    // The app registers a service worker; block it so page.route() API mocks always apply.
+    // e2e/offline.spec.ts opts back in to test offline mode.
+    serviceWorkers: 'block',
   },
   projects: [
     {

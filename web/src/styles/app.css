@@ -89,3 +89,7 @@ details.info > summary > span { display: inline-grid; place-items: center; width
 details.info[open] > summary > span { background: var(--accent); color: var(--accent-ink); }
 .info-body { background: var(--accent-soft); border-radius: var(--radius); padding: 0.75rem 1rem; margin-top: 0.35rem; font-size: 0.95rem; line-height: 1.5; }
 .how { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 0.8rem 1rem; font-size: 0.98rem; }
+
+/* camp mode */
+.btn-link.inline { min-height: 0; padding: 0; border: 0; background: none; color: var(--accent); font: inherit; text-decoration: underline; cursor: pointer; }
+.card.camp { border-color: var(--accent); }

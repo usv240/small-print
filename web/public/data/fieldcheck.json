@@ -1,0 +1,4228 @@
+{
+ "label": "FIELD CHECK: published real-world reading-glasses powers vs the SIMULATED bench population and Small Print's SIMULATED recommendations. Population-level plausibility only; no new participants.",
+ "generatedAt": "2026-10-01T22:46:32.837Z",
+ "config": {
+  "seed": 20261003,
+  "n": 20000,
+  "ages": [
+   40,
+   70
+  ],
+  "cardReserveD": 0.25,
+  "script": "sim/fieldcheck.ts",
+  "replicaCheck": "runStrategies() == runScenario() on all main decisions; personWithAmplitudeCentre(Hofstetter mean) == makePerson()"
+ },
+ "sources": {
+  "kenya": {
+   "id": "katibeh2024-eye",
+   "citation": "Katibeh M, Watts E, Gichangi M, Latorre-Arteaga S, Bolster NM, Bastawrous A. Near vision data and near correction requirements from community eye health programmes in nine countries. Eye (Lond). 2024;38(11):2150–2155. doi:10.1038/s41433-023-02910-4. PMCID: PMC11269744. Open access, CC BY 4.0.",
+   "url": "https://doi.org/10.1038/s41433-023-02910-4",
+   "accessed": "Europe PMC full-text XML (PMC11269744) and the publisher figure image, 2026-10-01",
+   "population": "Peek-powered community eye health programmes (door-to-door and primary-care screening), Jan 2022–Jun 2023. 388,939 people aged 35+ screened in 9 countries; 146,801 failed near screening. Required near power was recorded ONLY in Kenya (n = 34,328; 34,283 with power data). Table 4 is restricted to non-owners of reading glasses (n = 31,474).",
+   "measure": "\"Power of ready readers identified at triage\" by trained ophthalmic clinical officers with ready-made readers (spherical, same power both eyes) after a near-vision chart in N notation. Stock range +1.00 to +4.00."
+  },
+  "india": {
+   "id": "katibeh2026-frontiers",
+   "citation": "Katibeh M, Sabherwal S, Javed M, Watts E, Latorre-Arteaga S, Bolster NM, Coverley D, Pintus A, Hewitt V, Thaker N, Bastawrous A. A novel digital tool to guide provision of near vision glasses for presbyopia correction in the community. Front Ophthalmol. 2026;6:1891054. doi:10.3389/fopht.2026.1891054. PMCID: PMC13500277. Open access, CC BY 4.0.",
+   "url": "https://doi.org/10.3389/fopht.2026.1891054",
+   "accessed": "Europe PMC full-text XML (PMC13500277), 2026-10-01",
+   "population": "Door-to-door programme, Khiri district, Uttar Pradesh, India. 378 adults aged 35–80 (mean 45.7 ± 6.7), uncorrected distance VA 6/12 or better in both eyes AND near VA worse than N6 at 40 cm. 96% owned no glasses.",
+   "measure": "Power of ready-made near glasses prescribed by a single optometrist in a clinic (gold standard), Table 2."
+  },
+  "asmara": {
+   "id": "smret2023-clinoptom",
+   "citation": "Smret TM, Weldegergis RK, Achila OO, Tekle AM. Understanding Presbyopia in Asmara: Prevalence, Association with Refractive Error, and Age-Based Addition. Clin Optom (Auckl). 2023;15:191–203 (as indexed). doi:10.2147/OPTO.S421366. PMCID: PMC10516207. Open access.",
+   "url": "https://doi.org/10.2147/OPTO.S421366",
+   "accessed": "Europe PMC full-text XML (PMC10516207), 2026-10-01",
+   "population": "All eye-centre visitors in Asmara, Eritrea, aged 35–60, best-corrected VA 6/9 or better (n = 1,310). Clinic sample, not a community programme.",
+   "measure": "Near ADDITION over full distance correction: dynamic retinoscopy (MEM) − 0.75 D, then \"the minimum plus\" that reads 0.00 logMAR at 40 cm (Table 4). NOT ready-reader power: hyperopia and myopia are already corrected."
+  },
+  "thrive": {
+   "id": "sehrin2024-plosone",
+   "citation": "Sehrin F, Jin L, Naher K, Das NC, Chan VF, Li DF, Bergson S, Gudwin E, Clarke M, Stephan T, Congdon N. The effect on income of providing near vision correction to workers in Bangladesh: The THRIVE randomized controlled trial. PLoS One. 2024;19(4):e0296115. doi:10.1371/journal.pone.0296115. PMCID: PMC10990163.",
+   "url": "https://doi.org/10.1371/journal.pone.0296115",
+   "accessed": "Europe PMC full-text XML (PMC10990163), 2026-10-01",
+   "population": "824 presbyopic workers aged 35–65 in rural Bangladesh (mean age ≈ 47).",
+   "measure": "Power ASSIGNED by a rule from unaided near acuity (1.2M→+1.0 … <4.0M→+3.0), not measured. Baseline median +1.00 (IQR +1.00 to +1.50) in both arms (Table 1). Context only: not used quantitatively."
+  },
+  "panke": {
+   "id": "panke2019-spie",
+   "citation": "Panke K, Kassaliete E, Ikaunieks G, Svede A, Krumina G. Limitation of tables indicating the relation between age and reading addition for presbyopia correction. Proc SPIE 11207, Fourth International Conference on Applications of Optics and Photonics; 112070Y (2019). doi:10.1117/12.2527291.",
+   "url": "https://doi.org/10.1117/12.2527291",
+   "accessed": "Abstract only (full text paywalled), via web search, 2026-10-01",
+   "population": "216 adults aged 35–80, Latvia.",
+   "measure": "Near add at 40 cm, plus build-up. Abstract reports age vs add r = 0.73 and large individual spread. No per-age values available to us: context only."
+  }
+ },
+ "extracted": {
+  "kenyaTable4": [
+   {
+    "band": "40–44",
+    "lo": 40,
+    "hi": 45,
+    "n": 3538,
+    "meanD": 1.5,
+    "ci": [
+     1.49,
+     1.52
+    ]
+   },
+   {
+    "band": "45–49",
+    "lo": 45,
+    "hi": 50,
+    "n": 5745,
+    "meanD": 1.83,
+    "ci": [
+     1.82,
+     1.84
+    ]
+   },
+   {
+    "band": "50–54",
+    "lo": 50,
+    "hi": 55,
+    "n": 7251,
+    "meanD": 2.19,
+    "ci": [
+     2.18,
+     2.2
+    ]
+   },
+   {
+    "band": "55–59",
+    "lo": 55,
+    "hi": 60,
+    "n": 4399,
+    "meanD": 2.51,
+    "ci": [
+     2.5,
+     2.52
+    ]
+   },
+   {
+    "band": "60–64",
+    "lo": 60,
+    "hi": 65,
+    "n": 4863,
+    "meanD": 2.81,
+    "ci": [
+     2.8,
+     2.82
+    ]
+   },
+   {
+    "band": "65–69",
+    "lo": 65,
+    "hi": 70,
+    "n": 2410,
+    "meanD": 2.9,
+    "ci": [
+     2.88,
+     2.91
+    ]
+   },
+   {
+    "band": "70–74",
+    "lo": 70,
+    "hi": 75,
+    "n": 2064,
+    "meanD": 3.05,
+    "ci": [
+     3.03,
+     3.07
+    ]
+   },
+   {
+    "band": "75–79",
+    "lo": 75,
+    "hi": 80,
+    "n": 750,
+    "meanD": 3.06,
+    "ci": [
+     3.03,
+     3.1
+    ]
+   },
+   {
+    "band": "80–84",
+    "lo": 80,
+    "hi": 85,
+    "n": 317,
+    "meanD": 3.13,
+    "ci": [
+     3.08,
+     3.19
+    ]
+   },
+   {
+    "band": "≥85",
+    "lo": 85,
+    "hi": 120,
+    "n": 137,
+    "meanD": 3.11,
+    "ci": [
+     3.02,
+     3.2
+    ]
+   }
+  ],
+  "kenyaFig1d": [
+   {
+    "band": "35–39",
+    "lo": 35,
+    "hi": 40,
+    "q1": 1,
+    "q3": 1.5,
+    "whiskerLo": 1,
+    "whiskerHi": 2,
+    "medianD": null,
+    "medianSource": "on a box edge; not stated"
+   },
+   {
+    "band": "40–44",
+    "lo": 40,
+    "hi": 45,
+    "q1": 1,
+    "q3": 2,
+    "whiskerLo": 1,
+    "whiskerHi": 3.5,
+    "medianD": 1.5,
+    "medianSource": "median line visible"
+   },
+   {
+    "band": "45–49",
+    "lo": 45,
+    "hi": 50,
+    "q1": 1.5,
+    "q3": 2,
+    "whiskerLo": 1,
+    "whiskerHi": 2.75,
+    "medianD": 2,
+    "medianSource": "box edge; authors' text"
+   },
+   {
+    "band": "50–54",
+    "lo": 50,
+    "hi": 55,
+    "q1": 2,
+    "q3": 2.5,
+    "whiskerLo": 1.25,
+    "whiskerHi": 3.25,
+    "medianD": 2,
+    "medianSource": "box edge; authors' text"
+   },
+   {
+    "band": "55–59",
+    "lo": 55,
+    "hi": 60,
+    "q1": 2.5,
+    "q3": 2.75,
+    "whiskerLo": 2.25,
+    "whiskerHi": 3,
+    "medianD": 2.5,
+    "medianSource": "box edge; authors' text"
+   },
+   {
+    "band": "60–64",
+    "lo": 60,
+    "hi": 65,
+    "q1": 2.5,
+    "q3": 3,
+    "whiskerLo": 1.75,
+    "whiskerHi": 3.75,
+    "medianD": 3,
+    "medianSource": "box edge; authors' text (\"over 60\")"
+   },
+   {
+    "band": "65–69",
+    "lo": 65,
+    "hi": 70,
+    "q1": 2.75,
+    "q3": 3,
+    "whiskerLo": 2.5,
+    "whiskerHi": 3.25,
+    "medianD": 3,
+    "medianSource": "box edge; authors' text (\"over 60\")"
+   },
+   {
+    "band": "70–74",
+    "lo": 70,
+    "hi": 75,
+    "q1": 3,
+    "q3": 3.25,
+    "whiskerLo": 2.75,
+    "whiskerHi": 3.5,
+    "medianD": 3,
+    "medianSource": "box edge; authors' text (\"over 60\")"
+   },
+   {
+    "band": "75–79",
+    "lo": 75,
+    "hi": 80,
+    "q1": 3,
+    "q3": 3.5,
+    "whiskerLo": 2.25,
+    "whiskerHi": 4,
+    "medianD": 3,
+    "medianSource": "box edge; authors' text (\"over 60\")"
+   },
+   {
+    "band": "80–84",
+    "lo": 80,
+    "hi": 85,
+    "q1": 3,
+    "q3": 3.5,
+    "whiskerLo": 2.25,
+    "whiskerHi": 4,
+    "medianD": 3,
+    "medianSource": "box edge; authors' text (\"over 60\")"
+   },
+   {
+    "band": "≥85",
+    "lo": 85,
+    "hi": 120,
+    "q1": 3,
+    "q3": 3.5,
+    "whiskerLo": 2.25,
+    "whiskerHi": 4,
+    "medianD": 3,
+    "medianSource": "box edge; authors' text (\"over 60\")"
+   }
+  ],
+  "kenyaFig1c": {
+   "note": "Digitised from bar heights (1 px ≈ 24 people); total 34,022 vs 34,283 reported.",
+   "counts": [
+    {
+     "powerD": 1,
+     "n": 1810
+    },
+    {
+     "powerD": 1.25,
+     "n": 190
+    },
+    {
+     "powerD": 1.5,
+     "n": 4024
+    },
+    {
+     "powerD": 1.75,
+     "n": 452
+    },
+    {
+     "powerD": 2,
+     "n": 9024
+    },
+    {
+     "powerD": 2.25,
+     "n": 476
+    },
+    {
+     "powerD": 2.5,
+     "n": 7619
+    },
+    {
+     "powerD": 2.75,
+     "n": 571
+    },
+    {
+     "powerD": 3,
+     "n": 7833
+    },
+    {
+     "powerD": 3.25,
+     "n": 476
+    },
+    {
+     "powerD": 3.5,
+     "n": 1167
+    },
+    {
+     "powerD": 3.75,
+     "n": 190
+    },
+    {
+     "powerD": 4,
+     "n": 190
+    }
+   ]
+  },
+  "kenyaTable2ScreeningFail": [
+   {
+    "band": "40–45",
+    "lo": 40,
+    "hi": 45,
+    "n": 95082,
+    "failPct": 27.73
+   },
+   {
+    "band": "45–50",
+    "lo": 45,
+    "hi": 50,
+    "n": 77997,
+    "failPct": 34.35
+   },
+   {
+    "band": "50–55",
+    "lo": 50,
+    "hi": 55,
+    "n": 67563,
+    "failPct": 39.6
+   },
+   {
+    "band": "55–59",
+    "lo": 55,
+    "hi": 60,
+    "n": 43208,
+    "failPct": 38.89
+   },
+   {
+    "band": "60–65",
+    "lo": 60,
+    "hi": 65,
+    "n": 37685,
+    "failPct": 47.04
+   },
+   {
+    "band": ">65",
+    "lo": 65,
+    "hi": 70.0001,
+    "n": 61759,
+    "failPct": 51.23
+   }
+  ],
+  "kenyaText": {
+   "screened": 388939,
+   "failedNearScreening": 146801,
+   "failedPct": 37.74,
+   "kenyaWithPower": 34328,
+   "mostCommonPowers": [
+    "+2.00",
+    "+2.50",
+    "+3.00"
+   ],
+   "authorsStartingRule": "1.50 D for 40–44, 2.00 D for 45–54, 2.50 D for 55–59, 3.00 D for over 60 (Discussion)"
+  },
+  "indiaTable2": [
+   {
+    "band": "35–39",
+    "lo": 35,
+    "hi": 40,
+    "meanD": 1,
+    "medianD": 1,
+    "se": 0
+   },
+   {
+    "band": "40–44",
+    "lo": 40,
+    "hi": 45,
+    "meanD": 1.21,
+    "medianD": 1,
+    "se": 0.028
+   },
+   {
+    "band": "45–49",
+    "lo": 45,
+    "hi": 50,
+    "meanD": 1.57,
+    "medianD": 1.5,
+    "se": 0.025
+   },
+   {
+    "band": "50–54",
+    "lo": 50,
+    "hi": 55,
+    "meanD": 2.05,
+    "medianD": 2,
+    "se": 0.022
+   },
+   {
+    "band": "55–59",
+    "lo": 55,
+    "hi": 60,
+    "meanD": 2.24,
+    "medianD": 2,
+    "se": 0.062
+   },
+   {
+    "band": "60–64",
+    "lo": 60,
+    "hi": 65,
+    "meanD": 2.58,
+    "medianD": 2.5,
+    "se": 0.083
+   },
+   {
+    "band": "≥65",
+    "lo": 65,
+    "hi": 120,
+    "meanD": 2.78,
+    "medianD": 3,
+    "se": 0.101
+   }
+  ],
+  "indiaText": {
+   "n": 378,
+   "meanAge": 45.7,
+   "sdAge": 6.7,
+   "calculatorExactAgreementPct": 92.9,
+   "within050Pct": 99.5
+  },
+  "asmaraTable4": [
+   {
+    "band": "35–40",
+    "lo": 35,
+    "hi": 41,
+    "n": 292,
+    "meanD": 0.7,
+    "sdD": 0.46
+   },
+   {
+    "band": "41–45",
+    "lo": 41,
+    "hi": 46,
+    "n": 312,
+    "meanD": 1.3,
+    "sdD": 0.32
+   },
+   {
+    "band": "46–50",
+    "lo": 46,
+    "hi": 51,
+    "n": 336,
+    "meanD": 1.77,
+    "sdD": 0.29
+   },
+   {
+    "band": "51–55",
+    "lo": 51,
+    "hi": 56,
+    "n": 194,
+    "meanD": 2.15,
+    "sdD": 0.26
+   },
+   {
+    "band": "56–60",
+    "lo": 56,
+    "hi": 61,
+    "n": 176,
+    "meanD": 2.37,
+    "sdD": 0.31
+   }
+  ],
+  "asmaraTable2PresbyopicPct": {
+   "35–40": 10.7,
+   "41–45": 77.6,
+   "46–50": 98.2,
+   "51–55": 100,
+   "56–60": 98.3
+  },
+  "asmaraText": {
+   "n": 1310,
+   "presbyopicPct": 74.1,
+   "addRiseNote": "\"every five years age increase in given addition 0.4–0.5 DS\" (Discussion)"
+  },
+  "thriveTable1": {
+   "medianPowerD": 1,
+   "iqrD": [
+    1,
+    1.5
+   ],
+   "meanAge": [
+    46.9,
+    47.4
+   ],
+   "n": [
+    423,
+    401
+   ],
+   "note": "assigned by an NVA rule, not measured"
+  },
+  "panke2019Abstract": {
+   "n": 216,
+   "ageRange": [
+    35,
+    80
+   ],
+   "rAgeAdd": 0.73
+  }
+ },
+ "comparisons": {
+  "definitions": {
+   "needsReaders": "sim person with refractive error ≥ −1.00 D and ideal (rounded) ≥ +1.00 D; powers capped to the field stock range +1.00..+4.00",
+   "simIdeal40cm": "A* = 2.5 + RE − AA/2 (field charts at 40 cm); simIdealOwnDistance uses the person's own reading distance (mean 37 cm)",
+   "failsN6At40": "no glasses, 2.5 D outside the clear range [−RE − DOF/2, AA − RE + DOF/2]",
+   "asmaraAdd": "distance error corrected (RE removed): half-reserve add = max(0, 2.5 − AA/2); minimum-plus add = max(0, 2.5 − AA − 0.325)"
+  },
+  "powerByBand": [
+   {
+    "band": "40–44",
+    "simN": 3431,
+    "needsReadersPctOfBand": 23.5,
+    "failsN6At40PctOfBand": 4.5,
+    "field": {
+     "kenya": {
+      "meanD": 1.5,
+      "n": 3538,
+      "medianD": 1.5,
+      "q1": 1,
+      "q3": 2
+     },
+     "india": {
+      "band": "40–44",
+      "meanD": 1.21,
+      "medianD": 1
+     }
+    },
+    "simIdealOwnDistance": {
+     "n": 806,
+     "meanD": 1.69,
+     "medianD": 1.5,
+     "q1": 1,
+     "q3": 2,
+     "meanMinusKenyaD": 0.19,
+     "meanMinusIndiaD": 0.48
+    },
+    "simIdeal40cm": {
+     "n": 806,
+     "meanD": 1.45,
+     "medianD": 1,
+     "q1": 1,
+     "q3": 1.75,
+     "meanMinusKenyaD": -0.05,
+     "meanMinusIndiaD": 0.24,
+     "medianMinusKenyaD": -0.5
+    },
+    "recommended": {
+     "spStart": {
+      "givenReadersPctOfBand": 24.9,
+      "n": 855,
+      "meanD": 1.25,
+      "medianD": 1.25,
+      "q1": 1,
+      "q3": 1.5,
+      "meanMinusKenyaD": -0.25,
+      "medianMinusKenyaD": -0.25
+     },
+     "spTry050": {
+      "givenReadersPctOfBand": 21.8,
+      "n": 748,
+      "meanD": 1.19,
+      "medianD": 1,
+      "q1": 1,
+      "q3": 1.5,
+      "meanMinusKenyaD": -0.31,
+      "medianMinusKenyaD": -0.5
+     },
+     "spTry025": {
+      "givenReadersPctOfBand": 21.8,
+      "n": 749,
+      "meanD": 1.27,
+      "medianD": 1.25,
+      "q1": 1,
+      "q3": 1.5,
+      "meanMinusKenyaD": -0.23,
+      "medianMinusKenyaD": -0.25
+     },
+     "age40": {
+      "givenReadersPctOfBand": 100,
+      "n": 3431,
+      "meanD": 1,
+      "medianD": 1,
+      "q1": 1,
+      "q3": 1,
+      "meanMinusKenyaD": -0.5,
+      "medianMinusKenyaD": -0.5
+     }
+    }
+   },
+   {
+    "band": "45–49",
+    "simN": 3235,
+    "needsReadersPctOfBand": 49.5,
+    "failsN6At40PctOfBand": 10.8,
+    "field": {
+     "kenya": {
+      "meanD": 1.83,
+      "n": 5745,
+      "medianD": 2,
+      "q1": 1.5,
+      "q3": 2
+     },
+     "india": {
+      "band": "45–49",
+      "meanD": 1.57,
+      "medianD": 1.5
+     }
+    },
+    "simIdealOwnDistance": {
+     "n": 1601,
+     "meanD": 1.74,
+     "medianD": 1.5,
+     "q1": 1.25,
+     "q3": 2,
+     "meanMinusKenyaD": -0.09,
+     "meanMinusIndiaD": 0.17
+    },
+    "simIdeal40cm": {
+     "n": 1601,
+     "meanD": 1.47,
+     "medianD": 1.25,
+     "q1": 1,
+     "q3": 1.75,
+     "meanMinusKenyaD": -0.36,
+     "meanMinusIndiaD": -0.1,
+     "medianMinusKenyaD": -0.75
+    },
+    "recommended": {
+     "spStart": {
+      "givenReadersPctOfBand": 67.4,
+      "n": 2181,
+      "meanD": 1.41,
+      "medianD": 1.25,
+      "q1": 1,
+      "q3": 1.75,
+      "meanMinusKenyaD": -0.42,
+      "medianMinusKenyaD": -0.75
+     },
+     "spTry050": {
+      "givenReadersPctOfBand": 64,
+      "n": 2070,
+      "meanD": 1.31,
+      "medianD": 1,
+      "q1": 1,
+      "q3": 1.5,
+      "meanMinusKenyaD": -0.52,
+      "medianMinusKenyaD": -1
+     },
+     "spTry025": {
+      "givenReadersPctOfBand": 63.8,
+      "n": 2065,
+      "meanD": 1.41,
+      "medianD": 1.25,
+      "q1": 1,
+      "q3": 1.5,
+      "meanMinusKenyaD": -0.42,
+      "medianMinusKenyaD": -0.75
+     },
+     "age40": {
+      "givenReadersPctOfBand": 100,
+      "n": 3235,
+      "meanD": 1.5,
+      "medianD": 1.5,
+      "q1": 1.5,
+      "q3": 1.5,
+      "meanMinusKenyaD": -0.33,
+      "medianMinusKenyaD": -0.5
+     }
+    }
+   },
+   {
+    "band": "50–54",
+    "simN": 3328,
+    "needsReadersPctOfBand": 77.5,
+    "failsN6At40PctOfBand": 44.8,
+    "field": {
+     "kenya": {
+      "meanD": 2.19,
+      "n": 7251,
+      "medianD": 2,
+      "q1": 2,
+      "q3": 2.5
+     },
+     "india": {
+      "band": "50–54",
+      "meanD": 2.05,
+      "medianD": 2
+     }
+    },
+    "simIdealOwnDistance": {
+     "n": 2580,
+     "meanD": 2.08,
+     "medianD": 2,
+     "q1": 1.5,
+     "q3": 2.5,
+     "meanMinusKenyaD": -0.11,
+     "meanMinusIndiaD": 0.03
+    },
+    "simIdeal40cm": {
+     "n": 2580,
+     "meanD": 1.83,
+     "medianD": 1.75,
+     "q1": 1.25,
+     "q3": 2.25,
+     "meanMinusKenyaD": -0.36,
+     "meanMinusIndiaD": -0.22,
+     "medianMinusKenyaD": -0.25
+    },
+    "recommended": {
+     "spStart": {
+      "givenReadersPctOfBand": 93,
+      "n": 3095,
+      "meanD": 1.82,
+      "medianD": 1.75,
+      "q1": 1.5,
+      "q3": 2.25,
+      "meanMinusKenyaD": -0.37,
+      "medianMinusKenyaD": -0.25
+     },
+     "spTry050": {
+      "givenReadersPctOfBand": 84.4,
+      "n": 2808,
+      "meanD": 1.69,
+      "medianD": 1.5,
+      "q1": 1.5,
+      "q3": 2,
+      "meanMinusKenyaD": -0.5,
+      "medianMinusKenyaD": -0.5
+     },
+     "spTry025": {
+      "givenReadersPctOfBand": 84.6,
+      "n": 2816,
+      "meanD": 1.78,
+      "medianD": 1.75,
+      "q1": 1.5,
+      "q3": 2,
+      "meanMinusKenyaD": -0.41,
+      "medianMinusKenyaD": -0.25
+     },
+     "age40": {
+      "givenReadersPctOfBand": 100,
+      "n": 3328,
+      "meanD": 2,
+      "medianD": 2,
+      "q1": 2,
+      "q3": 2,
+      "meanMinusKenyaD": -0.19,
+      "medianMinusKenyaD": 0
+     }
+    }
+   },
+   {
+    "band": "55–59",
+    "simN": 3394,
+    "needsReadersPctOfBand": 88.3,
+    "failsN6At40PctOfBand": 87.5,
+    "field": {
+     "kenya": {
+      "meanD": 2.51,
+      "n": 4399,
+      "medianD": 2.5,
+      "q1": 2.5,
+      "q3": 2.75
+     },
+     "india": {
+      "band": "55–59",
+      "meanD": 2.24,
+      "medianD": 2
+     }
+    },
+    "simIdealOwnDistance": {
+     "n": 2998,
+     "meanD": 2.58,
+     "medianD": 2.5,
+     "q1": 2,
+     "q3": 3,
+     "meanMinusKenyaD": 0.07,
+     "meanMinusIndiaD": 0.34
+    },
+    "simIdeal40cm": {
+     "n": 2998,
+     "meanD": 2.35,
+     "medianD": 2.25,
+     "q1": 1.75,
+     "q3": 2.75,
+     "meanMinusKenyaD": -0.16,
+     "meanMinusIndiaD": 0.11,
+     "medianMinusKenyaD": -0.25
+    },
+    "recommended": {
+     "spStart": {
+      "givenReadersPctOfBand": 84.4,
+      "n": 2864,
+      "meanD": 2.42,
+      "medianD": 2.5,
+      "q1": 2.25,
+      "q3": 2.75,
+      "meanMinusKenyaD": -0.09,
+      "medianMinusKenyaD": 0
+     },
+     "spTry050": {
+      "givenReadersPctOfBand": 72.6,
+      "n": 2463,
+      "meanD": 2.19,
+      "medianD": 2,
+      "q1": 2,
+      "q3": 2.5,
+      "meanMinusKenyaD": -0.32,
+      "medianMinusKenyaD": -0.5
+     },
+     "spTry025": {
+      "givenReadersPctOfBand": 72.5,
+      "n": 2462,
+      "meanD": 2.23,
+      "medianD": 2.25,
+      "q1": 1.75,
+      "q3": 2.75,
+      "meanMinusKenyaD": -0.28,
+      "medianMinusKenyaD": -0.25
+     },
+     "age40": {
+      "givenReadersPctOfBand": 100,
+      "n": 3394,
+      "meanD": 2.5,
+      "medianD": 2.5,
+      "q1": 2.5,
+      "q3": 2.5,
+      "meanMinusKenyaD": -0.01,
+      "medianMinusKenyaD": 0
+     }
+    }
+   },
+   {
+    "band": "60–64",
+    "simN": 3300,
+    "needsReadersPctOfBand": 90.2,
+    "failsN6At40PctOfBand": 97.4,
+    "field": {
+     "kenya": {
+      "meanD": 2.81,
+      "n": 4863,
+      "medianD": 3,
+      "q1": 2.5,
+      "q3": 3
+     },
+     "india": {
+      "band": "60–64",
+      "meanD": 2.58,
+      "medianD": 2.5
+     }
+    },
+    "simIdealOwnDistance": {
+     "n": 2975,
+     "meanD": 3.04,
+     "medianD": 3,
+     "q1": 2.5,
+     "q3": 3.5,
+     "meanMinusKenyaD": 0.23,
+     "meanMinusIndiaD": 0.46
+    },
+    "simIdeal40cm": {
+     "n": 2975,
+     "meanD": 2.83,
+     "medianD": 2.75,
+     "q1": 2.5,
+     "q3": 3.25,
+     "meanMinusKenyaD": 0.02,
+     "meanMinusIndiaD": 0.25,
+     "medianMinusKenyaD": -0.25
+    },
+    "recommended": {
+     "spStart": {
+      "givenReadersPctOfBand": 77.9,
+      "n": 2571,
+      "meanD": 2.62,
+      "medianD": 2.5,
+      "q1": 2.5,
+      "q3": 2.75,
+      "meanMinusKenyaD": -0.19,
+      "medianMinusKenyaD": -0.5
+     },
+     "spTry050": {
+      "givenReadersPctOfBand": 54.5,
+      "n": 1797,
+      "meanD": 2.51,
+      "medianD": 2.5,
+      "q1": 2,
+      "q3": 3,
+      "meanMinusKenyaD": -0.3,
+      "medianMinusKenyaD": -0.5
+     },
+     "spTry025": {
+      "givenReadersPctOfBand": 54.7,
+      "n": 1806,
+      "meanD": 2.52,
+      "medianD": 2.5,
+      "q1": 2.25,
+      "q3": 3,
+      "meanMinusKenyaD": -0.29,
+      "medianMinusKenyaD": -0.5
+     },
+     "age40": {
+      "givenReadersPctOfBand": 100,
+      "n": 3300,
+      "meanD": 2.5,
+      "medianD": 2.5,
+      "q1": 2.5,
+      "q3": 2.5,
+      "meanMinusKenyaD": -0.31,
+      "medianMinusKenyaD": -0.5
+     }
+    }
+   },
+   {
+    "band": "65–69",
+    "simN": 3312,
+    "needsReadersPctOfBand": 90.4,
+    "failsN6At40PctOfBand": 97.8,
+    "field": {
+     "kenya": {
+      "meanD": 2.9,
+      "n": 2410,
+      "medianD": 3,
+      "q1": 2.75,
+      "q3": 3
+     },
+     "india": {
+      "band": "≥65",
+      "meanD": 2.78,
+      "medianD": 3
+     }
+    },
+    "simIdealOwnDistance": {
+     "n": 2995,
+     "meanD": 3.09,
+     "medianD": 3,
+     "q1": 2.625,
+     "q3": 3.5,
+     "meanMinusKenyaD": 0.19,
+     "meanMinusIndiaD": 0.31
+    },
+    "simIdeal40cm": {
+     "n": 2995,
+     "meanD": 2.87,
+     "medianD": 2.75,
+     "q1": 2.5,
+     "q3": 3.25,
+     "meanMinusKenyaD": -0.03,
+     "meanMinusIndiaD": 0.09,
+     "medianMinusKenyaD": -0.25
+    },
+    "recommended": {
+     "spStart": {
+      "givenReadersPctOfBand": 76.4,
+      "n": 2531,
+      "meanD": 2.62,
+      "medianD": 2.5,
+      "q1": 2.5,
+      "q3": 2.75,
+      "meanMinusKenyaD": -0.28,
+      "medianMinusKenyaD": -0.5
+     },
+     "spTry050": {
+      "givenReadersPctOfBand": 52.1,
+      "n": 1726,
+      "meanD": 2.55,
+      "medianD": 2.5,
+      "q1": 2.5,
+      "q3": 3,
+      "meanMinusKenyaD": -0.35,
+      "medianMinusKenyaD": -0.5
+     },
+     "spTry025": {
+      "givenReadersPctOfBand": 51.8,
+      "n": 1717,
+      "meanD": 2.55,
+      "medianD": 2.5,
+      "q1": 2.25,
+      "q3": 3,
+      "meanMinusKenyaD": -0.35,
+      "medianMinusKenyaD": -0.5
+     },
+     "age40": {
+      "givenReadersPctOfBand": 100,
+      "n": 3312,
+      "meanD": 2.5,
+      "medianD": 2.5,
+      "q1": 2.5,
+      "q3": 2.5,
+      "meanMinusKenyaD": -0.4,
+      "medianMinusKenyaD": -0.5
+     }
+    }
+   }
+  ],
+  "asmara": [
+   {
+    "band": "41–45",
+    "field": {
+     "addMeanD": 1.3,
+     "addSdD": 0.32,
+     "n": 312,
+     "presbyopicPct": 77.6
+    },
+    "sim": {
+     "n": 3399,
+     "addHalfReserveMeanD": 0.08,
+     "addMinimumPlusMeanD": 0,
+     "presbyopicPct": 0,
+     "meanAmplitudeD": 5.45
+    }
+   },
+   {
+    "band": "46–50",
+    "field": {
+     "addMeanD": 1.77,
+     "addSdD": 0.29,
+     "n": 336,
+     "presbyopicPct": 98.2
+    },
+    "sim": {
+     "n": 3206,
+     "addHalfReserveMeanD": 0.55,
+     "addMinimumPlusMeanD": 0.01,
+     "presbyopicPct": 2.2,
+     "meanAmplitudeD": 3.94
+    }
+   },
+   {
+    "band": "51–55",
+    "field": {
+     "addMeanD": 2.15,
+     "addSdD": 0.26,
+     "n": 194,
+     "presbyopicPct": 100
+    },
+    "sim": {
+     "n": 3391,
+     "addHalfReserveMeanD": 1.3,
+     "addMinimumPlusMeanD": 0.24,
+     "presbyopicPct": 40,
+     "meanAmplitudeD": 2.39
+    }
+   },
+   {
+    "band": "56–60",
+    "field": {
+     "addMeanD": 2.37,
+     "addSdD": 0.31,
+     "n": 176,
+     "presbyopicPct": 98.3
+    },
+    "sim": {
+     "n": 3418,
+     "addHalfReserveMeanD": 2.04,
+     "addMinimumPlusMeanD": 1.26,
+     "presbyopicPct": 95.3,
+     "meanAmplitudeD": 0.92
+    }
+   }
+  ],
+  "screening": [
+   {
+    "band": "40–45",
+    "fieldFailPct": 27.73,
+    "fieldN": 95082,
+    "simFailsN6At40Pct": 4.5
+   },
+   {
+    "band": "45–50",
+    "fieldFailPct": 34.35,
+    "fieldN": 77997,
+    "simFailsN6At40Pct": 10.8
+   },
+   {
+    "band": "50–55",
+    "fieldFailPct": 39.6,
+    "fieldN": 67563,
+    "simFailsN6At40Pct": 44.8
+   },
+   {
+    "band": "55–59",
+    "fieldFailPct": 38.89,
+    "fieldN": 43208,
+    "simFailsN6At40Pct": 87.5
+   },
+   {
+    "band": "60–65",
+    "fieldFailPct": 47.04,
+    "fieldN": 37685,
+    "simFailsN6At40Pct": 97.4
+   },
+   {
+    "band": ">65",
+    "fieldFailPct": 51.23,
+    "fieldN": 61759,
+    "simFailsN6At40Pct": 97.8
+   }
+  ],
+  "distribution": {
+   "note": "Shares (%) at each power, people given/needing readers, sim re-weighted to the Kenyan age mix (Table 4). Quarter steps are snapped up to the next 0.50 step for the 0.50 view, identically for field and sim.",
+   "steps025": [
+    1,
+    1.25,
+    1.5,
+    1.75,
+    2,
+    2.25,
+    2.5,
+    2.75,
+    3,
+    3.25,
+    3.5,
+    3.75,
+    4
+   ],
+   "steps050": [
+    1,
+    1.5,
+    2,
+    2.5,
+    3,
+    3.5,
+    4
+   ],
+   "field025Pct": [
+    5.3,
+    0.6,
+    11.8,
+    1.3,
+    26.5,
+    1.4,
+    22.4,
+    1.7,
+    23,
+    1.4,
+    3.4,
+    0.6,
+    0.6
+   ],
+   "field050Pct": [
+    5.3,
+    12.4,
+    27.9,
+    23.8,
+    24.7,
+    4.8,
+    1.1
+   ],
+   "simIdeal40cm025Pct": [
+    18.8,
+    8.3,
+    7.7,
+    8.2,
+    8.6,
+    8.6,
+    9.3,
+    8.3,
+    6.9,
+    4.9,
+    3.2,
+    2.1,
+    5.1
+   ],
+   "simIdeal40cm050Pct": [
+    18.8,
+    16.1,
+    16.7,
+    17.8,
+    15.2,
+    8.1,
+    7.2
+   ],
+   "simIdealOwnDistance050Pct": [
+    8.9,
+    17.4,
+    16.8,
+    17.3,
+    15.9,
+    11.3,
+    12.4
+   ],
+   "spTry050Pct": [
+    24.9,
+    20,
+    18.5,
+    20.4,
+    16.1,
+    0,
+    0
+   ],
+   "spStart050Pct": [
+    12.5,
+    19.8,
+    16,
+    29.2,
+    22.5,
+    0,
+    0
+   ],
+   "ageTable050Pct": [
+    11.2,
+    18.3,
+    23,
+    47.5,
+    0,
+    0,
+    0
+   ],
+   "fieldAbove3Pct": 5.9,
+   "simIdeal40cmAbove3Pct": 15.3,
+   "vsField": {
+    "simIdeal40cm_025": {
+     "ksDistance": 0.24,
+     "overlapPct": 48.5
+    },
+    "simIdeal40cm_050": {
+     "ksDistance": 0.17,
+     "overlapPct": 73.5
+    },
+    "simIdealOwnDistance_050": {
+     "ksDistance": 0.18,
+     "overlapPct": 73.7
+    },
+    "spTry050_050": {
+     "ksDistance": 0.27,
+     "overlapPct": 72.8
+    },
+    "spStart_050": {
+     "ksDistance": 0.15,
+     "overlapPct": 80
+    },
+    "ageTable_050": {
+     "ksDistance": 0.31,
+     "overlapPct": 64.5
+    }
+   }
+  },
+  "reweightFeasibility": [
+   {
+    "band": "40–44",
+    "simN": 3431,
+    "simFailsN6At40N": 154,
+    "simNeedsReadersN": 806
+   },
+   {
+    "band": "45–49",
+    "simN": 3235,
+    "simFailsN6At40N": 349,
+    "simNeedsReadersN": 1601
+   },
+   {
+    "band": "50–54",
+    "simN": 3328,
+    "simFailsN6At40N": 1492,
+    "simNeedsReadersN": 2580
+   },
+   {
+    "band": "55–59",
+    "simN": 3394,
+    "simFailsN6At40N": 2971,
+    "simNeedsReadersN": 2998
+   },
+   {
+    "band": "60–64",
+    "simN": 3300,
+    "simFailsN6At40N": 3215,
+    "simNeedsReadersN": 2975
+   },
+   {
+    "band": "65–69",
+    "simN": 3312,
+    "simFailsN6At40N": 3240,
+    "simNeedsReadersN": 2995
+   }
+  ]
+ },
+ "sensitivity": [
+  {
+   "id": "main",
+   "label": "Shipped bench population (Hofstetter mean)",
+   "amplitudeCentreD": [
+    {
+     "age": 40,
+     "centreD": 6.5,
+     "hofstetterMeanD": 6.5
+    },
+    {
+     "age": 45,
+     "centreD": 5,
+     "hofstetterMeanD": 5
+    },
+    {
+     "age": 50,
+     "centreD": 3.5,
+     "hofstetterMeanD": 3.5
+    },
+    {
+     "age": 55,
+     "centreD": 2,
+     "hofstetterMeanD": 2
+    },
+    {
+     "age": 60,
+     "centreD": 0.5,
+     "hofstetterMeanD": 0.5
+    },
+    {
+     "age": 65,
+     "centreD": 0,
+     "hofstetterMeanD": 0
+    },
+    {
+     "age": 70,
+     "centreD": 0,
+     "hofstetterMeanD": 0
+    }
+   ],
+   "anchors": null,
+   "truthMix": {
+    "inScopePct": 53.8,
+    "noneYetPct": 16.2,
+    "referMyopiaPct": 10.2,
+    "referAboveRangePct": 19.8
+   },
+   "headline": {
+    "age40": {
+     "appropriatePct": 41.96,
+     "within025Pct": 49.37,
+     "within050Pct": 75.1,
+     "biasD": 0.07,
+     "maeD": 0.45,
+     "referSafePct": 0,
+     "myopiaMissedPct": 100,
+     "noneGivenReadersPct": 100,
+     "falseNonePct": 0,
+     "givenReadersPct": 100,
+     "inScopeN": 10763,
+     "allN": 20000
+    },
+    "ageW": {
+     "appropriatePct": 43.11,
+     "within025Pct": 42.18,
+     "within050Pct": 63.15,
+     "biasD": 0.28,
+     "maeD": 0.51,
+     "referSafePct": 22.32,
+     "myopiaMissedPct": 88.7,
+     "noneGivenReadersPct": 87.13,
+     "falseNonePct": 0.97,
+     "givenReadersPct": 94.18,
+     "inScopeN": 10763,
+     "allN": 20000
+    },
+    "card14": {
+     "appropriatePct": 50.89,
+     "within025Pct": 47.23,
+     "within050Pct": 63.92,
+     "biasD": -0.38,
+     "maeD": 0.51,
+     "referSafePct": 42.37,
+     "myopiaMissedPct": 99.9,
+     "noneGivenReadersPct": 100,
+     "falseNonePct": 0,
+     "givenReadersPct": 94.3,
+     "inScopeN": 10763,
+     "allN": 20000
+    },
+    "cardOwn": {
+     "appropriatePct": 52.12,
+     "within025Pct": 46.68,
+     "within050Pct": 64.29,
+     "biasD": -0.43,
+     "maeD": 0.51,
+     "referSafePct": 45.82,
+     "myopiaMissedPct": 99.85,
+     "noneGivenReadersPct": 100,
+     "falseNonePct": 0,
+     "givenReadersPct": 96.2,
+     "inScopeN": 10763,
+     "allN": 20000
+    },
+    "spStart": {
+     "appropriatePct": 69.69,
+     "within025Pct": 58.66,
+     "within050Pct": 80.09,
+     "biasD": 0.05,
+     "maeD": 0.33,
+     "referSafePct": 40.97,
+     "myopiaMissedPct": 33.01,
+     "noneGivenReadersPct": 18.4,
+     "falseNonePct": 4.65,
+     "givenReadersPct": 92.52,
+     "inScopeN": 10763,
+     "allN": 20000
+    },
+    "spTry050": {
+     "appropriatePct": 84.64,
+     "within025Pct": 71.8,
+     "within050Pct": 84.61,
+     "biasD": -0.09,
+     "maeD": 0.25,
+     "referSafePct": 79.98,
+     "myopiaMissedPct": 11.05,
+     "noneGivenReadersPct": 16.98,
+     "falseNonePct": 4.77,
+     "givenReadersPct": 91.62,
+     "inScopeN": 10763,
+     "allN": 20000
+    },
+    "spTry025": {
+     "appropriatePct": 85.43,
+     "within025Pct": 73.98,
+     "within050Pct": 86.65,
+     "biasD": -0.03,
+     "maeD": 0.24,
+     "referSafePct": 80.43,
+     "myopiaMissedPct": 10.85,
+     "noneGivenReadersPct": 17.17,
+     "falseNonePct": 4.74,
+     "givenReadersPct": 91.84,
+     "inScopeN": 10763,
+     "allN": 20000
+    },
+    "oracle050": {
+     "appropriatePct": 100,
+     "within025Pct": 100,
+     "within050Pct": 100,
+     "biasD": 0.12,
+     "maeD": 0.12,
+     "referSafePct": 100,
+     "myopiaMissedPct": 0,
+     "noneGivenReadersPct": 0,
+     "falseNonePct": 0,
+     "givenReadersPct": 100,
+     "inScopeN": 10763,
+     "allN": 20000
+    }
+   },
+   "rightCallByBand": [
+    {
+     "band": "40–44",
+     "age40": 30.8,
+     "spStart": 78.1,
+     "spTry050": 80.9
+    },
+    {
+     "band": "45–49",
+     "age40": 38.2,
+     "spStart": 79,
+     "spTry050": 82.1
+    },
+    {
+     "band": "50–54",
+     "age40": 43.2,
+     "spStart": 72.1,
+     "spTry050": 84.8
+    },
+    {
+     "band": "55–59",
+     "age40": 49,
+     "spStart": 67.6,
+     "spTry050": 86.6
+    },
+    {
+     "band": "60–64",
+     "age40": 45.6,
+     "spStart": 60.1,
+     "spTry050": 86.3
+    },
+    {
+     "band": "65–69",
+     "age40": 45.2,
+     "spStart": 61.2,
+     "spTry050": 87.2
+    }
+   ],
+   "fieldCheck": {
+    "powerByBand": [
+     {
+      "band": "40–44",
+      "simN": 3431,
+      "needsReadersPctOfBand": 23.5,
+      "failsN6At40PctOfBand": 4.5,
+      "field": {
+       "kenya": {
+        "meanD": 1.5,
+        "n": 3538,
+        "medianD": 1.5,
+        "q1": 1,
+        "q3": 2
+       },
+       "india": {
+        "band": "40–44",
+        "meanD": 1.21,
+        "medianD": 1
+       }
+      },
+      "simIdealOwnDistance": {
+       "n": 806,
+       "meanD": 1.69,
+       "medianD": 1.5,
+       "q1": 1,
+       "q3": 2,
+       "meanMinusKenyaD": 0.19,
+       "meanMinusIndiaD": 0.48
+      },
+      "simIdeal40cm": {
+       "n": 806,
+       "meanD": 1.45,
+       "medianD": 1,
+       "q1": 1,
+       "q3": 1.75,
+       "meanMinusKenyaD": -0.05,
+       "meanMinusIndiaD": 0.24,
+       "medianMinusKenyaD": -0.5
+      },
+      "recommended": {
+       "spStart": {
+        "givenReadersPctOfBand": 24.9,
+        "n": 855,
+        "meanD": 1.25,
+        "medianD": 1.25,
+        "q1": 1,
+        "q3": 1.5,
+        "meanMinusKenyaD": -0.25,
+        "medianMinusKenyaD": -0.25
+       },
+       "spTry050": {
+        "givenReadersPctOfBand": 21.8,
+        "n": 748,
+        "meanD": 1.19,
+        "medianD": 1,
+        "q1": 1,
+        "q3": 1.5,
+        "meanMinusKenyaD": -0.31,
+        "medianMinusKenyaD": -0.5
+       },
+       "spTry025": {
+        "givenReadersPctOfBand": 21.8,
+        "n": 749,
+        "meanD": 1.27,
+        "medianD": 1.25,
+        "q1": 1,
+        "q3": 1.5,
+        "meanMinusKenyaD": -0.23,
+        "medianMinusKenyaD": -0.25
+       },
+       "age40": {
+        "givenReadersPctOfBand": 100,
+        "n": 3431,
+        "meanD": 1,
+        "medianD": 1,
+        "q1": 1,
+        "q3": 1,
+        "meanMinusKenyaD": -0.5,
+        "medianMinusKenyaD": -0.5
+       }
+      }
+     },
+     {
+      "band": "45–49",
+      "simN": 3235,
+      "needsReadersPctOfBand": 49.5,
+      "failsN6At40PctOfBand": 10.8,
+      "field": {
+       "kenya": {
+        "meanD": 1.83,
+        "n": 5745,
+        "medianD": 2,
+        "q1": 1.5,
+        "q3": 2
+       },
+       "india": {
+        "band": "45–49",
+        "meanD": 1.57,
+        "medianD": 1.5
+       }
+      },
+      "simIdealOwnDistance": {
+       "n": 1601,
+       "meanD": 1.74,
+       "medianD": 1.5,
+       "q1": 1.25,
+       "q3": 2,
+       "meanMinusKenyaD": -0.09,
+       "meanMinusIndiaD": 0.17
+      },
+      "simIdeal40cm": {
+       "n": 1601,
+       "meanD": 1.47,
+       "medianD": 1.25,
+       "q1": 1,
+       "q3": 1.75,
+       "meanMinusKenyaD": -0.36,
+       "meanMinusIndiaD": -0.1,
+       "medianMinusKenyaD": -0.75
+      },
+      "recommended": {
+       "spStart": {
+        "givenReadersPctOfBand": 67.4,
+        "n": 2181,
+        "meanD": 1.41,
+        "medianD": 1.25,
+        "q1": 1,
+        "q3": 1.75,
+        "meanMinusKenyaD": -0.42,
+        "medianMinusKenyaD": -0.75
+       },
+       "spTry050": {
+        "givenReadersPctOfBand": 64,
+        "n": 2070,
+        "meanD": 1.31,
+        "medianD": 1,
+        "q1": 1,
+        "q3": 1.5,
+        "meanMinusKenyaD": -0.52,
+        "medianMinusKenyaD": -1
+       },
+       "spTry025": {
+        "givenReadersPctOfBand": 63.8,
+        "n": 2065,
+        "meanD": 1.41,
+        "medianD": 1.25,
+        "q1": 1,
+        "q3": 1.5,
+        "meanMinusKenyaD": -0.42,
+        "medianMinusKenyaD": -0.75
+       },
+       "age40": {
+        "givenReadersPctOfBand": 100,
+        "n": 3235,
+        "meanD": 1.5,
+        "medianD": 1.5,
+        "q1": 1.5,
+        "q3": 1.5,
+        "meanMinusKenyaD": -0.33,
+        "medianMinusKenyaD": -0.5
+       }
+      }
+     },
+     {
+      "band": "50–54",
+      "simN": 3328,
+      "needsReadersPctOfBand": 77.5,
+      "failsN6At40PctOfBand": 44.8,
+      "field": {
+       "kenya": {
+        "meanD": 2.19,
+        "n": 7251,
+        "medianD": 2,
+        "q1": 2,
+        "q3": 2.5
+       },
+       "india": {
+        "band": "50–54",
+        "meanD": 2.05,
+        "medianD": 2
+       }
+      },
+      "simIdealOwnDistance": {
+       "n": 2580,
+       "meanD": 2.08,
+       "medianD": 2,
+       "q1": 1.5,
+       "q3": 2.5,
+       "meanMinusKenyaD": -0.11,
+       "meanMinusIndiaD": 0.03
+      },
+      "simIdeal40cm": {
+       "n": 2580,
+       "meanD": 1.83,
+       "medianD": 1.75,
+       "q1": 1.25,
+       "q3": 2.25,
+       "meanMinusKenyaD": -0.36,
+       "meanMinusIndiaD": -0.22,
+       "medianMinusKenyaD": -0.25
+      },
+      "recommended": {
+       "spStart": {
+        "givenReadersPctOfBand": 93,
+        "n": 3095,
+        "meanD": 1.82,
+        "medianD": 1.75,
+        "q1": 1.5,
+        "q3": 2.25,
+        "meanMinusKenyaD": -0.37,
+        "medianMinusKenyaD": -0.25
+       },
+       "spTry050": {
+        "givenReadersPctOfBand": 84.4,
+        "n": 2808,
+        "meanD": 1.69,
+        "medianD": 1.5,
+        "q1": 1.5,
+        "q3": 2,
+        "meanMinusKenyaD": -0.5,
+        "medianMinusKenyaD": -0.5
+       },
+       "spTry025": {
+        "givenReadersPctOfBand": 84.6,
+        "n": 2816,
+        "meanD": 1.78,
+        "medianD": 1.75,
+        "q1": 1.5,
+        "q3": 2,
+        "meanMinusKenyaD": -0.41,
+        "medianMinusKenyaD": -0.25
+       },
+       "age40": {
+        "givenReadersPctOfBand": 100,
+        "n": 3328,
+        "meanD": 2,
+        "medianD": 2,
+        "q1": 2,
+        "q3": 2,
+        "meanMinusKenyaD": -0.19,
+        "medianMinusKenyaD": 0
+       }
+      }
+     },
+     {
+      "band": "55–59",
+      "simN": 3394,
+      "needsReadersPctOfBand": 88.3,
+      "failsN6At40PctOfBand": 87.5,
+      "field": {
+       "kenya": {
+        "meanD": 2.51,
+        "n": 4399,
+        "medianD": 2.5,
+        "q1": 2.5,
+        "q3": 2.75
+       },
+       "india": {
+        "band": "55–59",
+        "meanD": 2.24,
+        "medianD": 2
+       }
+      },
+      "simIdealOwnDistance": {
+       "n": 2998,
+       "meanD": 2.58,
+       "medianD": 2.5,
+       "q1": 2,
+       "q3": 3,
+       "meanMinusKenyaD": 0.07,
+       "meanMinusIndiaD": 0.34
+      },
+      "simIdeal40cm": {
+       "n": 2998,
+       "meanD": 2.35,
+       "medianD": 2.25,
+       "q1": 1.75,
+       "q3": 2.75,
+       "meanMinusKenyaD": -0.16,
+       "meanMinusIndiaD": 0.11,
+       "medianMinusKenyaD": -0.25
+      },
+      "recommended": {
+       "spStart": {
+        "givenReadersPctOfBand": 84.4,
+        "n": 2864,
+        "meanD": 2.42,
+        "medianD": 2.5,
+        "q1": 2.25,
+        "q3": 2.75,
+        "meanMinusKenyaD": -0.09,
+        "medianMinusKenyaD": 0
+       },
+       "spTry050": {
+        "givenReadersPctOfBand": 72.6,
+        "n": 2463,
+        "meanD": 2.19,
+        "medianD": 2,
+        "q1": 2,
+        "q3": 2.5,
+        "meanMinusKenyaD": -0.32,
+        "medianMinusKenyaD": -0.5
+       },
+       "spTry025": {
+        "givenReadersPctOfBand": 72.5,
+        "n": 2462,
+        "meanD": 2.23,
+        "medianD": 2.25,
+        "q1": 1.75,
+        "q3": 2.75,
+        "meanMinusKenyaD": -0.28,
+        "medianMinusKenyaD": -0.25
+       },
+       "age40": {
+        "givenReadersPctOfBand": 100,
+        "n": 3394,
+        "meanD": 2.5,
+        "medianD": 2.5,
+        "q1": 2.5,
+        "q3": 2.5,
+        "meanMinusKenyaD": -0.01,
+        "medianMinusKenyaD": 0
+       }
+      }
+     },
+     {
+      "band": "60–64",
+      "simN": 3300,
+      "needsReadersPctOfBand": 90.2,
+      "failsN6At40PctOfBand": 97.4,
+      "field": {
+       "kenya": {
+        "meanD": 2.81,
+        "n": 4863,
+        "medianD": 3,
+        "q1": 2.5,
+        "q3": 3
+       },
+       "india": {
+        "band": "60–64",
+        "meanD": 2.58,
+        "medianD": 2.5
+       }
+      },
+      "simIdealOwnDistance": {
+       "n": 2975,
+       "meanD": 3.04,
+       "medianD": 3,
+       "q1": 2.5,
+       "q3": 3.5,
+       "meanMinusKenyaD": 0.23,
+       "meanMinusIndiaD": 0.46
+      },
+      "simIdeal40cm": {
+       "n": 2975,
+       "meanD": 2.83,
+       "medianD": 2.75,
+       "q1": 2.5,
+       "q3": 3.25,
+       "meanMinusKenyaD": 0.02,
+       "meanMinusIndiaD": 0.25,
+       "medianMinusKenyaD": -0.25
+      },
+      "recommended": {
+       "spStart": {
+        "givenReadersPctOfBand": 77.9,
+        "n": 2571,
+        "meanD": 2.62,
+        "medianD": 2.5,
+        "q1": 2.5,
+        "q3": 2.75,
+        "meanMinusKenyaD": -0.19,
+        "medianMinusKenyaD": -0.5
+       },
+       "spTry050": {
+        "givenReadersPctOfBand": 54.5,
+        "n": 1797,
+        "meanD": 2.51,
+        "medianD": 2.5,
+        "q1": 2,
+        "q3": 3,
+        "meanMinusKenyaD": -0.3,
+        "medianMinusKenyaD": -0.5
+       },
+       "spTry025": {
+        "givenReadersPctOfBand": 54.7,
+        "n": 1806,
+        "meanD": 2.52,
+        "medianD": 2.5,
+        "q1": 2.25,
+        "q3": 3,
+        "meanMinusKenyaD": -0.29,
+        "medianMinusKenyaD": -0.5
+       },
+       "age40": {
+        "givenReadersPctOfBand": 100,
+        "n": 3300,
+        "meanD": 2.5,
+        "medianD": 2.5,
+        "q1": 2.5,
+        "q3": 2.5,
+        "meanMinusKenyaD": -0.31,
+        "medianMinusKenyaD": -0.5
+       }
+      }
+     },
+     {
+      "band": "65–69",
+      "simN": 3312,
+      "needsReadersPctOfBand": 90.4,
+      "failsN6At40PctOfBand": 97.8,
+      "field": {
+       "kenya": {
+        "meanD": 2.9,
+        "n": 2410,
+        "medianD": 3,
+        "q1": 2.75,
+        "q3": 3
+       },
+       "india": {
+        "band": "≥65",
+        "meanD": 2.78,
+        "medianD": 3
+       }
+      },
+      "simIdealOwnDistance": {
+       "n": 2995,
+       "meanD": 3.09,
+       "medianD": 3,
+       "q1": 2.625,
+       "q3": 3.5,
+       "meanMinusKenyaD": 0.19,
+       "meanMinusIndiaD": 0.31
+      },
+      "simIdeal40cm": {
+       "n": 2995,
+       "meanD": 2.87,
+       "medianD": 2.75,
+       "q1": 2.5,
+       "q3": 3.25,
+       "meanMinusKenyaD": -0.03,
+       "meanMinusIndiaD": 0.09,
+       "medianMinusKenyaD": -0.25
+      },
+      "recommended": {
+       "spStart": {
+        "givenReadersPctOfBand": 76.4,
+        "n": 2531,
+        "meanD": 2.62,
+        "medianD": 2.5,
+        "q1": 2.5,
+        "q3": 2.75,
+        "meanMinusKenyaD": -0.28,
+        "medianMinusKenyaD": -0.5
+       },
+       "spTry050": {
+        "givenReadersPctOfBand": 52.1,
+        "n": 1726,
+        "meanD": 2.55,
+        "medianD": 2.5,
+        "q1": 2.5,
+        "q3": 3,
+        "meanMinusKenyaD": -0.35,
+        "medianMinusKenyaD": -0.5
+       },
+       "spTry025": {
+        "givenReadersPctOfBand": 51.8,
+        "n": 1717,
+        "meanD": 2.55,
+        "medianD": 2.5,
+        "q1": 2.25,
+        "q3": 3,
+        "meanMinusKenyaD": -0.35,
+        "medianMinusKenyaD": -0.5
+       },
+       "age40": {
+        "givenReadersPctOfBand": 100,
+        "n": 3312,
+        "meanD": 2.5,
+        "medianD": 2.5,
+        "q1": 2.5,
+        "q3": 2.5,
+        "meanMinusKenyaD": -0.4,
+        "medianMinusKenyaD": -0.5
+       }
+      }
+     }
+    ],
+    "asmara": [
+     {
+      "band": "41–45",
+      "field": {
+       "addMeanD": 1.3,
+       "addSdD": 0.32,
+       "n": 312,
+       "presbyopicPct": 77.6
+      },
+      "sim": {
+       "n": 3399,
+       "addHalfReserveMeanD": 0.08,
+       "addMinimumPlusMeanD": 0,
+       "presbyopicPct": 0,
+       "meanAmplitudeD": 5.45
+      }
+     },
+     {
+      "band": "46–50",
+      "field": {
+       "addMeanD": 1.77,
+       "addSdD": 0.29,
+       "n": 336,
+       "presbyopicPct": 98.2
+      },
+      "sim": {
+       "n": 3206,
+       "addHalfReserveMeanD": 0.55,
+       "addMinimumPlusMeanD": 0.01,
+       "presbyopicPct": 2.2,
+       "meanAmplitudeD": 3.94
+      }
+     },
+     {
+      "band": "51–55",
+      "field": {
+       "addMeanD": 2.15,
+       "addSdD": 0.26,
+       "n": 194,
+       "presbyopicPct": 100
+      },
+      "sim": {
+       "n": 3391,
+       "addHalfReserveMeanD": 1.3,
+       "addMinimumPlusMeanD": 0.24,
+       "presbyopicPct": 40,
+       "meanAmplitudeD": 2.39
+      }
+     },
+     {
+      "band": "56–60",
+      "field": {
+       "addMeanD": 2.37,
+       "addSdD": 0.31,
+       "n": 176,
+       "presbyopicPct": 98.3
+      },
+      "sim": {
+       "n": 3418,
+       "addHalfReserveMeanD": 2.04,
+       "addMinimumPlusMeanD": 1.26,
+       "presbyopicPct": 95.3,
+       "meanAmplitudeD": 0.92
+      }
+     }
+    ],
+    "screening": [
+     {
+      "band": "40–45",
+      "fieldFailPct": 27.73,
+      "fieldN": 95082,
+      "simFailsN6At40Pct": 4.5
+     },
+     {
+      "band": "45–50",
+      "fieldFailPct": 34.35,
+      "fieldN": 77997,
+      "simFailsN6At40Pct": 10.8
+     },
+     {
+      "band": "50–55",
+      "fieldFailPct": 39.6,
+      "fieldN": 67563,
+      "simFailsN6At40Pct": 44.8
+     },
+     {
+      "band": "55–59",
+      "fieldFailPct": 38.89,
+      "fieldN": 43208,
+      "simFailsN6At40Pct": 87.5
+     },
+     {
+      "band": "60–65",
+      "fieldFailPct": 47.04,
+      "fieldN": 37685,
+      "simFailsN6At40Pct": 97.4
+     },
+     {
+      "band": ">65",
+      "fieldFailPct": 51.23,
+      "fieldN": 61759,
+      "simFailsN6At40Pct": 97.8
+     }
+    ],
+    "distribution": {
+     "note": "Shares (%) at each power, people given/needing readers, sim re-weighted to the Kenyan age mix (Table 4). Quarter steps are snapped up to the next 0.50 step for the 0.50 view, identically for field and sim.",
+     "steps025": [
+      1,
+      1.25,
+      1.5,
+      1.75,
+      2,
+      2.25,
+      2.5,
+      2.75,
+      3,
+      3.25,
+      3.5,
+      3.75,
+      4
+     ],
+     "steps050": [
+      1,
+      1.5,
+      2,
+      2.5,
+      3,
+      3.5,
+      4
+     ],
+     "field025Pct": [
+      5.3,
+      0.6,
+      11.8,
+      1.3,
+      26.5,
+      1.4,
+      22.4,
+      1.7,
+      23,
+      1.4,
+      3.4,
+      0.6,
+      0.6
+     ],
+     "field050Pct": [
+      5.3,
+      12.4,
+      27.9,
+      23.8,
+      24.7,
+      4.8,
+      1.1
+     ],
+     "simIdeal40cm025Pct": [
+      18.8,
+      8.3,
+      7.7,
+      8.2,
+      8.6,
+      8.6,
+      9.3,
+      8.3,
+      6.9,
+      4.9,
+      3.2,
+      2.1,
+      5.1
+     ],
+     "simIdeal40cm050Pct": [
+      18.8,
+      16.1,
+      16.7,
+      17.8,
+      15.2,
+      8.1,
+      7.2
+     ],
+     "simIdealOwnDistance050Pct": [
+      8.9,
+      17.4,
+      16.8,
+      17.3,
+      15.9,
+      11.3,
+      12.4
+     ],
+     "spTry050Pct": [
+      24.9,
+      20,
+      18.5,
+      20.4,
+      16.1,
+      0,
+      0
+     ],
+     "spStart050Pct": [
+      12.5,
+      19.8,
+      16,
+      29.2,
+      22.5,
+      0,
+      0
+     ],
+     "ageTable050Pct": [
+      11.2,
+      18.3,
+      23,
+      47.5,
+      0,
+      0,
+      0
+     ],
+     "fieldAbove3Pct": 5.9,
+     "simIdeal40cmAbove3Pct": 15.3,
+     "vsField": {
+      "simIdeal40cm_025": {
+       "ksDistance": 0.24,
+       "overlapPct": 48.5
+      },
+      "simIdeal40cm_050": {
+       "ksDistance": 0.17,
+       "overlapPct": 73.5
+      },
+      "simIdealOwnDistance_050": {
+       "ksDistance": 0.18,
+       "overlapPct": 73.7
+      },
+      "spTry050_050": {
+       "ksDistance": 0.27,
+       "overlapPct": 72.8
+      },
+      "spStart_050": {
+       "ksDistance": 0.15,
+       "overlapPct": 80
+      },
+      "ageTable_050": {
+       "ksDistance": 0.31,
+       "overlapPct": 64.5
+      }
+     }
+    }
+   },
+   "upperTailReweighted": {
+    "k": 0.35,
+    "simAbove3Pct": 15.3,
+    "fieldAbove3Pct": 5.9,
+    "weightedPeoplePct": 12.9,
+    "rightCallPct": {
+     "age40": 45.3,
+     "ageW": 45.5,
+     "card14": 48.1,
+     "cardOwn": 49.8,
+     "spStart": 74.5,
+     "spTry050": 85.1,
+     "spTry025": 85.9,
+     "oracle050": 100
+    }
+   }
+  },
+  {
+   "id": "field-half-reserve",
+   "label": "Field-calibrated: add = keep half in reserve",
+   "amplitudeCentreD": [
+    {
+     "age": 40,
+     "centreD": 3.17,
+     "hofstetterMeanD": 6.5
+    },
+    {
+     "age": 45,
+     "centreD": 2.12,
+     "hofstetterMeanD": 5
+    },
+    {
+     "age": 50,
+     "centreD": 1.2,
+     "hofstetterMeanD": 3.5
+    },
+    {
+     "age": 55,
+     "centreD": 0.41,
+     "hofstetterMeanD": 2
+    },
+    {
+     "age": 60,
+     "centreD": 0,
+     "hofstetterMeanD": 0.5
+    },
+    {
+     "age": 65,
+     "centreD": 0,
+     "hofstetterMeanD": 0
+    },
+    {
+     "age": 70,
+     "centreD": 0,
+     "hofstetterMeanD": 0
+    }
+   ],
+   "anchors": [
+    {
+     "age": 38,
+     "targetAddD": 0.7,
+     "centreD": 3.61
+    },
+    {
+     "age": 43.5,
+     "targetAddD": 1.3,
+     "centreD": 2.41
+    },
+    {
+     "age": 48.5,
+     "targetAddD": 1.77,
+     "centreD": 1.46
+    },
+    {
+     "age": 53.5,
+     "targetAddD": 2.15,
+     "centreD": 0.62
+    },
+    {
+     "age": 58.5,
+     "targetAddD": 2.37,
+     "centreD": -0.07
+    }
+   ],
+   "truthMix": {
+    "inScopePct": 59.5,
+    "noneYetPct": 1.3,
+    "referMyopiaPct": 10.2,
+    "referAboveRangePct": 29.1
+   },
+   "headline": {
+    "age40": {
+     "appropriatePct": 41.12,
+     "within025Pct": 43.41,
+     "within050Pct": 68.23,
+     "biasD": -0.34,
+     "maeD": 0.54,
+     "referSafePct": 0,
+     "myopiaMissedPct": 100,
+     "noneGivenReadersPct": 100,
+     "falseNonePct": 0,
+     "givenReadersPct": 100,
+     "inScopeN": 11890,
+     "allN": 20000
+    },
+    "ageW": {
+     "appropriatePct": 49.33,
+     "within025Pct": 47.32,
+     "within050Pct": 68.84,
+     "biasD": -0.17,
+     "maeD": 0.45,
+     "referSafePct": 19.94,
+     "myopiaMissedPct": 88.7,
+     "noneGivenReadersPct": 69.02,
+     "falseNonePct": 3.41,
+     "givenReadersPct": 93.8,
+     "inScopeN": 11890,
+     "allN": 20000
+    },
+    "card14": {
+     "appropriatePct": 56.82,
+     "within025Pct": 43.48,
+     "within050Pct": 62.53,
+     "biasD": -0.36,
+     "maeD": 0.5,
+     "referSafePct": 48.27,
+     "myopiaMissedPct": 99.9,
+     "noneGivenReadersPct": 100,
+     "falseNonePct": 0,
+     "givenReadersPct": 92.44,
+     "inScopeN": 11890,
+     "allN": 20000
+    },
+    "cardOwn": {
+     "appropriatePct": 58.88,
+     "within025Pct": 42.51,
+     "within050Pct": 62.77,
+     "biasD": -0.43,
+     "maeD": 0.51,
+     "referSafePct": 53.15,
+     "myopiaMissedPct": 99.8,
+     "noneGivenReadersPct": 100,
+     "falseNonePct": 0,
+     "givenReadersPct": 94.84,
+     "inScopeN": 11890,
+     "allN": 20000
+    },
+    "spStart": {
+     "appropriatePct": 59.45,
+     "within025Pct": 57.08,
+     "within050Pct": 80.1,
+     "biasD": -0.14,
+     "maeD": 0.36,
+     "referSafePct": 27.4,
+     "myopiaMissedPct": 59.72,
+     "noneGivenReadersPct": 33.73,
+     "falseNonePct": 1.35,
+     "givenReadersPct": 96.14,
+     "inScopeN": 11890,
+     "allN": 20000
+    },
+    "spTry050": {
+     "appropriatePct": 83.21,
+     "within025Pct": 70.71,
+     "within050Pct": 86.62,
+     "biasD": -0.16,
+     "maeD": 0.26,
+     "referSafePct": 77.66,
+     "myopiaMissedPct": 20.28,
+     "noneGivenReadersPct": 23.14,
+     "falseNonePct": 1.46,
+     "givenReadersPct": 94.91,
+     "inScopeN": 11890,
+     "allN": 20000
+    },
+    "spTry025": {
+     "appropriatePct": 84.87,
+     "within025Pct": 75.32,
+     "within050Pct": 89.36,
+     "biasD": -0.12,
+     "maeD": 0.23,
+     "referSafePct": 77.81,
+     "myopiaMissedPct": 20.68,
+     "noneGivenReadersPct": 25.88,
+     "falseNonePct": 1.43,
+     "givenReadersPct": 95.19,
+     "inScopeN": 11890,
+     "allN": 20000
+    },
+    "oracle050": {
+     "appropriatePct": 100,
+     "within025Pct": 100,
+     "within050Pct": 100,
+     "biasD": 0.12,
+     "maeD": 0.12,
+     "referSafePct": 100,
+     "myopiaMissedPct": 0,
+     "noneGivenReadersPct": 0,
+     "falseNonePct": 0,
+     "givenReadersPct": 100,
+     "inScopeN": 11890,
+     "allN": 20000
+    }
+   },
+   "rightCallByBand": [
+    {
+     "band": "40–44",
+     "age40": 35.2,
+     "spStart": 65.3,
+     "spTry050": 72.6
+    },
+    {
+     "band": "45–49",
+     "age40": 34.5,
+     "spStart": 60.3,
+     "spTry050": 82
+    },
+    {
+     "band": "50–54",
+     "age40": 37.9,
+     "spStart": 51.3,
+     "spTry050": 85.4
+    },
+    {
+     "band": "55–59",
+     "age40": 48.8,
+     "spStart": 59,
+     "spTry050": 86.2
+    },
+    {
+     "band": "60–64",
+     "age40": 45,
+     "spStart": 59.5,
+     "spTry050": 86.1
+    },
+    {
+     "band": "65–69",
+     "age40": 45.2,
+     "spStart": 61.2,
+     "spTry050": 87.2
+    }
+   ],
+   "fieldCheck": {
+    "powerByBand": [
+     {
+      "band": "40–44",
+      "simN": 3431,
+      "needsReadersPctOfBand": 78.7,
+      "failsN6At40PctOfBand": 46.6,
+      "field": {
+       "kenya": {
+        "meanD": 1.5,
+        "n": 3538,
+        "medianD": 1.5,
+        "q1": 1,
+        "q3": 2
+       },
+       "india": {
+        "band": "40–44",
+        "meanD": 1.21,
+        "medianD": 1
+       }
+      },
+      "simIdealOwnDistance": {
+       "n": 2699,
+       "meanD": 2.1,
+       "medianD": 2,
+       "q1": 1.5,
+       "q3": 2.5,
+       "meanMinusKenyaD": 0.6,
+       "meanMinusIndiaD": 0.89
+      },
+      "simIdeal40cm": {
+       "n": 2699,
+       "meanD": 1.85,
+       "medianD": 1.75,
+       "q1": 1.25,
+       "q3": 2.25,
+       "meanMinusKenyaD": 0.35,
+       "meanMinusIndiaD": 0.64,
+       "medianMinusKenyaD": 0.25
+      },
+      "recommended": {
+       "spStart": {
+        "givenReadersPctOfBand": 86.1,
+        "n": 2954,
+        "meanD": 1.57,
+        "medianD": 1.5,
+        "q1": 1.25,
+        "q3": 1.75,
+        "meanMinusKenyaD": 0.07,
+        "medianMinusKenyaD": 0
+       },
+       "spTry050": {
+        "givenReadersPctOfBand": 76.5,
+        "n": 2623,
+        "meanD": 1.55,
+        "medianD": 1.5,
+        "q1": 1,
+        "q3": 2,
+        "meanMinusKenyaD": 0.05,
+        "medianMinusKenyaD": 0
+       },
+       "spTry025": {
+        "givenReadersPctOfBand": 76.6,
+        "n": 2628,
+        "meanD": 1.62,
+        "medianD": 1.5,
+        "q1": 1.25,
+        "q3": 2,
+        "meanMinusKenyaD": 0.12,
+        "medianMinusKenyaD": 0
+       },
+       "age40": {
+        "givenReadersPctOfBand": 100,
+        "n": 3431,
+        "meanD": 1,
+        "medianD": 1,
+        "q1": 1,
+        "q3": 1,
+        "meanMinusKenyaD": -0.5,
+        "medianMinusKenyaD": -0.5
+       }
+      }
+     },
+     {
+      "band": "45–49",
+      "simN": 3235,
+      "needsReadersPctOfBand": 85.7,
+      "failsN6At40PctOfBand": 75.6,
+      "field": {
+       "kenya": {
+        "meanD": 1.83,
+        "n": 5745,
+        "medianD": 2,
+        "q1": 1.5,
+        "q3": 2
+       },
+       "india": {
+        "band": "45–49",
+        "meanD": 1.57,
+        "medianD": 1.5
+       }
+      },
+      "simIdealOwnDistance": {
+       "n": 2772,
+       "meanD": 2.41,
+       "medianD": 2.25,
+       "q1": 1.75,
+       "q3": 3,
+       "meanMinusKenyaD": 0.58,
+       "meanMinusIndiaD": 0.84
+      },
+      "simIdeal40cm": {
+       "n": 2772,
+       "meanD": 2.16,
+       "medianD": 2,
+       "q1": 1.5,
+       "q3": 2.5,
+       "meanMinusKenyaD": 0.33,
+       "meanMinusIndiaD": 0.59,
+       "medianMinusKenyaD": 0
+      },
+      "recommended": {
+       "spStart": {
+        "givenReadersPctOfBand": 96.8,
+        "n": 3133,
+        "meanD": 1.83,
+        "medianD": 1.75,
+        "q1": 1.5,
+        "q3": 2,
+        "meanMinusKenyaD": 0,
+        "medianMinusKenyaD": -0.25
+       },
+       "spTry050": {
+        "givenReadersPctOfBand": 79.8,
+        "n": 2580,
+        "meanD": 1.9,
+        "medianD": 2,
+        "q1": 1.5,
+        "q3": 2.5,
+        "meanMinusKenyaD": 0.07,
+        "medianMinusKenyaD": 0
+       },
+       "spTry025": {
+        "givenReadersPctOfBand": 79.9,
+        "n": 2586,
+        "meanD": 1.95,
+        "medianD": 1.75,
+        "q1": 1.5,
+        "q3": 2.25,
+        "meanMinusKenyaD": 0.12,
+        "medianMinusKenyaD": -0.25
+       },
+       "age40": {
+        "givenReadersPctOfBand": 100,
+        "n": 3235,
+        "meanD": 1.5,
+        "medianD": 1.5,
+        "q1": 1.5,
+        "q3": 1.5,
+        "meanMinusKenyaD": -0.33,
+        "medianMinusKenyaD": -0.5
+       }
+      }
+     },
+     {
+      "band": "50–54",
+      "simN": 3328,
+      "needsReadersPctOfBand": 89.2,
+      "failsN6At40PctOfBand": 92.5,
+      "field": {
+       "kenya": {
+        "meanD": 2.19,
+        "n": 7251,
+        "medianD": 2,
+        "q1": 2,
+        "q3": 2.5
+       },
+       "india": {
+        "band": "50–54",
+        "meanD": 2.05,
+        "medianD": 2
+       }
+      },
+      "simIdealOwnDistance": {
+       "n": 2969,
+       "meanD": 2.76,
+       "medianD": 2.75,
+       "q1": 2.25,
+       "q3": 3.25,
+       "meanMinusKenyaD": 0.57,
+       "meanMinusIndiaD": 0.71
+      },
+      "simIdeal40cm": {
+       "n": 2969,
+       "meanD": 2.53,
+       "medianD": 2.5,
+       "q1": 2,
+       "q3": 3,
+       "meanMinusKenyaD": 0.34,
+       "meanMinusIndiaD": 0.48,
+       "medianMinusKenyaD": 0.5
+      },
+      "recommended": {
+       "spStart": {
+        "givenReadersPctOfBand": 96.4,
+        "n": 3207,
+        "meanD": 2.12,
+        "medianD": 2,
+        "q1": 1.75,
+        "q3": 2.5,
+        "meanMinusKenyaD": -0.07,
+        "medianMinusKenyaD": 0
+       },
+       "spTry050": {
+        "givenReadersPctOfBand": 70.9,
+        "n": 2359,
+        "meanD": 2.21,
+        "medianD": 2,
+        "q1": 2,
+        "q3": 2.5,
+        "meanMinusKenyaD": 0.02,
+        "medianMinusKenyaD": 0
+       },
+       "spTry025": {
+        "givenReadersPctOfBand": 70.5,
+        "n": 2346,
+        "meanD": 2.23,
+        "medianD": 2.25,
+        "q1": 1.75,
+        "q3": 2.75,
+        "meanMinusKenyaD": 0.04,
+        "medianMinusKenyaD": 0.25
+       },
+       "age40": {
+        "givenReadersPctOfBand": 100,
+        "n": 3328,
+        "meanD": 2,
+        "medianD": 2,
+        "q1": 2,
+        "q3": 2,
+        "meanMinusKenyaD": -0.19,
+        "medianMinusKenyaD": 0
+       }
+      }
+     },
+     {
+      "band": "55–59",
+      "simN": 3394,
+      "needsReadersPctOfBand": 89.5,
+      "failsN6At40PctOfBand": 96.5,
+      "field": {
+       "kenya": {
+        "meanD": 2.51,
+        "n": 4399,
+        "medianD": 2.5,
+        "q1": 2.5,
+        "q3": 2.75
+       },
+       "india": {
+        "band": "55–59",
+        "meanD": 2.24,
+        "medianD": 2
+       }
+      },
+      "simIdealOwnDistance": {
+       "n": 3038,
+       "meanD": 2.94,
+       "medianD": 3,
+       "q1": 2.5,
+       "q3": 3.5,
+       "meanMinusKenyaD": 0.43,
+       "meanMinusIndiaD": 0.7
+      },
+      "simIdeal40cm": {
+       "n": 3038,
+       "meanD": 2.73,
+       "medianD": 2.75,
+       "q1": 2.25,
+       "q3": 3.25,
+       "meanMinusKenyaD": 0.22,
+       "meanMinusIndiaD": 0.49,
+       "medianMinusKenyaD": 0.25
+      },
+      "recommended": {
+       "spStart": {
+        "givenReadersPctOfBand": 83.2,
+        "n": 2823,
+        "meanD": 2.55,
+        "medianD": 2.5,
+        "q1": 2.25,
+        "q3": 2.75,
+        "meanMinusKenyaD": 0.04,
+        "medianMinusKenyaD": 0
+       },
+       "spTry050": {
+        "givenReadersPctOfBand": 60,
+        "n": 2036,
+        "meanD": 2.41,
+        "medianD": 2.5,
+        "q1": 2,
+        "q3": 3,
+        "meanMinusKenyaD": -0.1,
+        "medianMinusKenyaD": 0
+       },
+       "spTry025": {
+        "givenReadersPctOfBand": 60.8,
+        "n": 2063,
+        "meanD": 2.41,
+        "medianD": 2.5,
+        "q1": 2.25,
+        "q3": 2.75,
+        "meanMinusKenyaD": -0.1,
+        "medianMinusKenyaD": 0
+       },
+       "age40": {
+        "givenReadersPctOfBand": 100,
+        "n": 3394,
+        "meanD": 2.5,
+        "medianD": 2.5,
+        "q1": 2.5,
+        "q3": 2.5,
+        "meanMinusKenyaD": -0.01,
+        "medianMinusKenyaD": 0
+       }
+      }
+     },
+     {
+      "band": "60–64",
+      "simN": 3300,
+      "needsReadersPctOfBand": 90.2,
+      "failsN6At40PctOfBand": 97.5,
+      "field": {
+       "kenya": {
+        "meanD": 2.81,
+        "n": 4863,
+        "medianD": 3,
+        "q1": 2.5,
+        "q3": 3
+       },
+       "india": {
+        "band": "60–64",
+        "meanD": 2.58,
+        "medianD": 2.5
+       }
+      },
+      "simIdealOwnDistance": {
+       "n": 2976,
+       "meanD": 3.06,
+       "medianD": 3,
+       "q1": 2.5,
+       "q3": 3.5,
+       "meanMinusKenyaD": 0.25,
+       "meanMinusIndiaD": 0.48
+      },
+      "simIdeal40cm": {
+       "n": 2976,
+       "meanD": 2.84,
+       "medianD": 2.75,
+       "q1": 2.5,
+       "q3": 3.25,
+       "meanMinusKenyaD": 0.03,
+       "meanMinusIndiaD": 0.26,
+       "medianMinusKenyaD": -0.25
+      },
+      "recommended": {
+       "spStart": {
+        "givenReadersPctOfBand": 77.9,
+        "n": 2572,
+        "meanD": 2.62,
+        "medianD": 2.5,
+        "q1": 2.5,
+        "q3": 2.75,
+        "meanMinusKenyaD": -0.19,
+        "medianMinusKenyaD": -0.5
+       },
+       "spTry050": {
+        "givenReadersPctOfBand": 53.8,
+        "n": 1775,
+        "meanD": 2.51,
+        "medianD": 2.5,
+        "q1": 2,
+        "q3": 3,
+        "meanMinusKenyaD": -0.3,
+        "medianMinusKenyaD": -0.5
+       },
+       "spTry025": {
+        "givenReadersPctOfBand": 54.2,
+        "n": 1787,
+        "meanD": 2.53,
+        "medianD": 2.5,
+        "q1": 2.25,
+        "q3": 3,
+        "meanMinusKenyaD": -0.28,
+        "medianMinusKenyaD": -0.5
+       },
+       "age40": {
+        "givenReadersPctOfBand": 100,
+        "n": 3300,
+        "meanD": 2.5,
+        "medianD": 2.5,
+        "q1": 2.5,
+        "q3": 2.5,
+        "meanMinusKenyaD": -0.31,
+        "medianMinusKenyaD": -0.5
+       }
+      }
+     },
+     {
+      "band": "65–69",
+      "simN": 3312,
+      "needsReadersPctOfBand": 90.4,
+      "failsN6At40PctOfBand": 97.8,
+      "field": {
+       "kenya": {
+        "meanD": 2.9,
+        "n": 2410,
+        "medianD": 3,
+        "q1": 2.75,
+        "q3": 3
+       },
+       "india": {
+        "band": "≥65",
+        "meanD": 2.78,
+        "medianD": 3
+       }
+      },
+      "simIdealOwnDistance": {
+       "n": 2995,
+       "meanD": 3.09,
+       "medianD": 3,
+       "q1": 2.625,
+       "q3": 3.5,
+       "meanMinusKenyaD": 0.19,
+       "meanMinusIndiaD": 0.31
+      },
+      "simIdeal40cm": {
+       "n": 2995,
+       "meanD": 2.87,
+       "medianD": 2.75,
+       "q1": 2.5,
+       "q3": 3.25,
+       "meanMinusKenyaD": -0.03,
+       "meanMinusIndiaD": 0.09,
+       "medianMinusKenyaD": -0.25
+      },
+      "recommended": {
+       "spStart": {
+        "givenReadersPctOfBand": 76.4,
+        "n": 2531,
+        "meanD": 2.62,
+        "medianD": 2.5,
+        "q1": 2.5,
+        "q3": 2.75,
+        "meanMinusKenyaD": -0.28,
+        "medianMinusKenyaD": -0.5
+       },
+       "spTry050": {
+        "givenReadersPctOfBand": 52.1,
+        "n": 1726,
+        "meanD": 2.55,
+        "medianD": 2.5,
+        "q1": 2.5,
+        "q3": 3,
+        "meanMinusKenyaD": -0.35,
+        "medianMinusKenyaD": -0.5
+       },
+       "spTry025": {
+        "givenReadersPctOfBand": 51.8,
+        "n": 1717,
+        "meanD": 2.55,
+        "medianD": 2.5,
+        "q1": 2.25,
+        "q3": 3,
+        "meanMinusKenyaD": -0.35,
+        "medianMinusKenyaD": -0.5
+       },
+       "age40": {
+        "givenReadersPctOfBand": 100,
+        "n": 3312,
+        "meanD": 2.5,
+        "medianD": 2.5,
+        "q1": 2.5,
+        "q3": 2.5,
+        "meanMinusKenyaD": -0.4,
+        "medianMinusKenyaD": -0.5
+       }
+      }
+     }
+    ],
+    "asmara": [
+     {
+      "band": "41–45",
+      "field": {
+       "addMeanD": 1.3,
+       "addSdD": 0.32,
+       "n": 312,
+       "presbyopicPct": 77.6
+      },
+      "sim": {
+       "n": 3399,
+       "addHalfReserveMeanD": 1.29,
+       "addMinimumPlusMeanD": 0.21,
+       "presbyopicPct": 38.2,
+       "meanAmplitudeD": 2.42
+      }
+     },
+     {
+      "band": "46–50",
+      "field": {
+       "addMeanD": 1.77,
+       "addSdD": 0.29,
+       "n": 336,
+       "presbyopicPct": 98.2
+      },
+      "sim": {
+       "n": 3206,
+       "addHalfReserveMeanD": 1.76,
+       "addMinimumPlusMeanD": 0.78,
+       "presbyopicPct": 80.7,
+       "meanAmplitudeD": 1.48
+      }
+     },
+     {
+      "band": "51–55",
+      "field": {
+       "addMeanD": 2.15,
+       "addSdD": 0.26,
+       "n": 194,
+       "presbyopicPct": 100
+      },
+      "sim": {
+       "n": 3391,
+       "addHalfReserveMeanD": 2.15,
+       "addMinimumPlusMeanD": 1.48,
+       "presbyopicPct": 97.6,
+       "meanAmplitudeD": 0.7
+      }
+     },
+     {
+      "band": "56–60",
+      "field": {
+       "addMeanD": 2.37,
+       "addSdD": 0.31,
+       "n": 176,
+       "presbyopicPct": 98.3
+      },
+      "sim": {
+       "n": 3418,
+       "addHalfReserveMeanD": 2.34,
+       "addMinimumPlusMeanD": 1.86,
+       "presbyopicPct": 99.9,
+       "meanAmplitudeD": 0.31
+      }
+     }
+    ],
+    "screening": [
+     {
+      "band": "40–45",
+      "fieldFailPct": 27.73,
+      "fieldN": 95082,
+      "simFailsN6At40Pct": 46.6
+     },
+     {
+      "band": "45–50",
+      "fieldFailPct": 34.35,
+      "fieldN": 77997,
+      "simFailsN6At40Pct": 75.6
+     },
+     {
+      "band": "50–55",
+      "fieldFailPct": 39.6,
+      "fieldN": 67563,
+      "simFailsN6At40Pct": 92.5
+     },
+     {
+      "band": "55–59",
+      "fieldFailPct": 38.89,
+      "fieldN": 43208,
+      "simFailsN6At40Pct": 96.5
+     },
+     {
+      "band": "60–65",
+      "fieldFailPct": 47.04,
+      "fieldN": 37685,
+      "simFailsN6At40Pct": 97.5
+     },
+     {
+      "band": ">65",
+      "fieldFailPct": 51.23,
+      "fieldN": 61759,
+      "simFailsN6At40Pct": 97.8
+     }
+    ],
+    "distribution": {
+     "note": "Shares (%) at each power, people given/needing readers, sim re-weighted to the Kenyan age mix (Table 4). Quarter steps are snapped up to the next 0.50 step for the 0.50 view, identically for field and sim.",
+     "steps025": [
+      1,
+      1.25,
+      1.5,
+      1.75,
+      2,
+      2.25,
+      2.5,
+      2.75,
+      3,
+      3.25,
+      3.5,
+      3.75,
+      4
+     ],
+     "steps050": [
+      1,
+      1.5,
+      2,
+      2.5,
+      3,
+      3.5,
+      4
+     ],
+     "field025Pct": [
+      5.3,
+      0.6,
+      11.8,
+      1.3,
+      26.5,
+      1.4,
+      22.4,
+      1.7,
+      23,
+      1.4,
+      3.4,
+      0.6,
+      0.6
+     ],
+     "field050Pct": [
+      5.3,
+      12.4,
+      27.9,
+      23.8,
+      24.7,
+      4.8,
+      1.1
+     ],
+     "simIdeal40cm025Pct": [
+      3.7,
+      3.8,
+      5.8,
+      7.9,
+      10.1,
+      11.8,
+      13.4,
+      12.1,
+      9.8,
+      6.8,
+      4.5,
+      2.6,
+      7.8
+     ],
+     "simIdeal40cm050Pct": [
+      3.7,
+      9.6,
+      18,
+      25.2,
+      21.9,
+      11.3,
+      10.3
+     ],
+     "simIdealOwnDistance050Pct": [
+      1.9,
+      7.5,
+      14.1,
+      20.6,
+      22.3,
+      15.8,
+      17.7
+     ],
+     "spTry050Pct": [
+      9.1,
+      16.3,
+      21.7,
+      28,
+      24.8,
+      0,
+      0
+     ],
+     "spStart050Pct": [
+      3.9,
+      10.9,
+      22,
+      36.9,
+      26.4,
+      0,
+      0
+     ],
+     "ageTable050Pct": [
+      11.2,
+      18.3,
+      23,
+      47.5,
+      0,
+      0,
+      0
+     ],
+     "fieldAbove3Pct": 5.9,
+     "simIdeal40cmAbove3Pct": 21.6,
+     "vsField": {
+      "simIdeal40cm_025": {
+       "ksDistance": 0.16,
+       "overlapPct": 53.7
+      },
+      "simIdeal40cm_050": {
+       "ksDistance": 0.16,
+       "overlapPct": 82.9
+      },
+      "simIdealOwnDistance_050": {
+       "ksDistance": 0.28,
+       "overlapPct": 72.4
+      },
+      "spTry050_050": {
+       "ksDistance": 0.08,
+       "overlapPct": 87.9
+      },
+      "spStart_050": {
+       "ksDistance": 0.09,
+       "overlapPct": 85.3
+      },
+      "ageTable_050": {
+       "ksDistance": 0.31,
+       "overlapPct": 64.5
+      }
+     }
+    }
+   },
+   "upperTailReweighted": {
+    "k": 0.23,
+    "simAbove3Pct": 21.6,
+    "fieldAbove3Pct": 5.9,
+    "weightedPeoplePct": 18.9,
+    "rightCallPct": {
+     "age40": 47.3,
+     "ageW": 55.2,
+     "card14": 52.2,
+     "cardOwn": 55.2,
+     "spStart": 67.1,
+     "spTry050": 83.2,
+     "spTry025": 85.1,
+     "oracle050": 100
+    }
+   }
+  },
+  {
+   "id": "field-minimum-plus",
+   "label": "Field-calibrated: add = minimum plus",
+   "amplitudeCentreD": [
+    {
+     "age": 40,
+     "centreD": 1.3,
+     "hofstetterMeanD": 6.5
+    },
+    {
+     "age": 45,
+     "centreD": 0.65,
+     "hofstetterMeanD": 5
+    },
+    {
+     "age": 50,
+     "centreD": 0,
+     "hofstetterMeanD": 3.5
+    },
+    {
+     "age": 55,
+     "centreD": 0,
+     "hofstetterMeanD": 2
+    },
+    {
+     "age": 60,
+     "centreD": 0,
+     "hofstetterMeanD": 0.5
+    },
+    {
+     "age": 65,
+     "centreD": 0,
+     "hofstetterMeanD": 0
+    },
+    {
+     "age": 70,
+     "centreD": 0,
+     "hofstetterMeanD": 0
+    }
+   ],
+   "anchors": [
+    {
+     "age": 38,
+     "targetAddD": 0.7,
+     "centreD": 1.56
+    },
+    {
+     "age": 43.5,
+     "targetAddD": 1.3,
+     "centreD": 0.84
+    },
+    {
+     "age": 48.5,
+     "targetAddD": 1.77,
+     "centreD": 0.2
+    },
+    {
+     "age": 53.5,
+     "targetAddD": 2.15,
+     "centreD": -1.08
+    },
+    {
+     "age": 58.5,
+     "targetAddD": 2.37,
+     "centreD": -3
+    }
+   ],
+   "truthMix": {
+    "inScopePct": 51.8,
+    "noneYetPct": 0.1,
+    "referMyopiaPct": 10.2,
+    "referAboveRangePct": 37.9
+   },
+   "headline": {
+    "age40": {
+     "appropriatePct": 30.27,
+     "within025Pct": 35.45,
+     "within050Pct": 58.33,
+     "biasD": -0.53,
+     "maeD": 0.67,
+     "referSafePct": 0,
+     "myopiaMissedPct": 100,
+     "noneGivenReadersPct": 100,
+     "falseNonePct": 0,
+     "givenReadersPct": 100,
+     "inScopeN": 10368,
+     "allN": 20000
+    },
+    "ageW": {
+     "appropriatePct": 38.53,
+     "within025Pct": 39.16,
+     "within050Pct": 58.27,
+     "biasD": -0.39,
+     "maeD": 0.57,
+     "referSafePct": 17.21,
+     "myopiaMissedPct": 88.7,
+     "noneGivenReadersPct": 60,
+     "falseNonePct": 4.23,
+     "givenReadersPct": 93.04,
+     "inScopeN": 10368,
+     "allN": 20000
+    },
+    "card14": {
+     "appropriatePct": 63.37,
+     "within025Pct": 50.68,
+     "within050Pct": 70.08,
+     "biasD": -0.15,
+     "maeD": 0.37,
+     "referSafePct": 56.12,
+     "myopiaMissedPct": 99.9,
+     "noneGivenReadersPct": 100,
+     "falseNonePct": 0,
+     "givenReadersPct": 86.58,
+     "inScopeN": 10368,
+     "allN": 20000
+    },
+    "cardOwn": {
+     "appropriatePct": 67.47,
+     "within025Pct": 52.04,
+     "within050Pct": 72.82,
+     "biasD": -0.28,
+     "maeD": 0.38,
+     "referSafePct": 61.7,
+     "myopiaMissedPct": 99.71,
+     "noneGivenReadersPct": 100,
+     "falseNonePct": 0,
+     "givenReadersPct": 91.18,
+     "inScopeN": 10368,
+     "allN": 20000
+    },
+    "spStart": {
+     "appropriatePct": 48.75,
+     "within025Pct": 50.49,
+     "within050Pct": 74.1,
+     "biasD": -0.24,
+     "maeD": 0.41,
+     "referSafePct": 21.39,
+     "myopiaMissedPct": 69.01,
+     "noneGivenReadersPct": 80,
+     "falseNonePct": 0.06,
+     "givenReadersPct": 97.26,
+     "inScopeN": 10368,
+     "allN": 20000
+    },
+    "spTry050": {
+     "appropriatePct": 85.12,
+     "within025Pct": 78.27,
+     "within050Pct": 91.22,
+     "biasD": -0.1,
+     "maeD": 0.21,
+     "referSafePct": 78.53,
+     "myopiaMissedPct": 27.9,
+     "noneGivenReadersPct": 50,
+     "falseNonePct": 0.09,
+     "givenReadersPct": 95.16,
+     "inScopeN": 10368,
+     "allN": 20000
+    },
+    "spTry025": {
+     "appropriatePct": 85.84,
+     "within025Pct": 81.66,
+     "within050Pct": 92.93,
+     "biasD": -0.09,
+     "maeD": 0.19,
+     "referSafePct": 78.19,
+     "myopiaMissedPct": 28.78,
+     "noneGivenReadersPct": 30,
+     "falseNonePct": 0.1,
+     "givenReadersPct": 95.66,
+     "inScopeN": 10368,
+     "allN": 20000
+    },
+    "oracle050": {
+     "appropriatePct": 100,
+     "within025Pct": 100,
+     "within050Pct": 100,
+     "biasD": 0.11,
+     "maeD": 0.11,
+     "referSafePct": 100,
+     "myopiaMissedPct": 0,
+     "noneGivenReadersPct": 0,
+     "falseNonePct": 0,
+     "givenReadersPct": 100,
+     "inScopeN": 10368,
+     "allN": 20000
+    }
+   },
+   "rightCallByBand": [
+    {
+     "band": "40–44",
+     "age40": 9.1,
+     "spStart": 46.3,
+     "spTry050": 81.9
+    },
+    {
+     "band": "45–49",
+     "age40": 13.1,
+     "spStart": 35.1,
+     "spTry050": 84.4
+    },
+    {
+     "band": "50–54",
+     "age40": 23.6,
+     "spStart": 34.2,
+     "spTry050": 85.3
+    },
+    {
+     "band": "55–59",
+     "age40": 45.7,
+     "spStart": 55.9,
+     "spTry050": 85.9
+    },
+    {
+     "band": "60–64",
+     "age40": 45,
+     "spStart": 59.5,
+     "spTry050": 86.1
+    },
+    {
+     "band": "65–69",
+     "age40": 45.2,
+     "spStart": 61.2,
+     "spTry050": 87.2
+    }
+   ],
+   "fieldCheck": {
+    "powerByBand": [
+     {
+      "band": "40–44",
+      "simN": 3431,
+      "needsReadersPctOfBand": 89.3,
+      "failsN6At40PctOfBand": 90.1,
+      "field": {
+       "kenya": {
+        "meanD": 1.5,
+        "n": 3538,
+        "medianD": 1.5,
+        "q1": 1,
+        "q3": 2
+       },
+       "india": {
+        "band": "40–44",
+        "meanD": 1.21,
+        "medianD": 1
+       }
+      },
+      "simIdealOwnDistance": {
+       "n": 3065,
+       "meanD": 2.68,
+       "medianD": 2.5,
+       "q1": 2,
+       "q3": 3.25,
+       "meanMinusKenyaD": 1.18,
+       "meanMinusIndiaD": 1.47
+      },
+      "simIdeal40cm": {
+       "n": 3065,
+       "meanD": 2.45,
+       "medianD": 2.5,
+       "q1": 2,
+       "q3": 3,
+       "meanMinusKenyaD": 0.95,
+       "meanMinusIndiaD": 1.24,
+       "medianMinusKenyaD": 1
+      },
+      "recommended": {
+       "spStart": {
+        "givenReadersPctOfBand": 97.3,
+        "n": 3340,
+        "meanD": 1.88,
+        "medianD": 1.875,
+        "q1": 1.5,
+        "q3": 2.25,
+        "meanMinusKenyaD": 0.38,
+        "medianMinusKenyaD": 0.38
+       },
+       "spTry050": {
+        "givenReadersPctOfBand": 73.2,
+        "n": 2513,
+        "meanD": 2.07,
+        "medianD": 2,
+        "q1": 1.5,
+        "q3": 2.5,
+        "meanMinusKenyaD": 0.57,
+        "medianMinusKenyaD": 0.5
+       },
+       "spTry025": {
+        "givenReadersPctOfBand": 73.7,
+        "n": 2530,
+        "meanD": 2.11,
+        "medianD": 2,
+        "q1": 1.75,
+        "q3": 2.5,
+        "meanMinusKenyaD": 0.61,
+        "medianMinusKenyaD": 0.5
+       },
+       "age40": {
+        "givenReadersPctOfBand": 100,
+        "n": 3431,
+        "meanD": 1,
+        "medianD": 1,
+        "q1": 1,
+        "q3": 1,
+        "meanMinusKenyaD": -0.5,
+        "medianMinusKenyaD": -0.5
+       }
+      }
+     },
+     {
+      "band": "45–49",
+      "simN": 3235,
+      "needsReadersPctOfBand": 88.3,
+      "failsN6At40PctOfBand": 94.7,
+      "field": {
+       "kenya": {
+        "meanD": 1.83,
+        "n": 5745,
+        "medianD": 2,
+        "q1": 1.5,
+        "q3": 2
+       },
+       "india": {
+        "band": "45–49",
+        "meanD": 1.57,
+        "medianD": 1.5
+       }
+      },
+      "simIdealOwnDistance": {
+       "n": 2857,
+       "meanD": 2.9,
+       "medianD": 3,
+       "q1": 2.25,
+       "q3": 3.5,
+       "meanMinusKenyaD": 1.07,
+       "meanMinusIndiaD": 1.33
+      },
+      "simIdeal40cm": {
+       "n": 2857,
+       "meanD": 2.67,
+       "medianD": 2.5,
+       "q1": 2.25,
+       "q3": 3,
+       "meanMinusKenyaD": 0.84,
+       "meanMinusIndiaD": 1.1,
+       "medianMinusKenyaD": 0.5
+      },
+      "recommended": {
+       "spStart": {
+        "givenReadersPctOfBand": 98.3,
+        "n": 3180,
+        "meanD": 1.98,
+        "medianD": 2,
+        "q1": 1.75,
+        "q3": 2.25,
+        "meanMinusKenyaD": 0.15,
+        "medianMinusKenyaD": 0
+       },
+       "spTry050": {
+        "givenReadersPctOfBand": 65.4,
+        "n": 2116,
+        "meanD": 2.3,
+        "medianD": 2.5,
+        "q1": 2,
+        "q3": 3,
+        "meanMinusKenyaD": 0.47,
+        "medianMinusKenyaD": 0.5
+       },
+       "spTry025": {
+        "givenReadersPctOfBand": 66.2,
+        "n": 2143,
+        "meanD": 2.31,
+        "medianD": 2.25,
+        "q1": 2,
+        "q3": 2.75,
+        "meanMinusKenyaD": 0.48,
+        "medianMinusKenyaD": 0.25
+       },
+       "age40": {
+        "givenReadersPctOfBand": 100,
+        "n": 3235,
+        "meanD": 1.5,
+        "medianD": 1.5,
+        "q1": 1.5,
+        "q3": 1.5,
+        "meanMinusKenyaD": -0.33,
+        "medianMinusKenyaD": -0.5
+       }
+      }
+     },
+     {
+      "band": "50–54",
+      "simN": 3328,
+      "needsReadersPctOfBand": 90.1,
+      "failsN6At40PctOfBand": 97.8,
+      "field": {
+       "kenya": {
+        "meanD": 2.19,
+        "n": 7251,
+        "medianD": 2,
+        "q1": 2,
+        "q3": 2.5
+       },
+       "india": {
+        "band": "50–54",
+        "meanD": 2.05,
+        "medianD": 2
+       }
+      },
+      "simIdealOwnDistance": {
+       "n": 2997,
+       "meanD": 3.07,
+       "medianD": 3,
+       "q1": 2.5,
+       "q3": 3.75,
+       "meanMinusKenyaD": 0.88,
+       "meanMinusIndiaD": 1.02
+      },
+      "simIdeal40cm": {
+       "n": 2997,
+       "meanD": 2.86,
+       "medianD": 2.75,
+       "q1": 2.5,
+       "q3": 3.25,
+       "meanMinusKenyaD": 0.67,
+       "meanMinusIndiaD": 0.81,
+       "medianMinusKenyaD": 0.75
+      },
+      "recommended": {
+       "spStart": {
+        "givenReadersPctOfBand": 96.5,
+        "n": 3213,
+        "meanD": 2.18,
+        "medianD": 2.25,
+        "q1": 2,
+        "q3": 2.5,
+        "meanMinusKenyaD": -0.01,
+        "medianMinusKenyaD": 0.25
+       },
+       "spTry050": {
+        "givenReadersPctOfBand": 58.1,
+        "n": 1932,
+        "meanD": 2.48,
+        "medianD": 2.5,
+        "q1": 2,
+        "q3": 3,
+        "meanMinusKenyaD": 0.29,
+        "medianMinusKenyaD": 0.5
+       },
+       "spTry025": {
+        "givenReadersPctOfBand": 58.8,
+        "n": 1958,
+        "meanD": 2.48,
+        "medianD": 2.5,
+        "q1": 2.25,
+        "q3": 3,
+        "meanMinusKenyaD": 0.29,
+        "medianMinusKenyaD": 0.5
+       },
+       "age40": {
+        "givenReadersPctOfBand": 100,
+        "n": 3328,
+        "meanD": 2,
+        "medianD": 2,
+        "q1": 2,
+        "q3": 2,
+        "meanMinusKenyaD": -0.19,
+        "medianMinusKenyaD": 0
+       }
+      }
+     },
+     {
+      "band": "55–59",
+      "simN": 3394,
+      "needsReadersPctOfBand": 89.6,
+      "failsN6At40PctOfBand": 97.6,
+      "field": {
+       "kenya": {
+        "meanD": 2.51,
+        "n": 4399,
+        "medianD": 2.5,
+        "q1": 2.5,
+        "q3": 2.75
+       },
+       "india": {
+        "band": "55–59",
+        "meanD": 2.24,
+        "medianD": 2
+       }
+      },
+      "simIdealOwnDistance": {
+       "n": 3042,
+       "meanD": 3.06,
+       "medianD": 3,
+       "q1": 2.5,
+       "q3": 3.75,
+       "meanMinusKenyaD": 0.55,
+       "meanMinusIndiaD": 0.82
+      },
+      "simIdeal40cm": {
+       "n": 3042,
+       "meanD": 2.86,
+       "medianD": 2.75,
+       "q1": 2.5,
+       "q3": 3.25,
+       "meanMinusKenyaD": 0.35,
+       "meanMinusIndiaD": 0.62,
+       "medianMinusKenyaD": 0.25
+      },
+      "recommended": {
+       "spStart": {
+        "givenReadersPctOfBand": 83.1,
+        "n": 2820,
+        "meanD": 2.57,
+        "medianD": 2.5,
+        "q1": 2.25,
+        "q3": 2.75,
+        "meanMinusKenyaD": 0.06,
+        "medianMinusKenyaD": 0
+       },
+       "spTry050": {
+        "givenReadersPctOfBand": 55.2,
+        "n": 1875,
+        "meanD": 2.48,
+        "medianD": 2.5,
+        "q1": 2,
+        "q3": 3,
+        "meanMinusKenyaD": -0.03,
+        "medianMinusKenyaD": 0
+       },
+       "spTry025": {
+        "givenReadersPctOfBand": 55.5,
+        "n": 1885,
+        "meanD": 2.48,
+        "medianD": 2.5,
+        "q1": 2.25,
+        "q3": 3,
+        "meanMinusKenyaD": -0.03,
+        "medianMinusKenyaD": 0
+       },
+       "age40": {
+        "givenReadersPctOfBand": 100,
+        "n": 3394,
+        "meanD": 2.5,
+        "medianD": 2.5,
+        "q1": 2.5,
+        "q3": 2.5,
+        "meanMinusKenyaD": -0.01,
+        "medianMinusKenyaD": 0
+       }
+      }
+     },
+     {
+      "band": "60–64",
+      "simN": 3300,
+      "needsReadersPctOfBand": 90.2,
+      "failsN6At40PctOfBand": 97.5,
+      "field": {
+       "kenya": {
+        "meanD": 2.81,
+        "n": 4863,
+        "medianD": 3,
+        "q1": 2.5,
+        "q3": 3
+       },
+       "india": {
+        "band": "60–64",
+        "meanD": 2.58,
+        "medianD": 2.5
+       }
+      },
+      "simIdealOwnDistance": {
+       "n": 2976,
+       "meanD": 3.06,
+       "medianD": 3,
+       "q1": 2.5,
+       "q3": 3.5,
+       "meanMinusKenyaD": 0.25,
+       "meanMinusIndiaD": 0.48
+      },
+      "simIdeal40cm": {
+       "n": 2976,
+       "meanD": 2.84,
+       "medianD": 2.75,
+       "q1": 2.5,
+       "q3": 3.25,
+       "meanMinusKenyaD": 0.03,
+       "meanMinusIndiaD": 0.26,
+       "medianMinusKenyaD": -0.25
+      },
+      "recommended": {
+       "spStart": {
+        "givenReadersPctOfBand": 77.9,
+        "n": 2572,
+        "meanD": 2.62,
+        "medianD": 2.5,
+        "q1": 2.5,
+        "q3": 2.75,
+        "meanMinusKenyaD": -0.19,
+        "medianMinusKenyaD": -0.5
+       },
+       "spTry050": {
+        "givenReadersPctOfBand": 53.8,
+        "n": 1775,
+        "meanD": 2.51,
+        "medianD": 2.5,
+        "q1": 2,
+        "q3": 3,
+        "meanMinusKenyaD": -0.3,
+        "medianMinusKenyaD": -0.5
+       },
+       "spTry025": {
+        "givenReadersPctOfBand": 54.2,
+        "n": 1787,
+        "meanD": 2.53,
+        "medianD": 2.5,
+        "q1": 2.25,
+        "q3": 3,
+        "meanMinusKenyaD": -0.28,
+        "medianMinusKenyaD": -0.5
+       },
+       "age40": {
+        "givenReadersPctOfBand": 100,
+        "n": 3300,
+        "meanD": 2.5,
+        "medianD": 2.5,
+        "q1": 2.5,
+        "q3": 2.5,
+        "meanMinusKenyaD": -0.31,
+        "medianMinusKenyaD": -0.5
+       }
+      }
+     },
+     {
+      "band": "65–69",
+      "simN": 3312,
+      "needsReadersPctOfBand": 90.4,
+      "failsN6At40PctOfBand": 97.8,
+      "field": {
+       "kenya": {
+        "meanD": 2.9,
+        "n": 2410,
+        "medianD": 3,
+        "q1": 2.75,
+        "q3": 3
+       },
+       "india": {
+        "band": "≥65",
+        "meanD": 2.78,
+        "medianD": 3
+       }
+      },
+      "simIdealOwnDistance": {
+       "n": 2995,
+       "meanD": 3.09,
+       "medianD": 3,
+       "q1": 2.625,
+       "q3": 3.5,
+       "meanMinusKenyaD": 0.19,
+       "meanMinusIndiaD": 0.31
+      },
+      "simIdeal40cm": {
+       "n": 2995,
+       "meanD": 2.87,
+       "medianD": 2.75,
+       "q1": 2.5,
+       "q3": 3.25,
+       "meanMinusKenyaD": -0.03,
+       "meanMinusIndiaD": 0.09,
+       "medianMinusKenyaD": -0.25
+      },
+      "recommended": {
+       "spStart": {
+        "givenReadersPctOfBand": 76.4,
+        "n": 2531,
+        "meanD": 2.62,
+        "medianD": 2.5,
+        "q1": 2.5,
+        "q3": 2.75,
+        "meanMinusKenyaD": -0.28,
+        "medianMinusKenyaD": -0.5
+       },
+       "spTry050": {
+        "givenReadersPctOfBand": 52.1,
+        "n": 1726,
+        "meanD": 2.55,
+        "medianD": 2.5,
+        "q1": 2.5,
+        "q3": 3,
+        "meanMinusKenyaD": -0.35,
+        "medianMinusKenyaD": -0.5
+       },
+       "spTry025": {
+        "givenReadersPctOfBand": 51.8,
+        "n": 1717,
+        "meanD": 2.55,
+        "medianD": 2.5,
+        "q1": 2.25,
+        "q3": 3,
+        "meanMinusKenyaD": -0.35,
+        "medianMinusKenyaD": -0.5
+       },
+       "age40": {
+        "givenReadersPctOfBand": 100,
+        "n": 3312,
+        "meanD": 2.5,
+        "medianD": 2.5,
+        "q1": 2.5,
+        "q3": 2.5,
+        "meanMinusKenyaD": -0.4,
+        "medianMinusKenyaD": -0.5
+       }
+      }
+     }
+    ],
+    "asmara": [
+     {
+      "band": "41–45",
+      "field": {
+       "addMeanD": 1.3,
+       "addSdD": 0.32,
+       "n": 312,
+       "presbyopicPct": 77.6
+      },
+      "sim": {
+       "n": 3399,
+       "addHalfReserveMeanD": 2.06,
+       "addMinimumPlusMeanD": 1.3,
+       "presbyopicPct": 95.8,
+       "meanAmplitudeD": 0.88
+      }
+     },
+     {
+      "band": "46–50",
+      "field": {
+       "addMeanD": 1.77,
+       "addSdD": 0.29,
+       "n": 336,
+       "presbyopicPct": 98.2
+      },
+      "sim": {
+       "n": 3206,
+       "addHalfReserveMeanD": 2.31,
+       "addMinimumPlusMeanD": 1.79,
+       "presbyopicPct": 99.4,
+       "meanAmplitudeD": 0.38
+      }
+     },
+     {
+      "band": "51–55",
+      "field": {
+       "addMeanD": 2.15,
+       "addSdD": 0.26,
+       "n": 194,
+       "presbyopicPct": 100
+      },
+      "sim": {
+       "n": 3391,
+       "addHalfReserveMeanD": 2.48,
+       "addMinimumPlusMeanD": 2.14,
+       "presbyopicPct": 100,
+       "meanAmplitudeD": 0.04
+      }
+     },
+     {
+      "band": "56–60",
+      "field": {
+       "addMeanD": 2.37,
+       "addSdD": 0.31,
+       "n": 176,
+       "presbyopicPct": 98.3
+      },
+      "sim": {
+       "n": 3418,
+       "addHalfReserveMeanD": 2.43,
+       "addMinimumPlusMeanD": 2.04,
+       "presbyopicPct": 100,
+       "meanAmplitudeD": 0.14
+      }
+     }
+    ],
+    "screening": [
+     {
+      "band": "40–45",
+      "fieldFailPct": 27.73,
+      "fieldN": 95082,
+      "simFailsN6At40Pct": 90.1
+     },
+     {
+      "band": "45–50",
+      "fieldFailPct": 34.35,
+      "fieldN": 77997,
+      "simFailsN6At40Pct": 94.7
+     },
+     {
+      "band": "50–55",
+      "fieldFailPct": 39.6,
+      "fieldN": 67563,
+      "simFailsN6At40Pct": 97.8
+     },
+     {
+      "band": "55–59",
+      "fieldFailPct": 38.89,
+      "fieldN": 43208,
+      "simFailsN6At40Pct": 97.6
+     },
+     {
+      "band": "60–65",
+      "fieldFailPct": 47.04,
+      "fieldN": 37685,
+      "simFailsN6At40Pct": 97.5
+     },
+     {
+      "band": ">65",
+      "fieldFailPct": 51.23,
+      "fieldN": 61759,
+      "simFailsN6At40Pct": 97.8
+     }
+    ],
+    "distribution": {
+     "note": "Shares (%) at each power, people given/needing readers, sim re-weighted to the Kenyan age mix (Table 4). Quarter steps are snapped up to the next 0.50 step for the 0.50 view, identically for field and sim.",
+     "steps025": [
+      1,
+      1.25,
+      1.5,
+      1.75,
+      2,
+      2.25,
+      2.5,
+      2.75,
+      3,
+      3.25,
+      3.5,
+      3.75,
+      4
+     ],
+     "steps050": [
+      1,
+      1.5,
+      2,
+      2.5,
+      3,
+      3.5,
+      4
+     ],
+     "field025Pct": [
+      5.3,
+      0.6,
+      11.8,
+      1.3,
+      26.5,
+      1.4,
+      22.4,
+      1.7,
+      23,
+      1.4,
+      3.4,
+      0.6,
+      0.6
+     ],
+     "field050Pct": [
+      5.3,
+      12.4,
+      27.9,
+      23.8,
+      24.7,
+      4.8,
+      1.1
+     ],
+     "simIdeal40cm025Pct": [
+      0.4,
+      0.8,
+      2.4,
+      4.6,
+      7.9,
+      11.5,
+      15.5,
+      15.4,
+      13.1,
+      9.3,
+      6,
+      3.3,
+      9.8
+     ],
+     "simIdeal40cm050Pct": [
+      0.4,
+      3.2,
+      12.5,
+      27,
+      28.5,
+      15.3,
+      13.1
+     ],
+     "simIdealOwnDistance050Pct": [
+      0.3,
+      2.3,
+      8.7,
+      19.7,
+      25.7,
+      20.1,
+      23.2
+     ],
+     "spTry050Pct": [
+      3.8,
+      9.9,
+      19.4,
+      32.7,
+      34.2,
+      0,
+      0
+     ],
+     "spStart050Pct": [
+      1.3,
+      6.1,
+      24.5,
+      40.5,
+      27.7,
+      0,
+      0
+     ],
+     "ageTable050Pct": [
+      11.2,
+      18.3,
+      23,
+      47.5,
+      0,
+      0,
+      0
+     ],
+     "fieldAbove3Pct": 5.9,
+     "simIdeal40cmAbove3Pct": 28.4,
+     "vsField": {
+      "simIdeal40cm_025": {
+       "ksDistance": 0.29,
+       "overlapPct": 50.2
+      },
+      "simIdeal40cm_050": {
+       "ksDistance": 0.29,
+       "overlapPct": 70.5
+      },
+      "simIdealOwnDistance_050": {
+       "ksDistance": 0.38,
+       "overlapPct": 61.7
+      },
+      "spTry050_050": {
+       "ksDistance": 0.13,
+       "overlapPct": 81.5
+      },
+      "spStart_050": {
+       "ksDistance": 0.14,
+       "overlapPct": 80.3
+      },
+      "ageTable_050": {
+       "ksDistance": 0.31,
+       "overlapPct": 64.5
+      }
+     }
+    }
+   },
+   "upperTailReweighted": {
+    "k": 0.16,
+    "simAbove3Pct": 28.4,
+    "fieldAbove3Pct": 5.9,
+    "weightedPeoplePct": 24.9,
+    "rightCallPct": {
+     "age40": 37.3,
+     "ageW": 45.4,
+     "card14": 56.6,
+     "cardOwn": 62.6,
+     "spStart": 58.5,
+     "spTry050": 84.6,
+     "spTry025": 85.5,
+     "oracle050": 100
+    }
+   }
+  }
+ ]
+}

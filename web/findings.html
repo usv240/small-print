@@ -30,7 +30,7 @@
     <div class="page-head">
       <p class="eyebrow">Findings</p>
       <h1>Why choosing reading glasses goes wrong, in numbers</h1>
-      <p class="lead">Three findings shaped how Small Print works. Each is labelled with the kind of evidence behind it: a calculation anyone can check, a measurement on our own devices, or a simulation.</p>
+      <p class="lead">Three findings shaped how Small Print works. Each is labelled with the kind of evidence behind it: a calculation anyone can check, numbers computed from published device specifications, or a simulation.</p>
     </div>
 
     <ol class="toc">
@@ -65,7 +65,7 @@
 
     <section id="screen">
       <h2>2. Your browser doesn't know how big its pixels are</h2>
-      <div class="tags"><span class="tag">Calculation</span><span class="tag pending">Measurement pending</span></div>
+      <div class="tags"><span class="tag">Calculation</span><span class="tag">Computed from published specs</span></div>
       <p>An on-screen reading test has to draw letters at an exact physical size. Web pages measure everything in CSS pixels, and CSS defines one inch as 96 CSS pixels. So a browser assumes:</p>
       <div class="formula">1 CSS pixel = 25.4 mm ÷ 96 = 0.2646 mm</div>
       <p>On a real screen, the size of a CSS pixel is:</p>
@@ -76,9 +76,25 @@
         <p>2.625 ÷ 420 × 25.4 mm = 0.159 mm per CSS pixel, about 60% of the nominal 0.2646 mm. An N6 letter meant to be 1.09 mm tall would come out about 0.65 mm: <strong>40% too small</strong>. That is 0.22 logMAR, about two lines on a standard eye chart, so the test would be considerably harder than intended.</p>
       </div>
       <p><strong>What Small Print does instead.</strong> You hold any bank, ID or library card against the screen and drag a box to the same width. Cards of this type are 85.6 mm wide (ISO/IEC 7810 ID-1), so the browser learns how many CSS pixels make a millimetre on your screen. Nothing is typed or photographed.</p>
-      <div class="slot" id="screen-result">
-        <p class="slot-label">Measured on our Pixel: pending</p>
-        <p>We are measuring the real size of a CSS pixel on our test phone (Google Pixel, Chrome) and laptop with the card calibration, using the <a href="/lab.html">measurement lab</a>. The result will appear here. Until then, the example above is arithmetic, not a measurement.</p>
+      <div id="screen-result">
+        <h3>What the published specs say</h3>
+        <div class="table-wrap">
+          <table>
+            <caption>Real size of one CSS pixel (device pixel ratio ÷ pixels per inch × 25.4 mm) compared with the 0.2646 mm browsers assume, and what that does to letters drawn without calibration. Default display settings. <span class="tag">Computed from published specs</span></caption>
+            <thead><tr><th>Device</th><th class="num">PPI</th><th class="num">DPR</th><th class="num">Physical size of 1 CSS px</th><th class="num">Uncalibrated letters</th></tr></thead>
+            <tbody>
+              <tr><td>Google Pixel 7</td><td class="num">416</td><td class="num">2.625</td><td class="num">0.160 mm</td><td class="num">39% too small</td></tr>
+              <tr><td>Google Pixel 8</td><td class="num">428</td><td class="num">2.625</td><td class="num">0.156 mm</td><td class="num">41% too small</td></tr>
+              <tr><td>Apple iPhone 15</td><td class="num">460</td><td class="num">3</td><td class="num">0.166 mm</td><td class="num">37% too small</td></tr>
+              <tr><td>Samsung Galaxy S23</td><td class="num">425</td><td class="num">3</td><td class="num">0.179 mm</td><td class="num">32% too small</td></tr>
+              <tr><td>Motorola Moto G4 (budget Android, 2016)</td><td class="num">401</td><td class="num">3</td><td class="num">0.190 mm</td><td class="num">28% too small</td></tr>
+              <tr><td>Typical 15.6″ 1920×1080 Windows laptop at 125% scaling</td><td class="num">141</td><td class="num">1.25</td><td class="num">0.225 mm</td><td class="num">15% too small</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>A one-time card match removes this error on any device.</strong></p>
+        <p class="small muted">Sources. Pixel 7: 416 ppi (<a href="https://www.gsmarena.com/google_pixel_7-11903.php">GSMArena</a>), 412 CSS px wide at DPR 2.625 (<a href="https://blisk.io/devices/details/google-pixel-7">Blisk</a>). Pixel 8: 428 ppi (<a href="https://www.gsmarena.com/google_pixel_8-12546.php">GSMArena</a>), DPR 2.625 (<a href="https://blisk.io/devices/details/google-pixel-8">Blisk</a>). iPhone 15: 460 ppi (<a href="https://support.apple.com/en-us/111831">Apple tech specs</a>), 393 points wide at 3× (<a href="https://www.ios-resolution.com/">ios-resolution.com</a>). Galaxy S23: 425 ppi (<a href="https://www.gsmarena.com/samsung_galaxy_s23-12082.php">GSMArena</a>), 360 CSS px wide at DPR 3 (<a href="https://blisk.io/devices/details/galaxy-s23">Blisk</a>). Moto G4: 401 ppi (<a href="https://www.gsmarena.com/motorola_moto_g4-8103.php">GSMArena</a>), 360 CSS px wide at DPR 3 (<a href="https://github.com/ChromeDevTools/devtools-frontend/blob/main/front_end/models/emulation/EmulatedDevices.ts">Chrome DevTools device list</a>). The Pixel 7, Pixel 8, iPhone 15 and Moto G4 values also match Playwright's device list. Laptop: 141 ppi from the screen geometry (√(1920² + 1080²) ÷ 15.6 in), and 125% Windows scaling gives a device pixel ratio of 1.25. Phone values assume the default display size; changing the display-size or zoom setting changes the DPR, and the error with it. Calculation and sources: <a href="/data/camera-bench.json">camera-bench.json</a> (<code>screen</code>).</p>
+        <p class="small muted">For context, on the Windows laptop we used for the camera bench, Chrome reports a device pixel ratio of 2 and a 1440×900 CSS-pixel screen: its 2880×1800 panel at 200% scaling. Neither number tells a web page how many millimetres the screen is, which is why Small Print asks for the card.</p>
       </div>
     </section>
 

@@ -12,7 +12,8 @@ import { LANGS, detectLang, formatPower, getLang, langName, setLang, t, type Lan
 import type { StringKey } from './i18n/en';
 import { drawE, onDirection, randomDirection, type Direction } from './ui/optotype';
 import { say, setVoice, stopVoice, voiceEnabled } from './ui/voice';
-import { ageBand, deviceType, sendResult, trafficType, type ReferReasonApi, type ResultPayload } from './api';
+import { ageBand, deviceType, flushOutbox, sendResult, trafficType, type ReferReasonApi, type ResultPayload } from './api';
+import { campActive, enableCamp, loadTally, recordPerson, resetTally, stockList, tallyCsv } from './camp';
 
 /** The near-point E keeps the angular size of N6 print at 40 cm (logMAR ≈ 0.27) at every distance. */
 const NEAR_LOGMAR = logMARForHeight(nPointHeightMm(TARGET_PRINT_N), 400);
@@ -47,6 +48,9 @@ const state = {
   tryOns: [] as { strength: number; verdict: TryOnResult['verdict'] }[],
   existing: null as number | null,
   tryOnStrength: 1.5,
+  /** Strength that got a "good fit" in the try-on, if any. */
+  confirmed: null as number | null,
+  campCounted: false,
   tryOnNear: null as number | null,
   distanceMm: null as number | null,
   sample: null as DistanceSample | null,
@@ -155,12 +159,15 @@ function welcome(): void {
       </ul>
       <p class="how">${t('welcome_how')}</p>
       <div class="stack">${btn('start', t('welcome_start'))}${btn('demo', t('welcome_demo'), 'secondary')}</div>
+      ${campActive() ? `<p class="banner">${t('camp_banner', { n: loadTally().people })} <button type="button" class="btn-link inline" id="camp-sum">${t('camp_summary')}</button></p>` : `<p class="small"><button type="button" class="btn-link inline" id="camp-on">${t('camp_link')}</button></p>`}
       ${t('translation_note') ? `<p class="small muted">${t('translation_note')}</p>` : ''}
     </section>`, 'welcome_say');
   document.getElementById('lang')!.addEventListener('change', (e) => { setLang((e.target as HTMLSelectElement).value as Lang); syncDemoBar(); welcome(); });
   on('voice', () => { setVoice(!voiceEnabled()); welcome(); });
   on('start', () => { state.mode = 'camera'; safety(); });
   on('demo', () => enterDemo());
+  on('camp-on', () => { enableCamp(); welcome(); });
+  on('camp-sum', campSummary);
 }
 
 function enterDemo(): void {
@@ -201,8 +208,9 @@ function safety(): void {
 
 function stopScreen(): void {
   show(`<section class="screen warn"><h1 tabindex="-1">${t('stop_h')}</h1><p class="lead">${t('stop_p')}</p>
-    <div class="stack">${btn('back', t('back'), 'secondary')}</div></section>`, 'stop_say');
+    <div class="stack">${btn('back', t('back'), 'secondary')}</div>${campActive() ? campCard() : ''}</section>`, 'stop_say');
   on('back', safety);
+  bindCamp('refer', null);
 }
 
 function adviseScreen(): void {
@@ -473,12 +481,13 @@ function result(recompute = true): void {
         <select id="existing"><option value="">—</option><option value="none">${t('existing_none')}</option><option value="unsure">${t('existing_unsure')}</option>${existingOpts}</select>
         <p id="existing-thanks" class="ok-text" role="status"></p>
       </div>
-      ${btn('again', t('start_again'), 'link')}
+      ${campActive() ? campCard() : btn('again', t('start_again'), 'link')}
     </section>`, 'result_say');
   report();
   on('tryon', () => tryOnPick(rec.tryFirst[0] ?? rec.strength ?? 1.5));
   on('share', () => share(rec));
   on('again', () => location.reload());
+  bindCamp(rec.outcome === 'readers' && !advised ? 'readers' : advised ? 'refer' : rec.outcome, rec.strength);
   document.getElementById('existing')!.addEventListener('change', (e) => {
     const v = (e.target as HTMLSelectElement).value;
     state.existing = v && !Number.isNaN(Number(v)) ? Number(v) : null;
@@ -549,6 +558,7 @@ function tryOnVerdict(farMm: number | null | undefined): void {
   const wd = state.workingMm ?? 400;
   const r = assessTryOn({ strength: s, workingDistanceMm: wd, nearLimitMm: state.tryOnNear ?? wd * 0.7, farLimitMm: farMm ?? null, reachMm: Math.max(state.tryMaxMm, wd) });
   state.tryOns.push({ strength: s, verdict: r.verdict });
+  if (r.verdict === 'good') state.confirmed = s;
   report();
   const confirm = r.verdict === 'good' && r.farEndUnknown && s + CONFIRM_STEP_D <= 3.5;
   const next = confirm ? s + CONFIRM_STEP_D : Math.max(0.75, s + r.change);
@@ -583,6 +593,53 @@ function rangeBar(nearMm: number, farMm: number | null, wdMm: number): string {
     <span class="tick" style="left:0">10</span><span class="tick" style="left:${pos(400)}">40</span><span class="tick" style="left:100%">80 cm</span></div>`;
 }
 
+// ---------- camp mode ----------
+
+function campCard(): string {
+  return `<div class="card camp"><p class="small muted">${t('camp_banner', { n: loadTally().people + (state.campCounted ? 0 : 1) })}</p>
+    <div class="stack two">${btn('camp-next', t('camp_next'))}${btn('camp-sum', t('camp_summary'), 'secondary')}</div></div>`;
+}
+
+/** Count this person once, then either start the next person or show the summary. */
+function bindCamp(outcome: 'readers' | 'no-readers' | 'refer', strength: number | null): void {
+  if (!campActive()) return;
+  const count = () => {
+    if (state.campCounted) return;
+    state.campCounted = true;
+    recordPerson(outcome, strength, state.confirmed);
+  };
+  on('camp-next', () => {
+    count();
+    const q = new URLSearchParams({ camp: '' });
+    if (state.mode === 'demo') q.set('demo', '');
+    location.href = `${location.pathname}?${q.toString().replace(/=(&|$)/g, '$1')}`;
+  });
+  on('camp-sum', () => { count(); campSummary(); });
+}
+
+function campSummary(): void {
+  const tally = loadTally();
+  const rows = Object.entries(tally.readers).sort(([a], [b]) => Number(a) - Number(b))
+    .map(([s, n]) => `<tr><td>${formatPower(Number(s))}</td><td class="num">${n}</td><td class="num">${tally.confirmed[s] ?? 0}</td></tr>`).join('');
+  const stock = stockList(tally).map(({ strength, count }) => `<li><b>${formatPower(Number(strength))}</b>: ${count}</li>`).join('');
+  show(`<section class="screen"><h1 tabindex="-1">${t('camp_h')}</h1>${info('info_camp')}
+    <div class="stats"><div class="stat"><b>${tally.people}</b><span>${t('camp_people')}</span></div>
+      <div class="stat"><b>${Object.values(tally.readers).reduce((a, b) => a + b, 0)}</b><span>${t('camp_readers')}</span></div>
+      <div class="stat"><b>${tally.noReaders}</b><span>${t('camp_none')}</span></div>
+      <div class="stat"><b>${tally.referred}</b><span>${t('camp_referred')}</span></div></div>
+    ${rows ? `<table><thead><tr><th>${t('camp_strength')}</th><th class="num">${t('camp_count')}</th><th class="num">${t('camp_confirmed')}</th></tr></thead><tbody>${rows}</tbody></table>
+      <h2>${t('camp_stock')}</h2><ul>${stock}</ul>` : `<p class="muted">${t('camp_empty')}</p>`}
+    <div class="stack">${btn('camp-next2', t('camp_next'))}${btn('camp-csv', t('camp_export'), 'secondary')}${btn('camp-reset', t('camp_reset'), 'link')}</div></section>`);
+  on('camp-next2', () => { location.href = `${location.pathname}?camp${state.mode === 'demo' ? '&demo' : ''}`; });
+  on('camp-csv', () => {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([tallyCsv(loadTally())], { type: 'text/csv' }));
+    a.download = `small-print-camp-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+  });
+  on('camp-reset', () => { resetTally(); campSummary(); });
+}
+
 // ---------- boot ----------
 
 function syncDemoBar(): void {
@@ -596,6 +653,11 @@ function boot(): void {
   setLang(detectLang());
   const q = new URLSearchParams(location.search);
   if (q.has('judge')) sessionStorage.setItem('small-print.judge', '1');
+  if (q.has('camp')) enableCamp();
+  // Offline support: cache the app after the first visit, and send any results queued while offline.
+  if ('serviceWorker' in navigator && import.meta.env.PROD) navigator.serviceWorker.register('/sw.js').catch(() => {});
+  window.addEventListener('online', () => void flushOutbox());
+  void flushOutbox();
   if (q.has('recalibrate')) clearCalibration();
   const slider = document.getElementById('demo-range') as HTMLInputElement;
   const label = document.getElementById('demo-value')!;

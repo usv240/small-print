@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Printable rack poster · Small Print</title>
+  <meta name="description" content="A free printable A4 poster with a QR code for reading-glasses racks in pharmacies, markets and clinics. Customers scan it and find their strength in two minutes.">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/src/styles/base.css">
+  <link rel="stylesheet" href="/src/styles/pages.css">
+  <link rel="stylesheet" href="/src/styles/poster.css">
+  <script type="module" src="/src/poster.ts"></script>
+</head>
+<body>
+  <header class="site-header no-print">
+    <div class="wrap">
+      <a class="brand" href="/">Small <span>Print</span></a>
+      <nav class="nav" aria-label="Site"><a href="/how-it-works.html">How it works</a><a href="/impact.html">Impact</a><a href="/judges.html">For judges</a></nav>
+    </div>
+  </header>
+
+  <main class="wrap no-print">
+    <div class="page-head">
+      <h1>A poster for the reading-glasses rack</h1>
+      <p class="lead">Most ready-made reading glasses are sold from a rack: in pharmacies, markets, supermarkets and clinics. The rack is exactly where people guess their strength. This free A4 poster puts a two-minute test right there.</p>
+    </div>
+    <ol class="steps">
+      <li><strong>Choose the language</strong> for the poster (the test itself lets each person choose too).</li>
+      <li><strong>Print it</strong> on A4 or US Letter, in colour or black and white.</li>
+      <li><strong>Put it next to the rack.</strong> Customers scan the code, take the test, and the result tells them which two strengths to try first, then checks the pair they pick.</li>
+    </ol>
+    <div class="poster-controls">
+      <label>Poster language
+        <select id="poster-lang">
+          <option value="en">English</option>
+          <option value="es">Español</option>
+          <option value="fr">Français</option>
+          <option value="pt">Português</option>
+        </select>
+      </label>
+      <button type="button" class="btn btn-primary" id="print">Print the poster</button>
+    </div>
+    <p class="small muted">The QR code links to the test. No sign-up, nothing to install, and no camera images leave the phone. Results are counted anonymously on the <a href="/impact.html">impact page</a>. It helps people choose non-prescription reading glasses and is not an eye exam.</p>
+    <h2>Preview</h2>
+  </main>
+
+  <article class="poster" id="poster" aria-label="Poster preview">
+    <p class="poster-eyebrow" data-k="eyebrow">Free · 2 minutes · no install</p>
+    <h1 class="poster-title" data-k="title">Not sure which reading glasses to buy?</h1>
+    <p class="poster-sub" data-k="sub">Scan the code and let your phone’s camera find your strength. Then check the pair before you buy.</p>
+    <div class="poster-qr" id="qr" role="img" aria-label="QR code linking to the Small Print test"></div>
+    <p class="poster-url" id="url">dxug72099q2ay.cloudfront.net</p>
+    <ol class="poster-steps">
+      <li data-k="s1">Scan the code with your phone camera.</li>
+      <li data-k="s2">Hold the phone where you like to read.</li>
+      <li data-k="s3">Swipe the way the letter E points. No reading needed.</li>
+      <li data-k="s4">Try the strength it suggests, and check it with the test.</li>
+    </ol>
+    <p class="poster-note" data-k="note">Not an eye exam. If your eyesight changed suddenly, or your eyes hurt or are red, see an eye-care professional.</p>
+    <p class="poster-brand">Small <span>Print</span></p>
+  </article>
+</body>
+</html>
