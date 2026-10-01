@@ -220,6 +220,11 @@
         <li><strong>CloudFront invalidations</strong>, to publish new versions of the site.</li>
       </ul>
       <p>Because the role is used only by the agent, CloudTrail records its calls separately from any human activity in the account. The table below lists real CloudTrail events from that role.</p>
+      <h3>The connection</h3>
+      <figure>
+        <img src="/media/proof-mcp-connected.png" alt="Claude Code's MCP servers panel in VS Code: the project server aws-mcp shows a green Connected badge." width="760" height="400" loading="lazy">
+        <figcaption>Claude Code's MCP panel in VS Code, Oct 1, 2026: the project-scoped <code>aws-mcp</code> server (AWS MCP Server via <code>mcp-proxy-for-aws</code>, profile <code>small-print-agent</code>) is connected. <a href="/media/proof-vscode-mcp.png">Full-window screenshot</a>. The connection check from the setup guide ("What AWS Regions are available?") returned all 37 regions through it.</figcaption>
+      </figure>
       <h3>CloudTrail: the agent's calls</h3>
       <div id="cloudtrail-table">
         <p>Totals for the role <code>small-print-agent</code>, session name <code>claude-code-agent</code>, from 18:00 to 21:30 UTC on 1 October 2026 (205 events). <span class="tag measured">Measured</span></p>
