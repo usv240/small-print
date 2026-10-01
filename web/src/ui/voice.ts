@@ -1,4 +1,4 @@
-// Voice guide. Clips are generated ahead of time with Amazon Polly (scripts/gen-voice.ts) and served
+// Voice guide. Clips are generated ahead of time with Amazon Polly (scripts/gen-voice.mjs) and served
 // from /audio/<lang>/<key>.mp3, so there is no per-visit cost and it works on slow connections.
 // If a clip is missing, the browser's own speech synthesis reads the text instead.
 

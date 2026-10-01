@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Findings: why reading-glasses charts go wrong · Small Print</title>
+  <meta name="description" content="Three findings behind Small Print: holding a 14-inch rack card at 30 cm shifts the result by a full strength step; browsers don't know how big a screen pixel is; and in simulation, checking the pair at the rack matters more than the starting estimate.">
+  <meta property="og:title" content="Small Print findings: a few centimetres, a whole strength step">
+  <meta property="og:description" content="The maths of the rack card, the screen-pixel problem, and what 20,000 simulated eyes say about choosing readers.">
+  <meta property="og:type" content="article">
+  <meta name="theme-color" content="#b4410e">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/src/styles/base.css">
+  <link rel="stylesheet" href="/src/styles/pages.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/">Small <span>Print</span></a>
+      <nav class="nav" aria-label="Site">
+        <a href="/how-it-works.html">How it works</a>
+        <a href="/findings.html" aria-current="page">Findings</a>
+        <a href="/impact.html">Impact</a>
+        <a href="/judges.html">For judges</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="page-head">
+      <p class="eyebrow">Findings</p>
+      <h1>Why choosing reading glasses goes wrong, in numbers</h1>
+      <p class="lead">Three findings shaped how Small Print works. Each is labelled with the kind of evidence behind it: a calculation anyone can check, a measurement on our own devices, or a simulation.</p>
+    </div>
+
+    <ol class="toc">
+      <li><a href="#card">A few centimetres cost a whole strength step</a></li>
+      <li><a href="#screen">Your browser doesn't know how big its pixels are</a></li>
+      <li><a href="#bench">Checking the pair matters more than the first guess</a></li>
+    </ol>
+
+    <section id="card">
+      <h2>1. A few centimetres cost a whole strength step</h2>
+      <div class="tags"><span class="tag">Calculation</span></div>
+      <p>Strength charts on reading-glasses racks, and printable ones online, are usually designed to be held at a fixed distance, often 14 inches (35.6 cm). Nothing checks that you actually hold them there.</p>
+      <p>The focusing demand of anything you look at is 1 ÷ distance in metres, in dioptres (D), the unit printed on reading glasses. At 35.6 cm that is 2.81 D. Hold the card at 30 cm and it is 3.33 D:</p>
+      <div class="formula">1 ÷ 0.30 − 1 ÷ 0.356 = 3.33 − 2.81 = 0.52 D</div>
+      <p>That is more than the 0.50 D step between neighbouring reader strengths (+1.50 and +2.00, for example). The same arithmetic for other distances:</p>
+      <div class="table-wrap">
+        <table>
+          <caption>Focusing demand compared with a card designed for 35.6 cm (14 in). <span class="tag">Calculation</span></caption>
+          <thead><tr><th>Held at</th><th class="num">Demand (D)</th><th class="num">Difference from 35.6 cm</th><th class="num">In 0.50 D strength steps</th></tr></thead>
+          <tbody>
+            <tr><td>25 cm</td><td class="num">4.00</td><td class="num">+1.19 D</td><td class="num">2.4</td></tr>
+            <tr class="hl"><td>30 cm</td><td class="num">3.33</td><td class="num">+0.52 D</td><td class="num">1.0</td></tr>
+            <tr><td>35.6 cm (14 in)</td><td class="num">2.81</td><td class="num">0</td><td class="num">0</td></tr>
+            <tr><td>40 cm</td><td class="num">2.50</td><td class="num">−0.31 D</td><td class="num">0.6</td></tr>
+            <tr><td>45 cm</td><td class="num">2.22</td><td class="num">−0.59 D</td><td class="num">1.2</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p><strong>What it means.</strong> A strength chosen for 35.6 cm only suits someone who reads at 35.6 cm. Someone who reads their phone at 30 cm needs about 0.5 D more; someone who reads at 45 cm needs about 0.5 D less. And if the card is held at the wrong distance while choosing, the demand during the test is wrong by the same amount. Holding a card closer also makes its letters look bigger, a separate effect that partly offsets the extra blur. A printed card has no way of knowing where it was held, so neither effect gets corrected.</p>
+      <p><strong>What Small Print does instead.</strong> The camera measures where you actually read, and the strength is worked out for that distance. The test letter is redrawn as you move so that it always covers the same angle, which removes the size effect. See <a href="/how-it-works.html#letter">How it works</a>.</p>
+    </section>
+
+    <section id="screen">
+      <h2>2. Your browser doesn't know how big its pixels are</h2>
+      <div class="tags"><span class="tag">Calculation</span><span class="tag pending">Measurement pending</span></div>
+      <p>An on-screen reading test has to draw letters at an exact physical size. Web pages measure everything in CSS pixels, and CSS defines one inch as 96 CSS pixels. So a browser assumes:</p>
+      <div class="formula">1 CSS pixel = 25.4 mm ÷ 96 = 0.2646 mm</div>
+      <p>On a real screen, the size of a CSS pixel is:</p>
+      <div class="formula">real size = device pixel ratio ÷ physical pixels per inch × 25.4 mm</div>
+      <p>The browser knows the device pixel ratio, but it does not know how many physical pixels fit in an inch of this particular screen. The CSS standard itself treats the pixel as an angle: one pixel of a 96-dpi screen seen from arm's length. A phone is held much closer than arm's length, so its device pixel ratio is usually set so that a CSS pixel is physically smaller than 0.2646 mm. On phones the real size is typically smaller than the nominal one.</p>
+      <div class="callout">
+        <p><strong>Worked example with illustrative numbers</strong> (not a measurement). A screen with 420 physical pixels per inch and a device pixel ratio of 2.625:</p>
+        <p>2.625 ÷ 420 × 25.4 mm = 0.159 mm per CSS pixel, about 60% of the nominal 0.2646 mm. An N6 letter meant to be 1.09 mm tall would come out about 0.65 mm: <strong>40% too small</strong>. That is 0.22 logMAR, about two lines on a standard eye chart, so the test would be considerably harder than intended.</p>
+      </div>
+      <p><strong>What Small Print does instead.</strong> You hold any bank, ID or library card against the screen and drag a box to the same width. Cards of this type are 85.6 mm wide (ISO/IEC 7810 ID-1), so the browser learns how many CSS pixels make a millimetre on your screen. Nothing is typed or photographed.</p>
+      <div class="slot" id="screen-result">
+        <p class="slot-label">Measured on our Pixel: pending</p>
+        <p>We are measuring the real size of a CSS pixel on our test phone (Google Pixel, Chrome) and laptop with the card calibration, using the <a href="/lab.html">measurement lab</a>. The result will appear here. Until then, the example above is arithmetic, not a measurement.</p>
+      </div>
+    </section>
+
+    <section id="bench">
+      <h2>3. Checking the pair matters more than the first guess</h2>
+      <div class="tags"><span class="tag sim">Simulation</span></div>
+      <p>We ran 20,000 virtual people aged 40–70, generated from published age norms and stated assumptions, through five ways of choosing readers. Each method's choice was scored against the strength that puts that person's reading distance in the middle of their clear range.<sup><a href="#r5">5</a></sup> <strong>This is a simulation; no real person was tested.</strong></p>
+      <div class="stats" aria-label="Simulation headline">
+        <div class="stat"><b>84.9%</b><span>right call with Small Print + the try-on check at the rack, including the stronger-pair check</span></div>
+        <div class="stat"><b>42.0%</b><span>right call with the age table alone</span></div>
+        <div class="stat"><b>50.9–52.1%</b><span>right call with a rack card (at 14 in, or where people read)</span></div>
+      </div>
+      <p>"Right call" counts everyone: a pair within ±0.50 D of ideal for people who need one, and no readers for people who should see a professional or don't need readers yet.</p>
+      <p><strong>The try-on matters more than the starting estimate.</strong> Small Print's no-glasses start is only modestly better than the age table for people who need readers (80.1% vs 75.1% within ±0.50 D; 58.7% vs 49.4% within ±0.25 D). Measuring the actual pair at the rack, including one pair 0.50 stronger when the first is still sharp at arm's length, lifts it to 85.0% and 72.9%. Over everyone, the start alone makes the right call 69.7% of the time; with the try-on, 84.9% (84.6% without the stronger-pair check).</p>
+      <p><strong>The biggest difference is who should not get readers.</strong> The age table and rack card hand readers to essentially every short-sighted person (99.9–100%) and to everyone who doesn't need them yet. With the try-on, Small Print hands readers to 11.1% of short-sighted people and 17.0% of those who don't need them yet.</p>
+      <figure>
+        <img src="/figures/bench-accuracy.svg" width="780" height="554" loading="lazy" alt="Simulation. Grouped bar chart of the share of in-scope virtual people within ±0.25 D and within ±0.50 D of their ideal strength. Age table at 40 cm: 49.4% and 75.1%. Age table with measured distance: 42.2% and 63.2%. Rack card at 14 inches: 47.2% and 63.9%. Rack card where they read: 46.7% and 64.3%. Small Print start: 58.7% and 80.1%. Small Print with try-on, 0.50 stock: 71.8% and 84.6%. Small Print with try-on, 0.25 stock: 74.0% and 86.6%.">
+        <figcaption><span class="tag sim">Simulation</span> Share of in-scope virtual people within ±0.25 D and ±0.50 D of their ideal strength, by method. The try-on bars are the try-on without the stronger-pair check; the shipped check is about 1 point higher.</figcaption>
+      </figure>
+      <h3>Honest caveats</h3>
+      <ul>
+        <li><strong>It is a model.</strong> Real errors such as lighting, letter recognition, unequal eyes, cataract and people not following instructions are not in it. Its results cannot be compared with real-world studies.</li>
+        <li><strong>The age table still wins in places.</strong> For people aged 60–70 who need readers, it is within ±0.50 D more often (92–95% vs 91% after try-on). At 40–44, Small Print tells many borderline people they don't need readers yet.</li>
+        <li><strong>Uncorrected long sight defeats every method.</strong> A test done only up close can't separate long sight from lost focusing.</li>
+        <li><strong>Arm-stretch could undo the gains.</strong> If people hold the phone at a stretched distance when asked where they read, the try-on falls below the age table.</li>
+        <li><strong>The rack card is modelled generously</strong>, as an ideal blur meter tuned to its own best score.</li>
+      </ul>
+      <p>Every number, assumption and weak spot is on <a href="/validation.html#simulated">Validation</a>; the code is in <a href="https://github.com/usv240/small-print/tree/main/web/sim">web/sim on GitHub</a>.</p>
+    </section>
+
+    <h2 id="refs">References and standards</h2>
+    <ol class="refs">
+      <li id="r5" value="5">Stevens S. How to prescribe spectacles for near vision. <i>Community Eye Health Journal</i> 2019;32(107):47. (N6 as the near-vision target; the reading distance should sit in the middle of the range of clear vision.)</li>
+    </ol>
+    <p class="small muted">Standards: W3C CSS Values and Units (1 inch = 96 CSS pixels; the reference pixel as a visual angle); ISO/IEC 7810 ID-1 card size, 85.60 × 53.98 mm. N6 print height (about 1.09 mm) uses the convention that 8-point print is about 1M, where a 1M letter is 1.454 mm tall.</p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Small Print helps you choose non-prescription reading glasses. It is not an eye exam and cannot detect eye disease. <a href="/safety.html">Safety</a> · <a href="/how-it-works.html">How it works</a> · <a href="/validation.html">Validation</a> · <a href="/evidence.html">Built on AWS</a> · <a href="/judges.html">For judges</a></p>
+      <p>Built for the AWS Builder Center “Zero to Shipped” hackathon, 2026. Open source.</p>
+    </div>
+  </footer>
+</body>
+</html>

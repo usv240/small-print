@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Impact: live counts, an honest projection and the path to scale · Small Print</title>
+  <meta name="description" content="Live anonymous counts of Small Print screenings (real use kept separate from judge, demo and development traffic), a transparent projection based on two randomised trials of reading glasses, and how Small Print could reach people at scale.">
+  <meta property="og:title" content="Small Print impact: what we can count, and what we can only project">
+  <meta property="og:description" content="Live counters from real use, a projection with every assumption shown, and a path to scale for a free reading-glasses test.">
+  <meta property="og:type" content="article">
+  <meta name="theme-color" content="#b4410e">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/src/styles/base.css">
+  <link rel="stylesheet" href="/src/styles/pages.css">
+  <script type="module" src="/src/impact.ts"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/">Small <span>Print</span></a>
+      <nav class="nav" aria-label="Site">
+        <a href="/how-it-works.html">How it works</a>
+        <a href="/findings.html">Findings</a>
+        <a href="/impact.html" aria-current="page">Impact</a>
+        <a href="/judges.html">For judges</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="page-head">
+      <p class="eyebrow">Impact</p>
+      <h1>What we can count, and what we can only project</h1>
+      <p class="lead">This page keeps three things apart: the size of the problem (from published studies), what Small Print has actually done (live counts), and what it might do (a projection, with every assumption shown).</p>
+    </div>
+
+    <ol class="toc">
+      <li><a href="#problem">The problem</a></li>
+      <li><a href="#live">Live counts</a></li>
+      <li><a href="#counting">How we count</a></li>
+      <li><a href="#projection">Projection, not a measured outcome</a></li>
+      <li><a href="#scale">Path to scale</a></li>
+      <li><a href="#refs">References</a></li>
+    </ol>
+
+    <h2 id="problem">The problem</h2>
+    <div class="stats" aria-label="The size of the problem">
+      <div class="stat"><b>1.8 billion</b><span>people had presbyopia in 2015<sup><a href="#r1">1</a></sup></span></div>
+      <div class="stat"><b>826 million</b><span>had near-vision impairment because it was not corrected<sup><a href="#r1">1</a></sup></span></div>
+      <div class="stat"><b>~90%</b><span>of people affected by uncorrected refractive error and presbyopia live in low- and middle-income countries<sup><a href="#r2">2</a></sup></span></div>
+      <div class="stat"><b>1.2 million</b><span>people per optometrist in central sub-Saharan Africa<sup><a href="#r2">2</a></sup></span></div>
+    </div>
+    <p>A 2020 estimate puts the number of people aged 50 and over with near-vision impairment from uncorrected presbyopia at 510 million.<sup><a href="#r1">1</a></sup> The fix is cheap: in the PROSPER trial, reading glasses cost about US$1.80 a pair.<sup><a href="#r3">3</a></sup> The gap is access, and it is extremely unequal:</p>
+    <div class="bars wide" role="group" aria-label="Effective near-vision coverage among adults 50 and over, 2021">
+      <div class="bar-row"><span>High-income</span><div class="bar-track" aria-hidden="true"><div class="bar-fill" style="width:64.7%"></div></div><span class="bar-value">64.7%</span></div>
+      <div class="bar-row"><span>North Africa &amp; Middle East</span><div class="bar-track" aria-hidden="true"><div class="bar-fill" style="width:41.8%"></div></div><span class="bar-value">41.8%</span></div>
+      <div class="bar-row"><span>Latin America &amp; Caribbean</span><div class="bar-track" aria-hidden="true"><div class="bar-fill" style="width:15.5%"></div></div><span class="bar-value">15.5%</span></div>
+      <div class="bar-row"><span>South Asia</span><div class="bar-track" aria-hidden="true"><div class="bar-fill" style="width:3.3%"></div></div><span class="bar-value">3.3%</span></div>
+      <div class="bar-row"><span>Sub-Saharan Africa</span><div class="bar-track" aria-hidden="true"><div class="bar-fill" style="width:1.4%"></div></div><span class="bar-value">1.4%</span></div>
+    </div>
+    <p class="small muted">Effective near-vision refractive error coverage, 2021: roughly, the share of adults aged 50 and over who need near-vision correction and have correction that works for them.<sup><a href="#r2">2</a></sup></p>
+    <p>When people do get reading glasses, two randomised trials found large effects. Tea pickers in Assam, India, given reading glasses were 22% more productive (over 30% for workers over 50).<sup><a href="#r3">3</a></sup> In Bangladesh, people in near-vision-intensive work given reading glasses saw their income rise 33.4% more than those who weren't; only 35% of participants could read.<sup><a href="#r4">4</a></sup> These trials measured the effect of <strong>giving people glasses</strong>, not of using this app.</p>
+
+    <h2 id="live">Live counts <span class="tag measured">Measured</span></h2>
+    <p id="stats-status" class="small muted" role="status">Live counts load from the public API (<code>/api/v1/stats</code>) when JavaScript runs, and refresh every minute.</p>
+
+    <section class="panel real" aria-labelledby="real-h">
+      <h3 id="real-h">Real use</h3>
+      <p class="small muted">People who took the test with the camera on the public site. <span id="real-updated"></span></p>
+      <div class="stats">
+        <div class="stat"><b id="real-screenings">–</b><span>screenings</span></div>
+        <div class="stat"><b id="real-readers">–</b><span>readers suggested <span id="real-readers-pct"></span></span></div>
+        <div class="stat"><b id="real-no-readers">–</b><span>no readers yet <span id="real-no-readers-pct"></span></span></div>
+        <div class="stat"><b id="real-refer">–</b><span>referred to eye care <span id="real-refer-pct"></span></span></div>
+        <div class="stat"><b id="real-tryon">–</b><span>checked a pair with the try-on</span></div>
+      </div>
+
+      <h4>Starting strength suggested</h4>
+      <div class="bars wide" id="real-strength"><p class="empty-note">Live data appears here when JavaScript runs.</p></div>
+
+      <h4>Age band</h4>
+      <div class="bars wide" id="real-ages"><p class="empty-note">Live data appears here when JavaScript runs.</p></div>
+
+      <h4>Why people were referred or advised</h4>
+      <div class="bars wide" id="real-reasons"><p class="empty-note">Live data appears here when JavaScript runs.</p></div>
+      <p class="small muted">One screening can have several reasons, so these don't add up to the referral count. "Possible short sight" leads to "no readers" with an exam suggested; "estimates disagree" leads to a try-on suggestion. Urgent warning signs (sudden change, flashes, pain, redness) stop the test before any result exists, so they never appear here.</p>
+
+      <h4 id="agreement">Agreement with readers people already own</h4>
+      <div class="bars wide" id="real-agreement"><p class="empty-note">Live data appears here when JavaScript runs.</p></div>
+      <p id="real-agreement-summary"></p>
+      <p class="small muted">After the result, people can tell us the strength printed on readers they already own. We compare it with Small Print's suggestion: the same strength, within 0.50, or further apart. This is a real-world signal, not validation: people's existing readers may not be right for them either, and the numbers are small.</p>
+
+      <h4>Devices, languages and calibration</h4>
+      <ul id="real-details" class="small"><li>Live data appears here when JavaScript runs.</li></ul>
+    </section>
+
+    <section class="panel" aria-labelledby="other-h">
+      <h3 id="other-h">Judges, demos and development</h3>
+      <p class="small"><strong>Judge tries and demo runs are counted separately and never added to real use.</strong></p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Traffic</th><th class="num">Screenings</th><th class="num">Readers</th><th class="num">No readers</th><th class="num">Referred</th><th class="num">Try-on</th></tr></thead>
+          <tbody id="other-traffic">
+            <tr><td>Judges</td><td class="num">–</td><td class="num">–</td><td class="num">–</td><td class="num">–</td><td class="num">–</td></tr>
+            <tr><td>Demo (no camera)</td><td class="num">–</td><td class="num">–</td><td class="num">–</td><td class="num">–</td><td class="num">–</td></tr>
+            <tr><td>Development</td><td class="num">–</td><td class="num">–</td><td class="num">–</td><td class="num">–</td><td class="num">–</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <h2 id="counting">How we count</h2>
+    <ul>
+      <li><strong>One record per test.</strong> Each test gets a random ID. If the person later checks a pair or tells us about their existing readers, the same record is updated, so nobody is counted twice.</li>
+      <li><strong>Four kinds of traffic, kept apart.</strong> <em>Development</em>: our own testing (local machines, or a <code>?dev</code> link). <em>Judge</em>: anyone who opened a <code>?judge</code> link in that browser tab. <em>Demo</em>: the slider instead of the camera. <em>Real</em>: everyone else, using the camera on the public site.</li>
+      <li><strong>Anonymous by design.</strong> No names, images, IP addresses or exact ages; see <a href="/safety.html#privacy">exactly what is stored</a>.</li>
+      <li><strong>What these numbers are not.</strong> A count of screenings is not a count of people helped. We don't know whether anyone bought or wore readers afterwards.</li>
+    </ul>
+
+    <h2 id="projection">Projection, not a measured outcome <span class="tag pending">Projection</span></h2>
+    <div class="callout warn">
+      <p><strong>This is arithmetic on assumptions, not a measured outcome.</strong> The trials below measured what happened when people were <em>given</em> reading glasses. Nobody has measured what happens when people use Small Print. Each step is shown so you can change any assumption you disagree with.</p>
+    </div>
+    <p>Start with <strong>1,000 people who need ready-made readers</strong> and take the test.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Step</th><th>Assumption</th><th>Where it comes from</th><th class="num">Per 1,000</th></tr></thead>
+        <tbody>
+          <tr><td>A. Pointed to a suitable pair (within ±0.50 D)</td><td class="num">85.0%</td><td>Our simulation of Small Print + try-on with the stronger-pair check <span class="tag sim">Simulation</span>. Not measured on real people.</td><td class="num">1,000 × 0.850 = 850</td></tr>
+          <tr><td>B. Get the pair and use it</td><td class="num">88.3%</td><td>THRIVE: self-reported use after 8 months among people <em>given free</em> glasses.<sup><a href="#r4">4</a></sup> Buying is a bigger step than being given, so this is optimistic.</td><td class="num">850 × 0.883 ≈ 751</td></tr>
+          <tr><td>C1. Productivity</td><td class="num">+22% each</td><td>PROSPER, tea pickers in Assam.<sup><a href="#r3">3</a></sup></td><td class="num">751 × 0.22 ≈ 165</td></tr>
+          <tr><td>C2. Income</td><td class="num">+33.4% each</td><td>THRIVE, near-vision-intensive work in Bangladesh.<sup><a href="#r4">4</a></sup></td><td class="num">751 × 0.334 ≈ 251</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p><strong>How to read C1 and C2.</strong> If all 751 people did work like the trial participants, their combined extra output would equal the output of about <strong>164 additional workers</strong> (PROSPER-like work), or their combined extra income would equal the income of about <strong>249 additional earners</strong> (THRIVE-like work). These are two alternative readings, not a sum.</p>
+    <div class="table-wrap">
+      <table>
+        <caption>The same arithmetic with lower uptake. 50% and 25% are illustrative values, not sourced.</caption>
+        <thead><tr><th>Uptake (step B)</th><th class="num">Using a suitable pair</th><th class="num">Worker-equivalents (+22%)</th><th class="num">Earner-equivalents (+33.4%)</th></tr></thead>
+        <tbody>
+          <tr><td>88.3% (THRIVE, free glasses)</td><td class="num">751</td><td class="num">165</td><td class="num">251</td></tr>
+          <tr><td>50%</td><td class="num">425</td><td class="num">94</td><td class="num">142</td></tr>
+          <tr><td>25%</td><td class="num">212</td><td class="num">47</td><td class="num">71</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p><strong>Why this could be wrong, in both directions:</strong></p>
+    <ul>
+      <li>Step A comes from a simulation. Real accuracy is unknown until the <a href="/validation.html#not-done">field pilot</a>.</li>
+      <li>In THRIVE, 88.3% reported using their glasses, but only 57.3% wore them at least four days a week.<sup><a href="#r4">4</a></sup></li>
+      <li>THRIVE's income effect was analysed by intention to treat: it already averages over everyone offered glasses, including people who didn't wear them.<sup><a href="#r4">4</a></sup> Applying an uptake factor on top counts non-use twice, so this projection leans low on that point.</li>
+      <li>The effects were measured in specific jobs that depend on close-up work. Many people who need readers don't do such work, and effects may differ elsewhere or fade over time.</li>
+    </ul>
+
+    <h2 id="scale">Path to scale</h2>
+    <p>Small Print is free for individuals and will stay free. The plan is for organisations that sell or distribute reading glasses to pay for, or adopt, versions that fit their setting. <strong>We have no partners yet</strong>; these are the kinds of organisations the product is designed for.</p>
+    <div class="grid2">
+      <div class="card"><h3>Reader retailers</h3><p>A white-label version of the test and the in-store try-on check. The value we expect for a retailer is fewer wrong-strength purchases and returns. That is a hypothesis to test with a retailer, not a measured result.</p></div>
+      <div class="card"><h3>Pharmacy racks</h3><p>A QR code on the rack opens the test on the customer's own phone, and the try-on check works right there at the rack. A shared kiosk mode is planned, not built.</p></div>
+      <div class="card"><h3>Employer vision days</h3><p>PROSPER's model was a workplace one: give near-work employees reading glasses.<sup><a href="#r3">3</a></sup> Queen's University Belfast, which led the trial, reports that this workplace approach has since reached about 750,000 workers.<sup><a href="#r14">14</a></sup> Small Print could help staff choose strengths before the event.</p></div>
+      <div class="card"><h3>NGO and health-worker camps</h3><p>Free for NGOs. Trained community health workers already provide reading glasses outside doctors' offices under the WHO's assistive-products training.<sup><a href="#r11">11</a></sup> A camp mode (many people on one device, working offline) is planned, not built.</p></div>
+    </div>
+    <p><strong>Running cost.</strong> About <strong>US$0.59 per 1,000 screenings</strong>, almost all of it delivering the on-device face model and runtime (about 6.6 MB per first visit). AWS's CloudFront free tier (1 TB a month) covers roughly 150,000 screenings a month. The full cost table and assumptions are on <a href="/evidence.html#cost">Built on AWS</a>.</p>
+
+    <h2 id="refs">References</h2>
+    <ol class="refs">
+      <li id="r1" value="1">Fricke TR, et al. Global prevalence of presbyopia and vision impairment from uncorrected presbyopia. <i>Ophthalmology</i> 2018;125(10):1492–1499 (1.8 billion with presbyopia and 826 million with near-vision impairment from uncorrected presbyopia, 2015). The 2020 estimate of 510 million aged 50 and over is from the Vision Loss Expert Group of the Global Burden of Disease study.</li>
+      <li id="r2" value="2">Global uncorrected refractive error and presbyopia: the size of the problem. <i>Community Eye Health Journal</i> 2024 (effective near-vision coverage by region, adults 50+, 2021; about 90% of those affected live in low- and middle-income countries; one optometrist per 1.2 million people in central sub-Saharan Africa).</li>
+      <li id="r3" value="3">Reddy PA, et al. Effect of providing near glasses on productivity among rural Indian tea workers with presbyopia (PROSPER): a randomised trial. <i>Lancet Global Health</i> 2018;6(9):e1019–e1027 (751 workers aged 40 and over; +22% productivity, over 30% in workers over 50; glasses about US$1.80 a pair).</li>
+      <li id="r4" value="4">Sehrin F, et al. The effect on income of providing near vision correction to workers in Bangladesh: the THRIVE randomized controlled trial. <i>PLOS ONE</i> 2024;19(4):e0296115 (824 people; 33.4% greater income increase; 35% literate; 88.3% self-reported use at 8 months, 57.3% at least 4 days a week; intention-to-treat analysis).</li>
+      <li id="r11" value="11">World Health Organization. Training in Assistive Products (TAP), reading-glasses content based on VisionSpring's community screening method. <a href="https://invisionmag.com/visionsprings-screening-methodology-adopted-by-who/">report</a></li>
+      <li id="r14" value="14">Queen's University Belfast, lead institution of the PROSPER trial: reported reach of the workplace reading-glasses approach (about 750,000 workers). <a href="https://www.qub.ac.uk/Research/case-studies/prosper-value-glasses-worker-productivity.html">qub.ac.uk case study</a></li>
+    </ol>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Small Print helps you choose non-prescription reading glasses. It is not an eye exam and cannot detect eye disease. <a href="/safety.html">Safety</a> · <a href="/how-it-works.html">How it works</a> · <a href="/validation.html">Validation</a> · <a href="/evidence.html">Built on AWS</a> · <a href="/judges.html">For judges</a></p>
+      <p>Built for the AWS Builder Center “Zero to Shipped” hackathon, 2026. Open source.</p>
+    </div>
+  </footer>
+</body>
+</html>

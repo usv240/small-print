@@ -22,3 +22,52 @@ sup a { text-decoration: none; font-size: 0.75em; }
 .bar-track { height: 0.9rem; background: var(--line); border-radius: 999px; overflow: hidden; }
 .bar-fill { height: 100%; background: var(--accent); border-radius: 999px; }
 .qr { display: inline-block; background: #fff; padding: 0.6rem; border-radius: 12px; border: 1px solid var(--line); }
+
+/* ---- Static content pages: how-it-works, safety, validation, findings, impact, judges, evidence ---- */
+.toc { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 0.8rem 1.1rem 0.8rem 2.2rem; font-size: 0.95rem; }
+.toc li { margin: 0.2rem 0; }
+.formula {
+  font: 0.92rem/1.65 ui-monospace, "Cascadia Mono", Consolas, Menlo, monospace;
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 0.8rem 1rem; margin: 1rem 0; overflow-x: auto; white-space: pre;
+}
+.callout { border-left: 4px solid var(--accent); background: var(--accent-soft); border-radius: 0 var(--radius) var(--radius) 0; padding: 0.8rem 1rem; margin: 1.25rem 0; }
+.callout.warn { border-left-color: var(--warn); background: var(--warn-soft); }
+.callout.ok { border-left-color: var(--ok); background: var(--ok-soft); }
+.callout > :last-child { margin-bottom: 0; }
+.slot { border: 2px dashed var(--line); border-radius: var(--radius); padding: 1rem 1.25rem; margin: 1.25rem 0; }
+.slot-label { font-weight: 700; color: var(--warn); }
+.tag.pending { background: var(--line); color: var(--ink); }
+.tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0.25rem 0 0.75rem; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+tr.hl td, tr.hl th { background: var(--accent-soft); font-weight: 600; }
+caption { text-align: left; color: var(--muted); font-size: 0.9rem; padding-bottom: 0.4rem; }
+.big-url {
+  display: block; font: 600 clamp(0.95rem, 4vw, 1.3rem)/1.4 ui-monospace, "Cascadia Mono", Consolas, Menlo, monospace;
+  word-break: break-all; background: var(--surface); border: 2px solid var(--accent); border-radius: var(--radius);
+  padding: 0.9rem 1rem; margin: 1rem 0; color: var(--ink); text-decoration: none;
+}
+.judge-steps li > :last-child { margin-bottom: 0; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 1rem 1.25rem; margin: 1.25rem 0; }
+.panel h3 { margin-top: 0.2em; }
+.panel h4 { font-size: 1rem; margin: 1.5em 0 0.4em; }
+.panel.real { border: 2px solid var(--ok); }
+.empty-note { color: var(--muted); font-size: 0.92rem; }
+.bars.wide .bar-row { grid-template-columns: minmax(8rem, 15rem) 1fr 3.2rem; }
+.bar-row .bar-value { text-align: right; font-variant-numeric: tabular-nums; }
+@media (max-width: 34rem) {
+  .bars.wide .bar-row { grid-template-columns: 1fr 3.2rem; row-gap: 0.2rem; }
+  .bars.wide .bar-row .bar-track { grid-column: 1 / -1; grid-row: 2; }
+}
+.arch-wrap { overflow-x: auto; margin: 1.25rem 0; border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg); }
+.arch { display: block; width: 100%; min-width: 640px; height: auto; }
+.arch .box { fill: var(--surface); stroke: var(--line); stroke-width: 1.5; }
+.arch .box.edge { stroke: var(--accent); stroke-width: 2; }
+.arch .box.build { stroke-dasharray: 6 4; }
+.arch text { fill: var(--ink); font-family: var(--sans); font-size: 14px; }
+.arch .t { font-weight: 600; }
+.arch .s, .arch .lbl { fill: var(--muted); font-size: 12px; }
+.arch .flow { stroke: var(--muted); stroke-width: 1.6; fill: none; }
+.arch .flow.dash { stroke-dasharray: 6 4; }
+.arch .head { fill: var(--muted); }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }

@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Built on AWS: architecture, security and cost · Small Print</title>
+  <meta name="description" content="How Small Print runs on AWS: CloudFront, S3, API Gateway, Lambda and DynamoDB, deployed with the AWS CDK and checked by cdk-nag. Least-privilege roles, no personal data, uptime checks, and a cost of about US$0.59 per 1,000 screenings.">
+  <meta property="og:title" content="Small Print: built on AWS">
+  <meta property="og:description" content="Static site plus a small anonymous API, infrastructure as code, least privilege, and about US$0.59 per 1,000 screenings.">
+  <meta property="og:type" content="article">
+  <meta name="theme-color" content="#b4410e">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/src/styles/base.css">
+  <link rel="stylesheet" href="/src/styles/pages.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/">Small <span>Print</span></a>
+      <nav class="nav" aria-label="Site">
+        <a href="/how-it-works.html">How it works</a>
+        <a href="/findings.html">Findings</a>
+        <a href="/impact.html">Impact</a>
+        <a href="/judges.html">For judges</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="page-head">
+      <p class="eyebrow">Built on AWS</p>
+      <h1>A static site, a small anonymous API, and nothing else</h1>
+      <p class="lead">The heavy work (face landmarks, distance, the test itself) runs in the visitor's browser. AWS delivers the site and the on-device model, and stores one small anonymous record per test. Everything is defined in code with the AWS CDK, in one stack in us-east-1.</p>
+    </div>
+
+    <ol class="toc">
+      <li><a href="#architecture">Architecture</a></li>
+      <li><a href="#services">Services and their roles</a></li>
+      <li><a href="#security">Security and least privilege</a></li>
+      <li><a href="#cost">Cost</a></li>
+      <li><a href="#agent-proof">How the coding agent built it</a></li>
+    </ol>
+
+    <h2 id="architecture">Architecture</h2>
+    <div class="arch-wrap">
+      <svg class="arch" viewBox="0 0 760 510" role="img" aria-labelledby="arch-title arch-desc" xmlns="http://www.w3.org/2000/svg">
+        <title id="arch-title">Small Print architecture on AWS</title>
+        <desc id="arch-desc">The phone or laptop browser runs MediaPipe on the device, so video never leaves it. It connects over HTTPS to Amazon CloudFront. CloudFront serves the site, face model, WebAssembly runtime and voice clips from a private Amazon S3 bucket, and forwards /api/* requests to an Amazon API Gateway HTTP API, which invokes three AWS Lambda functions (results, stats, health) that use Amazon DynamoDB. An Amazon EventBridge schedule runs an uptime Lambda every 5 minutes, which checks the site and API through CloudFront and publishes metrics to Amazon CloudWatch, where a dashboard and alarms live. AWS Budgets alerts on cost. At build time, Amazon Polly generates the voice clips and the AWS CDK, checked by cdk-nag, deploys the stack. IAM roles are least privilege and CloudTrail records API activity.</desc>
+        <defs>
+          <marker id="arch-arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path class="head" d="M0,0 L10,5 L0,10 z"/>
+          </marker>
+        </defs>
+
+        <!-- Build time -->
+        <rect class="box build" x="20" y="24" width="170" height="64" rx="10"/>
+        <text class="t" x="32" y="50">Amazon Polly</text>
+        <text class="s" x="32" y="70">voice clips, build time</text>
+
+        <rect class="box build" x="220" y="24" width="170" height="64" rx="10"/>
+        <text class="t" x="232" y="50">AWS CDK + cdk-nag</text>
+        <text class="s" x="232" y="70">deploys the stack</text>
+
+        <rect class="box" x="440" y="24" width="300" height="64" rx="10"/>
+        <text class="t" x="452" y="50">Amazon S3 (private, OAC)</text>
+        <text class="s" x="452" y="70">site · face model · wasm (brotli) · voice clips</text>
+
+        <!-- Request path -->
+        <rect class="box" x="20" y="150" width="170" height="84" rx="10"/>
+        <text class="t" x="32" y="176">Phone or laptop</text>
+        <text class="s" x="32" y="196">browser + MediaPipe</text>
+        <text class="s" x="32" y="214">video stays on device</text>
+
+        <rect class="box edge" x="220" y="150" width="170" height="84" rx="10"/>
+        <text class="t" x="232" y="176">Amazon CloudFront</text>
+        <text class="s" x="232" y="196">HTTPS, one origin</text>
+        <text class="s" x="232" y="214">security headers</text>
+
+        <rect class="box" x="430" y="150" width="130" height="84" rx="10"/>
+        <text class="t" x="442" y="176">API Gateway</text>
+        <text class="s" x="442" y="196">HTTP API</text>
+        <text class="s" x="442" y="214">20 req/s limit</text>
+
+        <rect class="box" x="580" y="150" width="160" height="84" rx="10"/>
+        <text class="t" x="592" y="176">AWS Lambda ×3</text>
+        <text class="s" x="592" y="196">results, stats,</text>
+        <text class="s" x="592" y="214">health</text>
+
+        <!-- Data and monitoring -->
+        <rect class="box" x="220" y="290" width="170" height="64" rx="10"/>
+        <text class="t" x="232" y="316">Amazon EventBridge</text>
+        <text class="s" x="232" y="336">every 5 minutes</text>
+
+        <rect class="box" x="430" y="290" width="130" height="64" rx="10"/>
+        <text class="t" x="442" y="316">Lambda: uptime</text>
+        <text class="s" x="442" y="336">checks site + API</text>
+
+        <rect class="box" x="580" y="290" width="160" height="64" rx="10"/>
+        <text class="t" x="592" y="316">Amazon DynamoDB</text>
+        <text class="s" x="592" y="336">anonymous results</text>
+
+        <rect class="box" x="20" y="410" width="170" height="64" rx="10"/>
+        <text class="t" x="32" y="436">AWS Budgets</text>
+        <text class="s" x="32" y="456">US$10 / month alerts</text>
+
+        <rect class="box" x="220" y="410" width="340" height="64" rx="10"/>
+        <text class="t" x="232" y="436">Amazon CloudWatch</text>
+        <text class="s" x="232" y="456">logs · metrics · dashboard · alarms → SNS email</text>
+
+        <rect class="box" x="580" y="410" width="160" height="64" rx="10"/>
+        <text class="t" x="592" y="436">IAM + CloudTrail</text>
+        <text class="s" x="592" y="456">least privilege; audit</text>
+
+        <!-- Arrows: solid = run time, dashed = build and deploy -->
+        <path class="flow" d="M190 192 H218" marker-end="url(#arch-arrow)"/>
+        <path class="flow" d="M390 165 H410 V56 H438" marker-end="url(#arch-arrow)"/>
+        <text class="lbl" x="415" y="120">/*</text>
+        <path class="flow" d="M390 205 H428" marker-end="url(#arch-arrow)"/>
+        <text class="lbl" x="409" y="226" text-anchor="middle">/api/*</text>
+        <path class="flow" d="M560 192 H578" marker-end="url(#arch-arrow)"/>
+        <path class="flow" d="M660 234 V288" marker-end="url(#arch-arrow)"/>
+        <path class="flow" d="M390 322 H428" marker-end="url(#arch-arrow)"/>
+        <path class="flow" d="M470 290 V262 H305 V236" marker-end="url(#arch-arrow)"/>
+        <text class="lbl" x="388" y="256" text-anchor="middle">uptime checks</text>
+        <path class="flow" d="M495 354 V408" marker-end="url(#arch-arrow)"/>
+        <text class="lbl" x="502" y="386">metrics</text>
+        <path class="flow dash" d="M190 56 H218" marker-end="url(#arch-arrow)"/>
+        <path class="flow dash" d="M390 40 H438" marker-end="url(#arch-arrow)"/>
+
+        <text class="lbl" x="20" y="500">Solid arrows: requests at run time. Dashed: build and deploy.</text>
+      </svg>
+    </div>
+    <p>In words:</p>
+    <ol>
+      <li>The browser loads the site from <strong>CloudFront</strong>, which reads it from a private <strong>S3</strong> bucket. That includes Google's MediaPipe face model (3.8 MB) and its WebAssembly runtime (2.4 MB, Brotli-compressed at build time from 11.8 MB), hosted by us rather than a third-party CDN.</li>
+      <li>The camera feed is processed in the browser. No image is ever sent.</li>
+      <li>At the result, the browser sends one small anonymous JSON record to <code>/api/v1/results</code> on the same origin. CloudFront forwards <code>/api/*</code> to an <strong>API Gateway HTTP API</strong>, which invokes a <strong>Lambda</strong> function that validates it and writes it to <strong>DynamoDB</strong> in a single transaction with the running totals.</li>
+      <li>The impact page reads <code>/api/v1/stats</code>, which CloudFront caches for 30 seconds.</li>
+      <li>Every 5 minutes, <strong>EventBridge</strong> runs an uptime Lambda that checks the home page, the health endpoint and the stats endpoint through CloudFront. <strong>CloudWatch</strong> holds the metrics, a dashboard and the alarms.</li>
+      <li>At build time, <strong>Amazon Polly</strong> generates the voice-guide clips, and the <strong>AWS CDK</strong> deploys the whole stack after <strong>cdk-nag</strong> checks it.</li>
+    </ol>
+
+    <h2 id="services">Services and their roles</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Service</th><th>Role</th></tr></thead>
+        <tbody>
+          <tr><td>Amazon CloudFront</td><td>One HTTPS origin for the site and the API, so no CORS is needed. Security headers on every response. Static files cached at the edge; <code>/api/v1/stats</code> cached 30 s; other <code>/api/*</code> calls not cached.</td></tr>
+          <tr><td>Amazon S3</td><td>Private bucket (Block Public Access, encryption, TLS-only), readable only by this CloudFront distribution through Origin Access Control. Content-hashed assets cached for a year; HTML, model and runtime revalidated.</td></tr>
+          <tr><td>Amazon API Gateway (HTTP API)</td><td>Three routes: <code>POST /api/v1/results</code>, <code>GET /api/v1/stats</code>, <code>GET /api/v1/health</code>. Throttled to 20 requests a second (bursts of 40). Access logs without IP address or user agent.</td></tr>
+          <tr><td>AWS Lambda</td><td>Node.js 22 on ARM (Graviton): <code>results</code>, <code>stats</code>, <code>health</code>, and <code>uptime</code>.</td></tr>
+          <tr><td>Amazon DynamoDB</td><td>One on-demand table: one item per test, plus one running-total item per traffic type (real, demo, judge, dev). Point-in-time recovery and deletion protection.</td></tr>
+          <tr><td>Amazon EventBridge</td><td>Runs the uptime check every 5 minutes.</td></tr>
+          <tr><td>Amazon CloudWatch</td><td>Logs kept 2 weeks; metrics for screenings by traffic type, uptime and latency; a dashboard; alarms for uptime and API errors.</td></tr>
+          <tr><td>Amazon SNS</td><td>Sends alarm notifications (email, if configured).</td></tr>
+          <tr><td>AWS Budgets</td><td>A US$10 monthly cost budget with alerts.</td></tr>
+          <tr><td>Amazon Polly</td><td>Generates the voice-guide clips ahead of time, so there is no per-visit cost and the voice works on slow connections. If a clip is missing, the browser's own speech voice is used.</td></tr>
+          <tr><td>AWS CDK + cdk-nag</td><td>The whole stack is TypeScript infrastructure as code. Every synth runs the cdk-nag AWS Solutions checks and fails on any finding that has not been reviewed and acknowledged with a reason.</td></tr>
+          <tr><td>AWS IAM + CloudTrail</td><td>One least-privilege role per function. A separate role for the coding agent, so its calls are visible on their own in CloudTrail (<a href="#agent-proof">below</a>).</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="security">Security and least privilege</h2>
+    <ul>
+      <li><strong>No personal data, no images.</strong> The API accepts only the fields listed on the <a href="/safety.html#privacy">privacy section</a>; unknown fields are rejected and the stored item is rebuilt from validated values. Requests over 4 KB are rejected, which could not carry an image anyway.</li>
+      <li><strong>No IP addresses or user agents</strong> are stored or logged. API access logs leave them out; function logs carry only validated values and error types; CloudFront and S3 access logs are off because they would record visitors' IP addresses.</li>
+      <li><strong>Each function has its own role</strong>, with no AWS managed policies: it can write only to its own log group and use only the DynamoDB actions it needs, restricted to its own key prefixes (<code>dynamodb:LeadingKeys</code>). The uptime function has no data access at all.</li>
+      <li><strong>Security headers</strong> on every response: HSTS, <code>Permissions-Policy: camera=(self)</code> (no microphone or location), <code>X-Content-Type-Options: nosniff</code>, <code>X-Frame-Options: DENY</code>, and a strict referrer policy.</li>
+      <li><strong>Abuse and cost limits:</strong> throttling, strict validation, the size cap, edge caching of the stats, the budget, and the uptime and error alarms. A web application firewall (at least US$5 a month) did not fit the US$10 budget; that trade-off is recorded as an acknowledged cdk-nag finding.</li>
+      <li><strong>Known limits:</strong> the API Gateway's own hostname is publicly reachable, bypassing CloudFront (throttling still applies); and the single running-total item per traffic type would need sharding above roughly 100 writes a second.</li>
+    </ul>
+
+    <h2 id="cost">Cost</h2>
+    <p>Per 1,000 screenings, at us-east-1 on-demand list prices (October 2026), before free tiers. Assumptions, deliberately pessimistic: every visitor is new (empty browser cache), completes one test, sends one result, and views the stats once with a cache miss.</p>
+    <ul>
+      <li>Download per visit: about <strong>6.6 MB</strong> = WebAssembly runtime 2.4 MB (Brotli; 11.8 MB uncompressed) + face model 3.8 MB + page, scripts, styles and audio about 0.4 MB. About 25 HTTPS requests.</li>
+      <li>Two API requests; Lambda billed time 100 ms (results) and 50 ms (stats) at 256 MB.</li>
+      <li>DynamoDB: a new result is 6 write units (transactions cost double); stats are 2 read units.</li>
+    </ul>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Item</th><th class="num">Per 1,000</th><th class="num">Unit price</th><th class="num">Cost</th></tr></thead>
+        <tbody>
+          <tr><td>CloudFront data transfer out (North America/Europe)</td><td class="num">6.6 GB</td><td class="num">$0.085 / GB</td><td class="num">$0.561</td></tr>
+          <tr><td>CloudFront HTTPS requests</td><td class="num">25,000</td><td class="num">$0.0100 / 10,000</td><td class="num">$0.025</td></tr>
+          <tr><td>API Gateway HTTP API requests</td><td class="num">2,000</td><td class="num">$1.00 / million</td><td class="num">$0.002</td></tr>
+          <tr><td>Lambda requests</td><td class="num">2,000</td><td class="num">$0.20 / million</td><td class="num">$0.0004</td></tr>
+          <tr><td>Lambda compute (ARM)</td><td class="num">37.5 GB-s</td><td class="num">$0.0000133334 / GB-s</td><td class="num">$0.0005</td></tr>
+          <tr><td>DynamoDB writes</td><td class="num">6,000</td><td class="num">$0.625 / million</td><td class="num">$0.0038</td></tr>
+          <tr><td>DynamoDB reads</td><td class="num">2,000</td><td class="num">$0.125 / million</td><td class="num">$0.0003</td></tr>
+          <tr><td>CloudWatch Logs ingestion</td><td class="num">2.5 MB</td><td class="num">$0.50 / GB</td><td class="num">$0.0013</td></tr>
+          <tr class="hl"><td>Total</td><td></td><td></td><td class="num">about $0.59</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>The backend (API Gateway, Lambda, DynamoDB, logs) is under one cent per 1,000 screenings; about 99% of the cost is CloudFront delivering the site, mostly the on-device model and runtime. CloudFront's always-free tier (1 TB of data and 10 million requests a month) covers about <strong>150,000 screenings a month</strong> (1 TB ÷ 6.6 MB). Data transfer to South America, Asia and Africa is priced higher per GB.</p>
+    <div class="table-wrap">
+      <table>
+        <caption>Fixed monthly costs, independent of traffic</caption>
+        <thead><tr><th>Item</th><th class="num">Per month</th></tr></thead>
+        <tbody>
+          <tr><td>Uptime checks (8,640 runs a month, plus their API and CloudFront requests)</td><td class="num">about $0.08</td></tr>
+          <tr><td>Custom metrics (10)</td><td class="num">$3.00, or $0 within the free tier</td></tr>
+          <tr><td>Alarms (4 alarm metrics)</td><td class="num">$0.40, or $0 within the free tier</td></tr>
+          <tr><td>Dashboard</td><td class="num">$0 (first 3 per account)</td></tr>
+          <tr><td>DynamoDB storage and backups, S3 storage, Budgets</td><td class="num">under $0.01</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="small muted">Before Brotli compression the runtime was sent uncompressed (CloudFront only compresses files up to 10 MB), which put the first-visit download at about 16 MB and the cost at about $1.39 per 1,000.</p>
+
+    <section id="agent-proof">
+      <h2>How the coding agent built it</h2>
+      <p>Small Print was built with an AI coding agent, Claude Code, working with a human developer. (The app itself uses no AI to decide anything about your eyes.) The agent connected to AWS through the <strong>AWS MCP Server</strong> (Agent Toolkit for AWS) using a dedicated IAM role, <code>small-print-agent</code>, used for nothing else. The role has:</p>
+      <ul>
+        <li><strong>ReadOnlyAccess</strong>, to inspect resources, logs and metrics;</li>
+        <li>permission to use the <strong>CDK deployment roles</strong>, so every change to infrastructure goes through the CDK and CloudFormation rather than direct edits;</li>
+        <li><strong>Amazon Polly</strong>, to generate the voice clips;</li>
+        <li><strong>CloudFront invalidations</strong>, to publish new versions of the site.</li>
+      </ul>
+      <p>Because the role is used only by the agent, CloudTrail records its calls separately from any human activity in the account. The table below lists real CloudTrail events from that role.</p>
+      <h3>CloudTrail: the agent's calls</h3>
+      <div id="cloudtrail-table">
+        <p>Totals for the role <code>small-print-agent</code>, session name <code>claude-code-agent</code>, from 18:00 to 21:30 UTC on 1 October 2026 (205 events). <span class="tag measured">Measured</span></p>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Event</th><th class="num">Count</th><th>What it shows</th></tr></thead>
+          <tbody>
+            <tr><td><code>aws-mcp:CallReadWriteTool</code></td><td class="num">16</td><td>The agent calling the AWS MCP Server's <code>aws___run_script</code> tool. User agent <code>mcp-proxy-for-aws/1.7.0 claude-code/2.1.287</code>.</td></tr>
+            <tr><td><code>sts:AssumeRole</code></td><td class="num">51</td><td>CDK deploys: the agent role assumes the CDK deployment roles (<code>cdk-hnb659fds-*</code>), the only way it can change infrastructure.</td></tr>
+            <tr><td><code>polly:SynthesizeSpeech</code></td><td class="num">81</td><td>Generating the 80 voice clips (English, Spanish, French, Portuguese) once, at build time.</td></tr>
+            <tr><td><code>s3:CreateBucket</code></td><td class="num">1</td><td>A deliberate test write. <strong>Refused with AccessDenied</strong>: the agent role cannot change anything directly.</td></tr>
+            <tr><td>Read-only calls (CloudFormation, CloudWatch, Logs, IAM, Pricing, CloudFront, DynamoDB)</td><td class="num">56</td><td>Checking deployments, alarms, logs and prices.</td></tr>
+          </tbody>
+        </table></div>
+        <p>Individual events a judge with access to the account could look up:</p>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Time (UTC)</th><th>Event</th><th>Detail</th><th>Event ID</th></tr></thead>
+          <tbody>
+            <tr><td>18:47:45</td><td><code>s3:CreateBucket</code></td><td>errorCode <code>AccessDenied</code></td><td><code>f1cbe106-8bfd-4a5d-8a6a-492132bdcf40</code></td></tr>
+            <tr><td>20:18:04</td><td><code>aws-mcp:CallReadWriteTool</code></td><td>tool <code>aws___run_script</code></td><td><code>3165bafa-c064-4383-83ff-de46f1d2aa3f</code></td></tr>
+            <tr><td>20:18:04</td><td><code>iam:GetRole</code></td><td>made by the MCP server: <code>sourceIPAddress: aws-mcp.amazonaws.com</code></td><td><code>8bb83331-0756-4bd3-9e54-5a9d2794864e</code></td></tr>
+            <tr><td>21:04:12</td><td><code>aws-mcp:CallReadWriteTool</code></td><td>tool <code>aws___run_script</code></td><td><code>fb1d4e55-682a-4424-b004-a8f2741936f6</code></td></tr>
+          </tbody>
+        </table></div>
+        <p class="small muted">Tool arguments are hidden by CloudTrail (<code>[HIDDEN_DUE_TO_SECURITY_REASONS]</code>), so the log shows that the agent called a tool, not what it ran. The connection check from the setup guide, "What AWS Regions are available?", returned all 37 regions through the MCP server.</p>
+      </div>
+      <h3>What went wrong</h3>
+      <p>Defects the agent caused or caught while building Small Print, and how each was fixed.</p>
+      <div class="table-wrap"><table id="what-went-wrong">
+        <thead><tr><th>Problem</th><th>How we found it</th><th>Fix</th></tr></thead>
+        <tbody>
+          <tr><td>The try-on couldn't tell "good" from "slightly too weak" when a pair was still sharp at arm's length.</td><td>Simulation: with perfect measurements but realistic arm reach, the try-on reached only 78% within ±0.25 D.</td><td>Flag the case and ask for one stronger pair to settle it.</td></tr>
+          <tr><td>People stretch their arm when asked where they read, which pushes the strength too high.</td><td>Simulation: try-on accuracy fell to 37% under arm-stretch.</td><td>Reading distance clamped to 25–45 cm; wording changed to "where you'd like to read".</td></tr>
+          <tr><td>The result could change silently after a try-on (the try-on's reach overwrote the no-glasses reach).</td><td>Automated end-to-end test.</td><td>The no-glasses reach is frozen; the result is not recomputed after a try-on.</td></tr>
+          <tr><td>The try-on could suggest a strength above +3.00 instead of referring.</td><td>Review of the safety page against the code.</td><td>Suggestions above +3.00 now show "please see an eye-care professional".</td></tr>
+          <tr><td>The "hold still" detector counted frames, so it never finished when the browser slowed timers.</td><td>Manual test in Chrome.</td><td>Stability is now measured over time, not frame count.</td></tr>
+          <tr><td>The 11.8 MB WebAssembly runtime was served uncompressed (CloudFront compresses files up to 10 MB only).</td><td>Cost check during the infrastructure build.</td><td>Brotli at build time, served with <code>Content-Encoding: br</code>: 2.4 MB.</td></tr>
+          <tr><td>The demo controls and arrow labels stayed in English after a language switch.</td><td>Automated accessibility test.</td><td>Labels are translated and refreshed on switch.</td></tr>
+          <tr><td>The MCP server didn't appear in the editor: it was registered under <code>C:\</code> while the folder was opened as <code>c:\</code>.</td><td>The human developer noticed the tools were missing.</td><td>Project-scoped <code>.mcp.json</code>.</td></tr>
+          <tr><td>The agent's own safety checks refused to create the IAM role without explicit approval.</td><td>Working as intended.</td><td>The human approved; the role was narrowed from power-user to read-only plus deployment roles.</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Small Print helps you choose non-prescription reading glasses. It is not an eye exam and cannot detect eye disease. <a href="/safety.html">Safety</a> · <a href="/how-it-works.html">How it works</a> · <a href="/validation.html">Validation</a> · <a href="/evidence.html">Built on AWS</a> · <a href="/judges.html">For judges</a></p>
+      <p>Built for the AWS Builder Center “Zero to Shipped” hackathon, 2026. Open source.</p>
+    </div>
+  </footer>
+</body>
+</html>

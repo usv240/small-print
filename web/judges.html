@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>For judges: try Small Print in 60 seconds</title>
+  <meta name="description" content="A step-by-step path for hackathon judges: try Small Print on your phone, laptop webcam, or without a camera, with the exact result to expect at each step, and where to find the evidence for each judging criterion.">
+  <meta property="og:title" content="Small Print for judges: try it in 60 seconds">
+  <meta property="og:description" content="Phone, laptop or no camera at all. Every step says what you should see.">
+  <meta property="og:type" content="article">
+  <meta name="theme-color" content="#b4410e">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/src/styles/base.css">
+  <link rel="stylesheet" href="/src/styles/pages.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/">Small <span>Print</span></a>
+      <nav class="nav" aria-label="Site">
+        <a href="/how-it-works.html">How it works</a>
+        <a href="/findings.html">Findings</a>
+        <a href="/impact.html">Impact</a>
+        <a href="/judges.html" aria-current="page">For judges</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="page-head">
+      <p class="eyebrow">For judges</p>
+      <h1>Try it in 60 seconds</h1>
+      <p class="lead">Three ways in: on your phone (about two minutes, a real result for your own eyes), on a laptop webcam, or with no camera at all (60 seconds, a scripted result you can check). Every step says what you should see.</p>
+      <p>Links with <code>?judge</code> mark your tries as judge traffic, so they are <a href="/impact.html#live">counted separately</a> and never mixed with real use.</p>
+    </div>
+
+    <h2 id="phone">A. On your phone (recommended)</h2>
+    <p>On a desktop? Open this address on your phone:</p>
+    <a class="big-url" href="/test.html?judge">https://dxug72099q2ay.cloudfront.net/test.html?judge</a>
+    <p class="small">Use Chrome or Safari. Browsers built into social and messaging apps often block the camera; if the camera won't start, open the link in your phone's main browser.</p>
+    <ol class="judge-steps">
+      <li><strong>Open the link and tap "Start with camera".</strong>
+        <span class="expect">"First, a few safety questions": six yes/no questions.</span></li>
+      <li><strong>Answer honestly and tap Continue.</strong> If you answer yes to diabetes, glaucoma in the family, distance blur or distance glasses, you'll see "An eye exam is a good idea"; tap "Continue anyway".
+        <span class="expect">"How old are you?" with − and + buttons.</span></li>
+      <li><strong>Set your age, tap Continue, then "Allow camera"</strong> and accept the browser's prompt.
+        <span class="expect">"Match a card to the screen" (first visit on this device only).</span></li>
+      <li><strong>Hold any bank, ID or library card against the screen</strong>, drag the slider until the box is exactly as wide, and tap "It matches". No card? Tap "I don't have a card".
+        <span class="expect">"Hold the screen 30 cm from your eyes", with a live distance pill (for example "31 cm") at the top that changes as you move.</span></li>
+      <li><strong>Hold the screen 30 cm from your eyes</strong> (a ruler, or the long side of an A4 sheet) and tap "It's 30 cm now". Or tap "Skip (less accurate)".
+        <span class="expect">"Hold your phone where you'd like to read". The pill tracks your distance live.</span></li>
+      <li><strong>Hold the phone where you'd comfortably read, without stretching, and keep still.</strong>
+        <span class="expect">A bar fills in about two seconds, then "Got it: you read at about … cm". Tap Continue.</span></li>
+      <li><strong>Swipe, or tap the arrow, in the direction the E points.</strong> Five times. Guess if unsure.
+        <span class="expect">"1 of 5" … "5 of 5", then "Is this E sharp?"</span></li>
+      <li><strong>Tap Sharp or Blurry, then move the phone slowly as asked</strong> and tap the moment the E changes.
+        <span class="expect">The E gets physically bigger as you move away and smaller as you come closer, so it always looks the same size to you. That is the constant-angle letter.</span></li>
+      <li><strong>Read your result.</strong>
+        <span class="expect">"Your result": a starting strength from +1.00 to +3.00 and which pair to try first (or "You may not need reading glasses yet", or a referral), plus "Just for fun: your eyes focus like a typical …-year-old's". Open "How we worked this out" to see the numbers behind it.</span></li>
+    </ol>
+
+    <h2 id="laptop">B. On a laptop webcam</h2>
+    <p>Open the same address in Chrome or Edge on your laptop: <a href="/test.html?judge">/test.html?judge</a>. The steps are identical. Instead of moving the screen, lean towards and away from it. Calibration works the same way: the card against the screen, then your eyes 30 cm from the screen.</p>
+    <p class="expect">The same live distance pill, the same resizing E, and a result card.</p>
+
+    <h2 id="demo">C. No camera: a scripted 60-second run</h2>
+    <p>A slider stands in for the camera, so the whole flow runs anywhere. This script has a known answer you can check against <a href="/how-it-works.html#strength">the worked example</a>.</p>
+    <a class="big-url" href="/test.html?demo&amp;judge">https://dxug72099q2ay.cloudfront.net/test.html?demo&amp;judge</a>
+    <ol class="judge-steps">
+      <li><strong>Open the link.</strong>
+        <span class="expect">The safety questions, with a "Distance from your eyes" slider at the bottom and the note "Demo mode: the slider stands in for the camera."</span></li>
+      <li><strong>Answer No to all six questions</strong> and tap Continue.
+        <span class="expect">"How old are you?", showing 50.</span></li>
+      <li><strong>Tap + twice to set 52</strong> and tap Continue.
+        <span class="expect">"Hold your phone where you'd like to read".</span></li>
+      <li><strong>Set the slider to 38 cm and leave it.</strong>
+        <span class="expect">The bar fills, then "Got it: you read at about 38 cm." Tap Continue.</span></li>
+      <li><strong>Answer the five E's</strong> with the arrows (any answers work for this script).
+        <span class="expect">"Is this E sharp?"</span></li>
+      <li><strong>Tap Blurry, move the slider to 60 cm, and tap "Now it's sharp".</strong>
+        <span class="expect">As the slider moves out, the E grows on screen.</span></li>
+      <li><strong>Read the result.</strong>
+        <span class="expect">"Start with reading glasses of +2.00", "At the shop, try +2.00 first.", and "Just for fun: your eyes focus like a typical 57-year-old's."</span></li>
+      <li><strong>Optional: the try-on check.</strong> Tap "Check a pair in the shop", pick the strength printed on a pair (here +2.00 is preselected), tap Continue, and follow the screens: find a sharp spot, move closer until it blurs, then away until it blurs.
+        <span class="expect">A verdict ("Good fit", "Too weak … try …" or "Too strong … try …") and a bar showing your sharp range and your reading distance. For example, with +2.00, marking 25 cm then 60 cm gives "Good fit. These +2.00 glasses suit your reading distance."</span></li>
+    </ol>
+
+    <h2 id="look">What to look for</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Criterion</th><th>Look for</th><th>Evidence</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Technical Innovation &amp; Originality</strong></td><td>The phone camera used as a ruler (iris size → distance, live); a test letter that resizes itself so it always covers the same angle; a try-on check that uses the standard "reading distance in the middle of the clear range" rule with real lenses.</td><td><a href="/how-it-works.html">How it works</a>, <a href="/findings.html">Findings</a></td></tr>
+          <tr><td><strong>Implementation Quality</strong></td><td>Open your browser's developer tools, Network tab: the camera feed is never uploaded; the only request is one small JSON result to <code>/api/v1/results</code>. 76 automated tests; infrastructure as code (AWS CDK) checked by cdk-nag; least-privilege roles; uptime checks and a cost budget.</td><td><a href="/evidence.html">Built on AWS</a>, <a href="/validation.html#verified">Tests</a>, <a href="/safety.html#privacy">Privacy</a></td></tr>
+          <tr><td><strong>Community / Market Impact</strong></td><td>Live counts with judge, demo and development traffic kept apart (your try appears under "Judges" within a couple of minutes); a projection with every assumption shown; a path to scale and a cost of about US$0.59 per 1,000 screenings.</td><td><a href="/impact.html">Impact</a></td></tr>
+          <tr><td><strong>Creativity &amp; Storytelling</strong></td><td>A test that needs no reading, with a voice guide; the "eye age" for fun; the finding that holding a 14-inch card at 30 cm shifts the result by a whole strength step; honest labels on everything simulated.</td><td><a href="/">Home</a>, <a href="/findings.html#card">Finding 1</a>, <a href="/validation.html#not-better">Where we're not better</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="tested">Tested on</h2>
+    <ul>
+      <li>Google Pixel phone, Chrome on Android.</li>
+      <li>Windows laptop webcam, Chrome and Edge.</li>
+      <li>iPhone Safari: best effort. We have not tested on an iPhone; the no-camera demo works in any modern browser.</li>
+    </ul>
+
+    <h2 id="trouble">If something goes wrong</h2>
+    <ul>
+      <li><strong>"Can't see your face."</strong> Face the screen in good light, about arm's length or closer.</li>
+      <li><strong>The camera won't start.</strong> Open the link in Chrome or Safari, not inside another app, and allow camera access. The camera screen also offers "Try without a camera".</li>
+      <li><strong>Redo the calibration</strong> (for example on a shared device): <a href="/test.html?judge&amp;recalibrate">/test.html?judge&amp;recalibrate</a>.</li>
+      <li><strong>Small Print is not an eye exam.</strong> Your result is a starting point for choosing ready-made readers. See <a href="/safety.html">Safety and scope</a>.</li>
+    </ul>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Small Print helps you choose non-prescription reading glasses. It is not an eye exam and cannot detect eye disease. <a href="/safety.html">Safety</a> · <a href="/how-it-works.html">How it works</a> · <a href="/validation.html">Validation</a> · <a href="/evidence.html">Built on AWS</a> · <a href="/judges.html">For judges</a></p>
+      <p>Built for the AWS Builder Center “Zero to Shipped” hackathon, 2026. Open source.</p>
+    </div>
+  </footer>
+</body>
+</html>

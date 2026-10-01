@@ -9,7 +9,9 @@
     "test": "vitest run",
     "sim": "tsx sim/bench.ts",
     "predev": "node scripts/copy-mediapipe.mjs",
-    "prebuild": "node scripts/copy-mediapipe.mjs"
+    "prebuild": "node scripts/copy-mediapipe.mjs",
+    "e2e": "playwright test",
+    "voice": "tsx scripts/gen-voice.mjs"
   },
   "keywords": [],
   "author": "",
@@ -20,6 +22,7 @@
     "@mediapipe/tasks-vision": "^1.0.1"
   },
   "devDependencies": {
+    "@playwright/test": "^1.63.0",
     "@types/node": "^26.6.3",
     "tsx": "^4.23.15",
     "typescript": "^7.0.2",

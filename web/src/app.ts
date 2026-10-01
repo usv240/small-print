@@ -39,6 +39,10 @@ const state = {
   nearPointMm: null as number | null,
   nearBeyond: false,
   maxMm: 0,
+  /** Farthest distance reached during the no-glasses test, frozen when the near point is marked. */
+  reachMm: 0,
+  /** Farthest distance reached during the current try-on. */
+  tryMaxMm: 0,
   rec: null as Recommendation | null,
   tryOns: [] as { strength: number; verdict: TryOnResult['verdict'] }[],
   existing: null as number | null,
@@ -99,7 +103,10 @@ async function startSource(): Promise<void> {
   await source.start((s) => {
     state.sample = s;
     state.distanceMm = s.distanceMm;
-    if (s.distanceMm !== null) state.maxMm = Math.max(state.maxMm, s.distanceMm);
+    if (s.distanceMm !== null) {
+      state.maxMm = Math.max(state.maxMm, s.distanceMm);
+      state.tryMaxMm = Math.max(state.tryMaxMm, s.distanceMm);
+    }
     updateLive();
     onDistance?.(s.distanceMm);
   });
@@ -137,7 +144,7 @@ function welcome(): void {
       <div class="stack">${btn('start', t('welcome_start'))}${btn('demo', t('welcome_demo'), 'secondary')}</div>
       ${t('translation_note') ? `<p class="small muted">${t('translation_note')}</p>` : ''}
     </section>`, 'welcome_say');
-  document.getElementById('lang')!.addEventListener('change', (e) => { setLang((e.target as HTMLSelectElement).value as Lang); welcome(); });
+  document.getElementById('lang')!.addEventListener('change', (e) => { setLang((e.target as HTMLSelectElement).value as Lang); syncDemoBar(); welcome(); });
   on('voice', () => { setVoice(!voiceEnabled()); welcome(); });
   on('start', () => { state.mode = 'camera'; safety(); });
   on('demo', () => enterDemo());
@@ -336,10 +343,10 @@ function smallPrint(): void {
 
 function arrows(): string {
   return `<div class="arrows" role="group">
-    <button type="button" class="arrow" data-d="up" aria-label="up">↑</button>
-    <button type="button" class="arrow" data-d="left" aria-label="left">←</button>
-    <button type="button" class="arrow" data-d="right" aria-label="right">→</button>
-    <button type="button" class="arrow" data-d="down" aria-label="down">↓</button></div>`;
+    <button type="button" class="arrow" data-d="up" aria-label="${t('arrow_up')}">↑</button>
+    <button type="button" class="arrow" data-d="left" aria-label="${t('arrow_left')}">←</button>
+    <button type="button" class="arrow" data-d="right" aria-label="${t('arrow_right')}">→</button>
+    <button type="button" class="arrow" data-d="down" aria-label="${t('arrow_down')}">↓</button></div>`;
 }
 
 function bindArrows(cb: (d: Direction) => void): void {
@@ -365,9 +372,10 @@ function nearMove(direction: 'in' | 'out'): void {
     if (state.distanceMm === null) return;
     state.nearPointMm = state.distanceMm;
     state.nearBeyond = false;
+    state.reachMm = Math.max(state.maxMm, state.workingMm ?? 0);
     result();
   });
-  on('never', () => { state.nearPointMm = null; state.nearBeyond = true; result(); });
+  on('never', () => { state.nearPointMm = null; state.nearBeyond = true; state.reachMm = Math.max(state.maxMm, state.workingMm ?? 0); result(); });
 }
 
 function computeRec(): Recommendation {
@@ -376,7 +384,7 @@ function computeRec(): Recommendation {
     workingDistanceMm: state.workingMm ?? 400,
     nearPointMm: state.nearPointMm,
     nearPointBeyondReach: state.nearBeyond,
-    reachMm: Math.max(state.maxMm, state.workingMm ?? 400),
+    reachMm: Math.max(state.reachMm, state.workingMm ?? 400),
     smallPrintAtWorkingDistance: state.smallPrintCorrect >= SMALL_PRINT_PASS,
   });
 }
@@ -411,8 +419,8 @@ function report(): void {
   void sendResult(payload);
 }
 
-function result(): void {
-  const rec = (state.rec = computeRec());
+function result(recompute = true): void {
+  const rec = recompute || !state.rec ? (state.rec = computeRec()) : state.rec;
   const advised = safetyReasons().length > 0;
   let main = '';
   if (rec.outcome === 'readers' && rec.strength !== null) {
@@ -430,7 +438,7 @@ function result(): void {
     t('result_why_wd', { cm: Math.round((state.workingMm ?? 400) / 10) }),
     t('result_why_age', { a: formatPower(Math.max(0, rec.detail.fromAge)) }),
     rec.detail.fromNearPoint === null ? '' : rec.detail.nearPointIsLowerBound
-      ? t('result_why_np_out', { cm: Math.round(Math.max(state.maxMm, state.workingMm ?? 0) / 10), a: formatPower(Math.max(0, rec.detail.fromNearPoint)) })
+      ? t('result_why_np_out', { cm: Math.round(Math.max(state.reachMm, state.workingMm ?? 0) / 10), a: formatPower(Math.max(0, rec.detail.fromNearPoint)) })
       : t('result_why_np', { cm: Math.round((state.nearPointMm ?? 0) / 10), a: formatPower(Math.max(0, rec.detail.fromNearPoint)) }),
   ].filter(Boolean).map((s) => `<li>${s}</li>`).join('');
   const powers = [0.75, 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.25, 3.5, 4];
@@ -477,7 +485,7 @@ async function share(rec: Recommendation): Promise<void> {
 
 function tryOnPick(initial: number): void {
   state.tryOnStrength = initial;
-  const powers = [0.75, 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.25, 3.5];
+  const powers = [0.75, 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3];
   const opts = powers.map((p) => `<button type="button" class="chip power-chip ${p === initial ? 'on' : ''}" data-p="${p}">${formatPower(p)}</button>`).join('');
   show(`<section class="screen"><h1 tabindex="-1">${t('tryon_h')}</h1><p class="lead">${t('tryon_p')}</p>
     <div class="chips" role="group">${opts}</div><div class="stack">${btn('next', t('continue'))}</div></section>`, 'tryon_say');
@@ -490,6 +498,7 @@ function tryOnPick(initial: number): void {
 
 function tryOnSharp(): void {
   state.tryOnNear = null;
+  state.tryMaxMm = 0;
   show(`<section class="screen">${livePill()}<h1 tabindex="-1">${t('tryon_sharp_h')}</h1><p>${t('tryon_sharp_p')}</p>
     <div class="stage"><canvas id="e"></canvas></div>
     <div class="stack">${btn('ok', t('tryon_sharp_btn'))}${btn('never', t('tryon_never'), 'secondary')}</div></section>`, 'tryon_sharp_say');
@@ -502,7 +511,7 @@ function tryOnNear(): void {
   show(`<section class="screen">${livePill()}<h1 tabindex="-1">${t('tryon_near_h')}</h1><p>${t('tryon_near_p')}</p>
     <div class="stage"><canvas id="e"></canvas></div><div class="stack">${btn('mark', t('nearin_btn'))}</div></section>`, 'tryon_near_say');
   liveE(document.getElementById('e') as HTMLCanvasElement, randomDirection());
-  on('mark', () => { if (state.distanceMm === null) return; state.tryOnNear = state.distanceMm; state.maxMm = state.distanceMm; tryOnFar(); });
+  on('mark', () => { if (state.distanceMm === null) return; state.tryOnNear = state.distanceMm; state.tryMaxMm = state.distanceMm; tryOnFar(); });
 }
 
 function tryOnFar(): void {
@@ -521,27 +530,34 @@ function tryOnVerdict(farMm: number | null | undefined): void {
     show(`<section class="screen"><h1 tabindex="-1">${t('tryon_h')}</h1><p class="lead">${t('tryon_neversharp')}</p>
       <div class="stack">${btn('another', t('tryon_another'))}${btn('done', t('tryon_done'), 'secondary')}</div></section>`);
     on('another', () => tryOnPick(s));
-    on('done', result);
+    on('done', () => result(false));
     return;
   }
   const wd = state.workingMm ?? 400;
-  const r = assessTryOn({ strength: s, workingDistanceMm: wd, nearLimitMm: state.tryOnNear ?? wd * 0.7, farLimitMm: farMm ?? null, reachMm: Math.max(state.maxMm, wd) });
+  const r = assessTryOn({ strength: s, workingDistanceMm: wd, nearLimitMm: state.tryOnNear ?? wd * 0.7, farLimitMm: farMm ?? null, reachMm: Math.max(state.tryMaxMm, wd) });
   state.tryOns.push({ strength: s, verdict: r.verdict });
   report();
   const confirm = r.verdict === 'good' && r.farEndUnknown && s + CONFIRM_STEP_D <= 3.5;
-  const next = confirm ? s + CONFIRM_STEP_D : Math.min(4, Math.max(0.75, s + r.change));
+  const next = confirm ? s + CONFIRM_STEP_D : Math.max(0.75, s + r.change);
+  if (r.verdict === 'stronger' && next > 3) {
+    // Ready-made readers stop at about +3.00 (Stevens 2019): beyond that, refer rather than sell.
+    show(`<section class="screen warn"><h1 tabindex="-1">${t('result_refer_h')}</h1><p class="lead">${t('result_refer_p')}</p>
+      <div class="stack">${btn('done', t('tryon_done'))}</div></section>`, 'stop_say');
+    on('done', () => result(false));
+    return;
+  }
   const msg = r.verdict === 'good'
     ? t('tryon_good', { s: formatPower(s) }) + (confirm ? ` ${t('tryon_confirm', { s: formatPower(next) })}` : '')
     : t(r.verdict === 'stronger' ? 'tryon_stronger' : 'tryon_weaker', { s: formatPower(next) });
   const sayKey: StringKey = r.verdict === 'good' ? 'tryon_good_say' : r.verdict === 'stronger' ? 'tryon_stronger_say' : 'tryon_weaker_say';
-  show(`<section class="screen result"><h1 tabindex="-1">${t('tryon_h')} ${formatPower(s)}</h1>
+  show(`<section class="screen result"><h1 tabindex="-1">${t('tryon_checking', { s: formatPower(s) })}</h1>
     <div class="result-card ${r.verdict}"><p class="lead">${msg}</p></div>
     ${rangeBar(state.tryOnNear ?? wd * 0.7, farMm ?? null, wd)}
     <p class="small muted">${t('tryon_range', { near: cm(state.tryOnNear), far: farMm ? cm(farMm) : t('armslength'), wd: cm(wd) })}</p>
     <div class="stack">${r.verdict === 'good' && !confirm ? '' : btn('another', t('tryon_another'), confirm ? 'secondary' : 'primary')}${btn('done', t('tryon_done'), r.verdict === 'good' ? 'primary' : 'secondary')}</div>
   </section>`, sayKey);
   on('another', () => tryOnPick(next));
-  on('done', result);
+  on('done', () => result(false));
 }
 
 /** A 10–80 cm scale with the sharp range shaded and the reading distance marked. */
@@ -556,6 +572,13 @@ function rangeBar(nearMm: number, farMm: number | null, wdMm: number): string {
 
 // ---------- boot ----------
 
+function syncDemoBar(): void {
+  const slider = document.getElementById('demo-range') as HTMLInputElement;
+  document.getElementById('demo-value')!.textContent = t('cm', { n: slider.value });
+  document.getElementById('demo-label')!.textContent = t('demo_slider');
+  document.getElementById('demo-note')!.textContent = t('demo_banner');
+}
+
 function boot(): void {
   setLang(detectLang());
   const q = new URLSearchParams(location.search);
@@ -563,11 +586,8 @@ function boot(): void {
   if (q.has('recalibrate')) clearCalibration();
   const slider = document.getElementById('demo-range') as HTMLInputElement;
   const label = document.getElementById('demo-value')!;
-  const sync = () => { label.textContent = t('cm', { n: slider.value }); };
-  slider.addEventListener('input', sync);
-  sync();
-  document.getElementById('demo-label')!.textContent = t('demo_slider');
-  document.getElementById('demo-note')!.textContent = t('demo_banner');
+  slider.addEventListener('input', () => { label.textContent = t('cm', { n: slider.value }); });
+  syncDemoBar();
   window.addEventListener('pagehide', () => { stopVoice(); source?.stop(); });
   if (q.has('demo')) enterDemo();
   else welcome();

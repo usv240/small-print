@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Validation: what is measured, verified, simulated and not yet done · Small Print</title>
+  <meta name="description" content="The honest evidence for Small Print: camera distance measured against a ruler, 76 automated tests against published references, a 20,000-person simulation with every assumption and every weak spot, and the field study that has not been done yet.">
+  <meta property="og:title" content="Small Print: the evidence, labelled honestly">
+  <meta property="og:description" content="Measured, verified, simulated, and not yet done. Including where Small Print is not better.">
+  <meta property="og:type" content="article">
+  <meta name="theme-color" content="#b4410e">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/src/styles/base.css">
+  <link rel="stylesheet" href="/src/styles/pages.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/">Small <span>Print</span></a>
+      <nav class="nav" aria-label="Site">
+        <a href="/how-it-works.html">How it works</a>
+        <a href="/findings.html">Findings</a>
+        <a href="/impact.html">Impact</a>
+        <a href="/judges.html">For judges</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="page-head">
+      <p class="eyebrow">Validation</p>
+      <h1>What we know, and how we know it</h1>
+      <p class="lead">Every claim about Small Print falls into one of four kinds of evidence, and we label which. <strong>Small Print has not been validated in a field study with real participants.</strong> We say exactly what has been measured, what has been checked against published references, what has only been simulated, and what still needs to be done.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Kind</th><th>What</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td><span class="tag measured">Measured</span></td><td>Camera distance against a ruler, on a Google Pixel phone and a Windows laptop webcam</td><td><a href="#measured">Results pending (Oct 2)</a></td></tr>
+          <tr><td><span class="tag">Verified</span></td><td>76 automated tests: optics against published values, the recommendation and try-on rules, the results API</td><td><a href="#verified">All passing (1 documented expected failure)</a></td></tr>
+          <tr><td><span class="tag sim">Simulation</span></td><td>20,000 virtual people aged 40–70 through Small Print and four other ways of choosing readers</td><td><a href="#simulated">Done; every assumption listed</a></td></tr>
+          <tr><td><span class="tag pending">Real use</span></td><td>Agreement between Small Print's suggestion and readers people already own</td><td><a href="/impact.html#agreement">Live counter; small numbers, not validation</a></td></tr>
+          <tr><td><span class="tag pending">Not done</span></td><td>Field validation against a trained screener with trial lenses</td><td><a href="#not-done">Proposed pilot below</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="measured">1. Measured: camera distance against a ruler <span class="tag measured">Measured</span></h2>
+    <div class="slot">
+      <p class="slot-label">Results pending — measured on Oct 2</p>
+      <p><strong>Protocol.</strong> On each device we open the <a href="/lab.html">measurement lab</a>, hold the screen at 25, 40 and 60 cm from the eyes (measured with a ruler from the cheekbone just below the eye to the screen), keep still, and record the median of 2 seconds of camera readings. Each distance is repeated up to 3 times, and the table records whether the 30 cm camera calibration was in use. Error = (camera − ruler) ÷ ruler.</p>
+      <div class="table-wrap">
+        <table id="distance-results">
+          <caption>Camera distance vs ruler. Rows are added when the measurements are done; nothing here is estimated.</caption>
+          <thead>
+            <tr><th>Device</th><th>Browser</th><th class="num">Ruler</th><th class="num">Camera</th><th class="num">Error</th><th>Camera calibrated</th><th class="num">Frames</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+    <p><strong>How to read it.</strong> Demand is 1/distance, so a distance error of <i>e</i>% changes the demand by about <i>e</i>% of its value. At 40 cm (2.50 D), 4% is 0.10 D and 10% is 0.25 D. Reader strengths are usually stocked 0.50 D apart.</p>
+    <p>The second measured result, how big a CSS pixel really is on our test phone, is on <a href="/findings.html#screen">Findings</a>.</p>
+
+    <h2 id="verified">2. Verified: automated tests <span class="tag">Verified</span></h2>
+    <p>The arithmetic is checked by 76 automated tests (<code>npm test</code> in <code>web/</code> and <code>api/</code>). 75 pass. One is a deliberate "expected failure" that documents a known limitation of the try-on and will start failing, as a reminder, once that limitation is fixed.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Suite</th><th class="num">Tests</th><th>What it checks</th></tr></thead>
+        <tbody>
+          <tr><td><code>web/tests/optics.test.ts</code></td><td class="num">13</td><td>Against published values: a 1M letter is 1.454 mm and 5 arcmin at 1 m (logMAR 0); N6 is about 1.09 mm, logMAR ≈ 0.27 at 40 cm; Hofstetter at age 50 gives 2.5 / 3.5 / 5.0 D;<sup><a href="#r6">6</a></sup> the age table at six ages;<sup><a href="#r5">5</a></sup> the distance shift of about +0.50 at 33 cm and −0.50 at 50 cm.</td></tr>
+          <tr><td><code>web/tests/recommend.test.ts</code></td><td class="num">11</td><td>Starting strength for a typical 52-year-old; never below the age table when the near point is out of reach; no readers for a young eye; the short-sight flag; referral above +3.00; 0.50-step brackets; the try-on accepts the ideal pair, rejects too weak and too strong, points toward the ideal, and is unaffected by depth of focus.</td></tr>
+          <tr><td><code>web/tests/sim.test.ts</code></td><td class="num">6</td><td>Simulation bench: same seed gives the same result; the ideal pair centres the reading distance exactly; the bench's copy of the algorithm matches the shipped code; noise-free try-on is at least 95% within ±0.25 D when both ends are measurable; plus the documented expected failure.</td></tr>
+          <tr><td><code>api/test/validate.test.ts</code></td><td class="num">20</td><td>The results API accepts only the exact contract: unknown fields (including <code>ip</code> and <code>userAgent</code>), wrong types, out-of-range values and off-grid strengths are rejected.</td></tr>
+          <tr><td><code>api/test/aggregates.test.ts</code></td><td class="num">9</td><td>Counters: one screening counted once; a repeat never double counts; a changed repeat moves counts without changing the total; every bucket present in the public stats.</td></tr>
+          <tr><td><code>api/test/store.test.ts</code></td><td class="num">8</td><td>Idempotent storage per session, no network identifiers in the stored item, retries on write conflicts.</td></tr>
+          <tr><td><code>api/test/http.test.ts</code></td><td class="num">5</td><td>Content types, invalid JSON, and the 4 KB body limit.</td></tr>
+          <tr><td><code>api/test/agreement.test.ts</code></td><td class="num">4</td><td>The exact / within 0.50 / further categories for agreement with existing readers.</td></tr>
+          <tr class="hl"><td>Total</td><td class="num">76</td><td>75 passing, 1 documented expected failure.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Tests show the code does what the published formulas say. They cannot show that the formulas, or the camera, are accurate on real people.</p>
+
+    <h2 id="simulated">3. Simulated: 20,000 virtual people <span class="tag sim">Simulation</span></h2>
+    <div class="callout warn">
+      <p><strong>This is a simulation, not clinical validation.</strong> Every "person" is a set of numbers drawn from published age norms and stated assumptions. No real participant was tested. The bench shows whether the algorithm is internally consistent and how it degrades under plausible noise. It cannot show how accurate the app is on real eyes.</p>
+    </div>
+    <p>The bench calls Small Print's own functions unchanged on simulated, noisy measurements, and compares them with four other ways of choosing readers. Each method's choice is scored against the person's simulated ideal strength: the one that puts their reading distance in the middle of their clear range.<sup><a href="#r5">5</a></sup> Run: bench 1.0.0, core sha256 345c07e2c4e5, seed 20261003, generated 2026-10-01T21:47:23.890Z, reproducible to the last digit. Full method, equations and code: <a href="https://github.com/usv240/small-print/tree/main/web/sim">web/sim on GitHub</a>. Raw numbers: <a href="/data/bench.json">bench.json</a>.</p>
+    <p><strong>The virtual population:</strong> 10,763 in scope for ready-made readers (ideal +0.75 to +3.00), 3,233 who don't need readers yet, 2,036 who should be referred for short sight (worse than −1.00 D), and 3,968 who need more than +3.00 and should be referred.</p>
+
+    <h3>Headline results (main scenario)</h3>
+    <div class="table-wrap">
+      <table>
+        <caption>"Right call, everyone" is over all 20,000: a pair within ±0.50 D of ideal if they need one, no readers if they should be referred or don't need them yet. The "in scope" columns are over the 10,763 who need ready-made readers (being told "no readers" counts as a miss). Bias and mean error are over in-scope people given a pair (+ = too strong). Referral sensitivity = share of people who should be referred who were not handed readers. <span class="tag sim">Simulation</span></caption>
+        <thead>
+          <tr><th>Method</th><th class="num">Right call, everyone</th><th class="num">In scope ±0.25 D</th><th class="num">In scope ±0.50 D</th><th class="num">Exact</th><th class="num">Bias (D)</th><th class="num">Mean error (D)</th><th class="num">Referral sensitivity</th><th class="num">Short-sighted given readers</th><th class="num">Given readers too early</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Age table (40 cm)</td><td class="num">42.0%</td><td class="num">49.4%</td><td class="num">75.1%</td><td class="num">16.5%</td><td class="num">+0.07</td><td class="num">0.45</td><td class="num">0.0%</td><td class="num">100.0%</td><td class="num">100.0%</td></tr>
+          <tr><td>Age table + measured distance</td><td class="num">43.1%</td><td class="num">42.2%</td><td class="num">63.2%</td><td class="num">15.3%</td><td class="num">+0.28</td><td class="num">0.51</td><td class="num">22.3%</td><td class="num">88.7%</td><td class="num">87.1%</td></tr>
+          <tr><td>Rack card at 14 in</td><td class="num">50.9%</td><td class="num">47.2%</td><td class="num">63.9%</td><td class="num">16.9%</td><td class="num">−0.38</td><td class="num">0.51</td><td class="num">42.4%</td><td class="num">99.9%</td><td class="num">100.0%</td></tr>
+          <tr><td>Rack card where they read</td><td class="num">52.1%</td><td class="num">46.7%</td><td class="num">64.3%</td><td class="num">16.5%</td><td class="num">−0.43</td><td class="num">0.51</td><td class="num">45.8%</td><td class="num">99.9%</td><td class="num">100.0%</td></tr>
+          <tr><td>Small Print start (no glasses)</td><td class="num">69.7%</td><td class="num">58.7%</td><td class="num">80.1%</td><td class="num">21.7%</td><td class="num">+0.05</td><td class="num">0.33</td><td class="num">41.0%</td><td class="num">33.0%</td><td class="num">18.4%</td></tr>
+          <tr class="hl"><td>Small Print + try-on, with the stronger-pair check (0.50 stock), as shipped</td><td class="num">84.9%</td><td class="num">72.9%</td><td class="num">85.0%</td><td class="num">31.6%</td><td class="num">−0.10</td><td class="num">0.25</td><td class="num">80.1%</td><td class="num">11.1%</td><td class="num">17.0%</td></tr>
+          <tr><td>Small Print + try-on, with the stronger-pair check (0.25 stock)</td><td class="num">86.1%</td><td class="num">76.7%</td><td class="num">87.2%</td><td class="num">34.7%</td><td class="num">−0.04</td><td class="num">0.22</td><td class="num">80.6%</td><td class="num">10.9%</td><td class="num">17.0%</td></tr>
+          <tr><td>Try-on without the stronger-pair check (0.50 stock)</td><td class="num">84.6%</td><td class="num">71.8%</td><td class="num">84.6%</td><td class="num">30.9%</td><td class="num">−0.09</td><td class="num">0.25</td><td class="num">80.0%</td><td class="num">11.1%</td><td class="num">17.0%</td></tr>
+          <tr><td>Try-on without the stronger-pair check (0.25 stock)</td><td class="num">85.4%</td><td class="num">74.0%</td><td class="num">86.6%</td><td class="num">32.2%</td><td class="num">−0.03</td><td class="num">0.24</td><td class="num">80.4%</td><td class="num">10.9%</td><td class="num">17.2%</td></tr>
+          <tr><td><i>What-if, rejected: far end estimated from lens power (0.50 stock)</i></td><td class="num">84.0%</td><td class="num">69.6%</td><td class="num">81.6%</td><td class="num">30.6%</td><td class="num">−0.13</td><td class="num">0.25</td><td class="num">80.1%</td><td class="num">10.8%</td><td class="num">4.3%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>"Rack card" is modelled as an ideal blur meter whose reserve was tuned to maximise the card's own score, which is deliberately generous to the card. The age table and rack card never ask about short sight, so they hand readers to nearly every short-sighted person and to everyone who doesn't need them yet.</p>
+    <p><strong>The stronger-pair check.</strong> The highlighted row is what ships, including the step described on <a href="/how-it-works.html#tryon">How it works</a>: when a pair is still sharp at arm's length, so the far end of the clear range can't be measured, the app asks you to also try one pair 0.50 stronger, and to keep the first pair if that one is too strong. The rows without the check are kept for comparison. The check adds about 1 point within ±0.25 D with 0.50 stock (72.9% vs 71.8%) and about 3 points with 0.25 stock (76.7% vs 74.0%), at the cost of trying more pairs (1.88 on average with 0.50 stock, against 1.30 without it). In bench.json and the bench summary the shipped check still carries its earlier label, "try-on + probe pair". Estimating the far end from the lens power instead was tried and rejected: in this bench it is less accurate for people who need readers (69.6% / 81.6%) and tells more of them they don't need readers yet (7.9% vs 4.8%), even though it hands readers too early to far fewer people (4.3%).</p>
+
+    <figure>
+      <img src="/figures/bench-accuracy.svg" width="780" height="554" loading="lazy" alt="Simulation. Grouped bar chart of the share of in-scope virtual people within ±0.25 D and within ±0.50 D of their ideal strength. Age table at 40 cm: 49.4% and 75.1%. Age table with measured distance: 42.2% and 63.2%. Rack card at 14 inches: 47.2% and 63.9%. Rack card where they read: 46.7% and 64.3%. Small Print start: 58.7% and 80.1%. Small Print with try-on, 0.50 stock: 71.8% and 84.6%. Small Print with try-on, 0.25 stock: 74.0% and 86.6%.">
+      <figcaption><span class="tag sim">Simulation</span> How often each method lands within ±0.25 D and ±0.50 D of the ideal strength, for the 10,763 in-scope virtual people. The try-on bars are the try-on without the stronger-pair check; the shipped check is about 1 point higher (table above).</figcaption>
+    </figure>
+    <figure>
+      <img src="/figures/bench-error-distribution.svg" width="780" height="958" loading="lazy" alt="Simulation. Small-multiple histograms of the error between each method's choice and the ideal strength, in 0.25 D steps, for in-scope virtual people, with the share given no pair. Within ±0.25 D: age table 49.4% (0.0% given no pair), age table with measured distance 42.2% (5.8%), rack card at 14 inches 47.2% (5.7%), rack card where they read 46.7% (3.8%), Small Print start 58.7% (7.5%), Small Print with try-on 0.50 stock 71.8% (8.4%), 0.25 stock 74.0% (8.2%).">
+      <figcaption><span class="tag sim">Simulation</span> Where each method goes wrong: the distribution of errors (chosen minus ideal strength) for in-scope virtual people, and the share given no pair at all. The try-on panels are the try-on without the stronger-pair check.</figcaption>
+    </figure>
+    <figure>
+      <img src="/figures/bench-distance-error.svg" width="780" height="484" loading="lazy" alt="Simulation. Line chart of within ±0.25 D accuracy as camera distance error grows from 0% to 8%. With error shared across all readings (a calibration error), Small Print with try-on falls only from 72.5% to 69.6%. With independent error on every reading, it falls from 72.7% to 60.1%. The age table is flat at 49.4% because it measures nothing.">
+      <figcaption><span class="tag sim">Simulation</span> How much camera distance error matters: a shared calibration error largely cancels; independent reading-to-reading error does not. The try-on line is the try-on without the stronger-pair check; the shipped check is in the sensitivity table below.</figcaption>
+    </figure>
+
+    <h3 id="not-better">Where Small Print is not better</h3>
+    <p>"After the try-on" here means the shipped try-on with the stronger-pair check, 0.50 stock (its breakdowns by age and refractive error are in bench.json).</p>
+    <ul>
+      <li><strong>Ages 60–70: the plain age table wins on in-scope accuracy.</strong> Within ±0.50 D, the 40 cm table is right for 92.3% (60–64) and 94.8% (65–70) of in-scope people, against 83.3% and 84.7% for Small Print's start and 91.0% and 91.1% after the try-on. In this model almost everyone over about 62 has no focusing left, so +2.50 suits most of them. Over everyone (right call), the start alone also loses to the rack card at 60+ (60.1–61.2% vs 66.8–72.8%); after the try-on Small Print leads (86.3–87.3%).</li>
+      <li><strong>Ages 40–44: Small Print says "not yet" to many borderline people.</strong> The table's +1.00 is within ±0.50 D for 73.5% of in-scope people, against about 45% for Small Print (45.7% start, 44.0% after try-on), because Small Print tells many people whose ideal is +0.75 or +1.00 that they don't need readers yet. Over everyone it is the other way round: 78.1–81.0% right call against 30.8%, because the table gives readers to everyone.</li>
+      <li><strong>Uncorrected long sight is a weak spot for every method.</strong> For in-scope people with +0.76 to +2.00 D of long sight, the try-on is within ±0.25 D for only 37.1% (bias −0.44 D, too weak), worse than the age table's 49.6%. Above +2.00 D almost nobody is within ±0.50 D by any method. A test done only up close can't tell long sight apart from lost focusing.</li>
+      <li><strong>Arm-stretch is the biggest real-world risk.</strong> If people hold the phone halfway out toward their no-glasses near point when asked where they read, the try-on falls to 39.3% within ±0.25 D and 60.1% within ±0.50 D (bias −0.47 D), below the age table (49.4% / 75.1%). This is why the app says "not stretched out" and limits the reading distance to 25–45 cm. Whether real people stretch is unknown until the pilot.</li>
+      <li><strong>The far end of the clear range is often out of reach.</strong> In 52.6% of simulated try-on measurements, the pair was still sharp at arm's length. On its own, the try-on can then only say "good" or "stronger"; that is why the app asks for one pair 0.50 stronger. With perfect measurements it reaches 80.9% within ±0.25 D (78.0% without the stronger-pair check); with the far end always measurable and no refractive error, 99.3%.</li>
+      <li><strong>The short-sight check catches only some short-sighted people at the start.</strong> 33.0% of them are still given a starting strength; after the try-on, 11.1%.</li>
+    </ul>
+
+    <h3 id="sensitivity">Sensitivity: what changes the results</h3>
+    <div class="table-wrap">
+      <table>
+        <caption>Small Print + try-on (0.50 stock), in-scope within ±0.25 D / ±0.50 D, as shipped (with the stronger-pair check) and without the check. Age table (40 cm) for comparison: 49.4% / 75.1% throughout (49.8% / 76.0% in the lower-accommodation population). Shipped values are from bench.json; the bench summary and the distance-error chart show the try-on without the check. <span class="tag sim">Simulation</span></caption>
+        <thead><tr><th>What was varied</th><th>Range tested</th><th class="num">Try-on as shipped</th><th class="num">Without the stronger-pair check</th></tr></thead>
+        <tbody>
+          <tr><td>Camera error shared by all readings (calibration)</td><td>0% → 8%</td><td class="num">73.4% / 85.4% → 71.2% / 83.2%</td><td class="num">72.5% / 85.1% → 69.6% / 82.7%</td></tr>
+          <tr><td>Camera error independent per reading</td><td>0% → 8%</td><td class="num">73.5% / 85.7% → 60.7% / 77.2%</td><td class="num">72.7% / 85.4% → 60.1% / 77.2%</td></tr>
+          <tr><td>Error judging the moment of blur</td><td>0 → 0.25 → 0.50 D</td><td class="num">79.0% → 72.9% → 61.9% (±0.25)</td><td class="num">76.5% → 71.8% → 61.8% (±0.25)</td></tr>
+          <tr><td>True depth of focus (app assumes 0.50 D)</td><td>0.30 → 1.00 D</td><td class="num">74.0% / 85.5% → 70.2% / 83.7%</td><td class="num">73.1% / 85.2% → 69.0% / 83.4%</td></tr>
+          <tr><td>Lower-accommodation population</td><td>centred on Hofstetter minimum</td><td class="num">71.2% / 84.5%</td><td class="num">70.4% / 84.2%</td></tr>
+          <tr><td>Reading distance varies 5% between test and real life</td><td>—</td><td class="num">68.5% / 82.6%</td><td class="num">67.4% / 82.4%</td></tr>
+          <tr><td>Arm-stretch during capture</td><td>halfway to near point</td><td class="num">39.3% / 60.1%</td><td class="num">38.6% / 59.5%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>The near-point weight of 0.6 is close to the best of the values tried (0.6: 58.7% / 80.1% at the start; 0.8: 59.2% / 78.1%; 0.4: 52.6% / 76.3%), so we did not change it. Any future change tuned on this bench would be tuned to our own simulated truth, and we would say so.</p>
+
+    <h3 id="assumptions">Every assumption</h3>
+    <ol>
+      <li>Age uniform from 40 to 70 (a supplementary run covers 35–39). <em>Assumption.</em></li>
+      <li>Accommodation follows Hofstetter's mean for age, spread 0.75 D, kept between 0 and Hofstetter's maximum.<sup><a href="#r6">6</a></sup> <em>Source, plus an assumed spread.</em> These norms come from push-up tests, which partly include depth of focus, so a lower-accommodation population is also run.</li>
+      <li>Refractive error: a mixture (72% around +0.25 D, 16% around +1.50 D, 12% around −2.00 D). <em>Assumption</em>, with less short sight than surveys of adults over 40 because people who already wear distance glasses are sent to an exam by the safety questions. Sources in the bench README.</li>
+      <li>Depth of focus uniform 0.3–1.0 D (depends on pupil size). <em>Published range, cited in the bench README.</em></li>
+      <li>Reading distance around 37 cm (spread 5 cm, limited to 25–55 cm). <em>Based on a published study of phone reading distances, cited in the bench README; spread assumed.</em></li>
+      <li>Arm's reach 55–70 cm; nothing closer than 12 cm can be measured. <em>Assumption.</em></li>
+      <li>Thin-lens optics at the eye; astigmatism, unequal eyes, eye disease and reduced acuity are ignored. <em>Standard simplification.</em></li>
+      <li>The ideal pair puts the reading distance in the middle of the clear range.<sup><a href="#r5">5</a></sup></li>
+      <li>Scope: refer if short sight is worse than −1.00 D or the ideal is above +3.00; "no readers yet" if the ideal is below +0.75. <em>Bench rule.</em></li>
+      <li>Camera distance error: 4% shared per person, plus 1% per reading.<sup><a href="#r7">7</a></sup> <em>Size from MediaPipe Iris; the split is assumed.</em></li>
+      <li>Error judging where the E blurs: 0.25 D per judgement. <em>Assumption</em> (swept 0–0.5 D).</li>
+      <li>At the rack: try the weaker of the two suggested pairs first, follow the advice, stop at "good" or after 3 pairs. <em>Assumption about how people use the screen.</em></li>
+      <li>Rack card: an ideal blur meter with a reserve tuned in the card's favour; letter-size changes with distance are ignored. <em>Assumption, generous to the card.</em></li>
+      <li>No learning, fatigue or lighting effects; everyone follows the instructions. <em>Assumption.</em></li>
+    </ol>
+
+    <h2 id="not-done">4. Not done yet: field validation <span class="tag pending">Not done</span></h2>
+    <p>Nobody has yet compared Small Print's result with a trained screener's result on the same real people. Until that is done, nobody (including us) knows how accurate it is in practice. This is the study we propose:</p>
+    <dl class="kv">
+      <dt>Setting</dt><dd>A community vision screening event, run with a partner that already provides reading glasses.</dd>
+      <dt>Participants</dt><dd>200 adults aged 40 or over with near-vision difficulty. People with warning signs are referred as usual and counted.</dd>
+      <dt>Reference</dt><dd>A trained screener chooses the reader strength with trial lenses, following the WHO Training in Assistive Products / Peek approach,<sup><a href="#r9">9</a></sup><sup><a href="#r11">11</a></sup> without seeing Small Print's result.</dd>
+      <dt>Small Print</dt><dd>Each person takes the test on a provided phone (and their own phone where possible), including the try-on with the screener's stock. Order randomised.</dd>
+      <dt>Primary outcome</dt><dd>Share of people whose Small Print strength is within ±0.50 D of the screener's.</dd>
+      <dt>Secondary</dt><dd>Within ±0.25 D and exact; start versus after try-on; agreement on who should be referred; time taken; finishing without help; results by age band, literacy, device and calibration; camera distance against a tape measure.</dd>
+      <dt>Precision</dt><dd>With 200 people, a result near 85% has a 95% confidence interval of about ±5 percentage points.</dd>
+      <dt>Ethics</dt><dd>Ethics approval and informed consent before any data collection; analysis plan registered in advance; all results published, including failures.</dd>
+    </dl>
+
+    <h3 id="benchmarks">Benchmarks the pilot would be judged against</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Method</th><th>Who uses it</th><th class="num">Within ±0.50 D</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Peek presbyopia calculator<sup><a href="#r9">9</a></sup></td><td>Trained community health workers, with lenses</td><td class="num">99.5%</td><td>Exact match with an optometrist 92.9%. The benchmark for trained screeners.</td></tr>
+          <tr><td>VisionApp smartphone near point<sup><a href="#r10">10</a></sup></td><td>Smartphone method</td><td class="num">82.5%</td><td>Preliminary; presbyopes over 52.</td></tr>
+          <tr><td>Age table vs measured addition<sup><a href="#r8">8</a></sup></td><td>Rule of thumb</td><td class="num">—</td><td>Mean difference +0.29 D (age table) and −0.65 D (accommodation-based); large individual differences.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>These are real-world figures. Our simulated figures above are not comparable with them and should not be read as if they were.</p>
+
+    <h2 id="refs">References</h2>
+    <ol class="refs">
+      <li id="r5" value="5">Stevens S. How to prescribe spectacles for near vision. <i>Community Eye Health Journal</i> 2019;32(107):47.</li>
+      <li id="r6" value="6">Hofstetter HW. A useful age-amplitude formula. <i>Optometric World</i> 1950;38:42–45.</li>
+      <li id="r7" value="7">Google Research. MediaPipe Iris: real-time iris tracking and depth estimation, 2020 (4.3% mean relative depth error). <a href="https://research.google/blog/mediapipe-iris-real-time-iris-tracking-depth-estimation/">research.google</a></li>
+      <li id="r8" value="8">Panke K, et al. Limitation of tables indicating the relation between age and reading addition. <i>Proc SPIE</i> 11207, 2019.</li>
+      <li id="r9" value="9">Peek presbyopia calculator: community health workers compared with an optometrist. <i>Frontiers in Ophthalmology</i>, 2026. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC13500277/">PMC13500277</a></li>
+      <li id="r10" value="10">Smartphone near-point method for reading addition (VisionApp), preliminary study. <i>Journal of Optometry</i>, 2025. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12205635">PMC12205635</a></li>
+      <li id="r11" value="11">World Health Organization. Training in Assistive Products (TAP), reading-glasses content based on VisionSpring's community screening method. <a href="https://invisionmag.com/visionsprings-screening-methodology-adopted-by-who/">report</a></li>
+    </ol>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Small Print helps you choose non-prescription reading glasses. It is not an eye exam and cannot detect eye disease. <a href="/safety.html">Safety</a> · <a href="/how-it-works.html">How it works</a> · <a href="/validation.html">Validation</a> · <a href="/evidence.html">Built on AWS</a> · <a href="/judges.html">For judges</a></p>
+      <p>Built for the AWS Builder Center “Zero to Shipped” hackathon, 2026. Open source.</p>
+    </div>
+  </footer>
+</body>
+</html>
