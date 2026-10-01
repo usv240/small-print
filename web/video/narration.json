@@ -1,0 +1,16 @@
+{
+  "voice": "Joanna",
+  "rate": "105%",
+  "segments": [
+    { "id": "title",   "text": "At 40, everyone's arms get too short. <break time=\"350ms\"/> Close-up text blurs, so the phone goes further and further away." },
+    { "id": "stats",   "text": "826 million people can't see well up close, because their eyes aren't corrected. <break time=\"250ms\"/> Reading glasses cost about two dollars, and in randomised trials, they raised productivity by 22%, and income by a third." },
+    { "id": "card",    "text": "The hard part is choosing the strength. <break time=\"200ms\"/> Shop charts only work at exactly the right distance, at the right print size, and only if you can read." },
+    { "id": "app",     "text": "Small Print turns your phone's camera into a ruler. <break time=\"200ms\"/> It measures how far your eyes are from the screen, right on the device. First, hold the phone where you like to read." },
+    { "id": "swipe",   "text": "Then just swipe the way the E points. No reading needed." },
+    { "id": "near",    "text": "The E is redrawn about 30 times a second, so it always looks the same size to your eye, while the test finds the closest distance where you still see sharply." },
+    { "id": "result",  "text": "Out comes a starting strength for ready-made reading glasses." },
+    { "id": "tryon",   "text": "Then check a pair in the shop. <break time=\"200ms\"/> With the glasses on, the app measures where you see sharply, and checks that your reading distance sits in the middle." },
+    { "id": "aws",     "text": "Video never leaves the phone, and there are no AI guesses about your eyes. <break time=\"250ms\"/> It's built on AWS, with CloudFront, Lambda, DynamoDB and Polly, for about 60 cents per 1,000 screenings." },
+    { "id": "end",     "text": "Small Print. <break time=\"300ms\"/> Everyone deserves to read the small print." }
+  ]
+}

@@ -67,7 +67,7 @@ input[type="range"] { width: 100%; accent-color: var(--accent); min-height: 2.5r
 details { margin: 1rem 0; }
 summary { cursor: pointer; font-weight: 600; min-height: 2.5rem; }
 
-.rangebar { position: relative; height: 2.6rem; margin: 1.5rem 0 0.5rem; background: var(--line); border-radius: 8px; }
+.rangebar { position: relative; height: 2.6rem; margin: 1.5rem 0 2rem; background: var(--line); border-radius: 8px; }
 .range-sharp { position: absolute; top: 0; bottom: 0.9rem; background: var(--ok); opacity: 0.75; border-radius: 8px 8px 0 0; }
 .range-wd { position: absolute; top: -0.3rem; bottom: 0.6rem; width: 4px; margin-left: -2px; background: var(--accent); }
 .tick { position: absolute; bottom: -1.2rem; transform: translateX(-50%); font-size: 0.8rem; color: var(--muted); white-space: nowrap; }

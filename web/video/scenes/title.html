@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Title scene</title>
+<style>
+  :root { --bg: #fbf8f3; --surface: #fff; --ink: #1a1917; --muted: #5d5a55; --line: #e4ded4; --accent: #b4410e; --accent-soft: #fbe9df;
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif; --sans: "Segoe UI", system-ui, sans-serif; }
+  html, body { margin: 0; width: 1280px; height: 720px; overflow: hidden; background: var(--bg); color: var(--ink); font-family: var(--sans); }
+  .brand { position: absolute; left: 80px; top: 54px; font: 700 26px var(--serif); }
+  .brand span { color: var(--accent); }
+  .text { position: absolute; left: 80px; top: 150px; width: 520px; }
+  .eyebrow { font: 600 16px var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin: 0 0 18px; }
+  h1 { font: 600 60px/1.08 var(--serif); margin: 0 0 26px; letter-spacing: -.01em; }
+  .sub { font: 24px/1.45 var(--sans); color: var(--muted); margin: 0; }
+  .panel { position: absolute; left: 650px; top: 96px; width: 560px; height: 500px; background: var(--surface); border: 1px solid var(--line); border-radius: 22px; box-shadow: 0 18px 50px rgba(26,25,23,.08); overflow: hidden; }
+  .chip { position: absolute; left: 18px; top: 16px; font: 600 14px var(--sans); color: var(--muted); border: 1.5px solid var(--line); border-radius: 999px; padding: 5px 12px; background: var(--bg); letter-spacing: .02em; }
+  svg { position: absolute; left: 10px; top: 20px; }
+  .note { font: italic 600 20px var(--serif); fill: var(--accent); }
+  .dist { font: 700 20px var(--sans); fill: var(--accent); }
+</style>
+</head>
+<body>
+  <div class="brand">Small <span>Print</span></div>
+  <div class="text">
+    <p class="eyebrow" id="eb">Reading glasses, chosen right</p>
+    <h1 id="h">At 40, everyone’s arms get too short.</h1>
+    <p class="sub" id="sub">The lens in the eye stiffens with age. Close-up text blurs, so the phone goes further and further away.</p>
+  </div>
+  <div class="panel" id="panel">
+    <span class="chip">Illustration</span>
+    <svg width="540" height="470" viewBox="0 0 540 470">
+      <defs>
+        <filter id="blur" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur id="bl" stdDeviation="2.5"/></filter>
+      </defs>
+      <!-- torso and head: a simple stylised figure, not a real person -->
+      <path d="M20 470 C 30 360, 70 320, 120 318 C 170 320, 200 360, 205 470 Z" fill="#d8cfc3"/>
+      <rect x="98" y="230" width="38" height="70" rx="14" fill="#cbbfb0"/>
+      <circle cx="118" cy="182" r="62" fill="#cbbfb0"/>
+      <path d="M58 168 C 56 120, 92 104, 126 108 C 160 112, 178 132, 176 150 C 150 140, 112 140, 64 176 Z" fill="#6b625a"/>
+      <path d="M176 178 L 192 200 L 176 204 Z" fill="#cbbfb0"/>
+      <ellipse id="eye" cx="152" cy="172" rx="5" ry="6" fill="#1a1917"/>
+      <!-- line of sight + distance -->
+      <line id="sight" x1="156" y1="172" x2="300" y2="190" stroke="#b4410e" stroke-width="2.5" stroke-dasharray="7 7"/>
+      <text id="dl" class="dist" x="220" y="160" text-anchor="middle">25 cm</text>
+      <!-- arm -->
+      <line id="upper" x1="125" y1="345" x2="200" y2="380" stroke="#bfb2a2" stroke-width="30" stroke-linecap="round"/>
+      <line id="fore" x1="200" y1="380" x2="300" y2="240" stroke="#cbbfb0" stroke-width="26" stroke-linecap="round"/>
+      <!-- phone -->
+      <g id="phone" transform="translate(300 220)">
+        <rect x="-30" y="-56" width="60" height="112" rx="10" fill="#1a1917"/>
+        <rect x="-25" y="-48" width="50" height="96" rx="5" fill="#fff"/>
+        <g filter="url(#blur)" fill="#1a1917">
+          <rect x="-19" y="-38" width="38" height="5" rx="1"/>
+          <rect x="-19" y="-28" width="30" height="4" rx="1"/>
+          <rect x="-19" y="-20" width="36" height="4" rx="1"/>
+          <rect x="-19" y="-12" width="26" height="4" rx="1"/>
+          <rect x="-19" y="-4" width="34" height="4" rx="1"/>
+          <rect x="-19" y="4" width="30" height="4" rx="1"/>
+          <rect x="-19" y="12" width="36" height="4" rx="1"/>
+          <rect x="-19" y="20" width="22" height="4" rx="1"/>
+        </g>
+        <circle cx="0" cy="0" r="18" fill="#b4410e" opacity="0" id="glow"/>
+      </g>
+      <circle id="hand" cx="300" cy="240" r="17" fill="#cbbfb0"/>
+      <text id="note" class="note" x="400" y="420" text-anchor="middle" opacity="0">…and still blurry</text>
+    </svg>
+  </div>
+<script>
+  const ease = (x) => (x <= 0 ? 0 : x >= 1 ? 1 : x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
+  const clamp = (x) => Math.max(0, Math.min(1, x));
+  const $ = (id) => document.getElementById(id);
+  const shoulder = { x: 125, y: 345 };
+  const L1 = 150, L2 = 150;
+  // t in seconds. Phone moves from ~25 cm (close) to arm's length (~60 cm); the text never gets sharp.
+  window.render = (t) => {
+    const fade = (a, d = 0.6) => clamp((t - a) / d);
+    $('eb').style.opacity = fade(0.0); $('h').style.opacity = fade(0.15);
+    $('h').style.transform = `translateY(${(1 - ease(fade(0.15))) * 14}px)`;
+    $('sub').style.opacity = fade(3.3, 0.7);
+    $('panel').style.opacity = fade(0.1, 0.7);
+    const p = ease(clamp((t - 1.4) / 4.2));
+    const hx = 262 + p * 168, hy = 236 - p * 30 + Math.sin(t * 3.1) * 1.5;
+    // two-segment arm (simple inverse kinematics, elbow below)
+    const dx = hx - shoulder.x, dy = hy - shoulder.y; const d = Math.min(L1 + L2 - 0.01, Math.hypot(dx, dy));
+    const a = Math.atan2(dy, dx); const k = Math.acos((L1 * L1 + d * d - L2 * L2) / (2 * L1 * d));
+    const ex = shoulder.x + L1 * Math.cos(a + k), ey = shoulder.y + L1 * Math.sin(a + k);
+    $('upper').setAttribute('x2', ex); $('upper').setAttribute('y2', ey);
+    $('fore').setAttribute('x1', ex); $('fore').setAttribute('y1', ey); $('fore').setAttribute('x2', hx); $('fore').setAttribute('y2', hy);
+    $('hand').setAttribute('cx', hx); $('hand').setAttribute('cy', hy + 14);
+    $('phone').setAttribute('transform', `translate(${hx} ${hy - 22}) rotate(${-10 + p * 6})`);
+    $('sight').setAttribute('x2', hx - 30); $('sight').setAttribute('y2', hy - 22);
+    const cm = Math.round(25 + p * 35);
+    $('dl').textContent = `${cm} cm`; $('dl').setAttribute('x', (156 + hx - 30) / 2 - 16 + p * 16); $('dl').setAttribute('y', (172 + hy - 22) / 2 - 36 + p * 18);
+    $('bl').setAttribute('stdDeviation', (2.6 - p * 1.3).toFixed(2));
+    $('note').setAttribute('opacity', fade(5.4, 0.6));
+  };
+  window.render(0);
+</script>
+</body>
+</html>

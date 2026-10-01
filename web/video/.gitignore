@@ -1,0 +1,5 @@
+# Heavy intermediates for the demo video pipeline (final outputs live in public/media/)
+*.webm
+frames/
+tmp/
+*.log
