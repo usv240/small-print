@@ -77,3 +77,15 @@ summary { cursor: pointer; font-weight: 600; min-height: 2.5rem; }
 .demo-bar .wrap { max-width: 34rem; }
 .demo-bar label { display: flex; justify-content: space-between; font-weight: 600; }
 .demo-bar p { margin: 0; font-size: 0.85rem; color: var(--muted); }
+
+/* ⓘ info toggles and step progress */
+.progress { display: flex; align-items: center; gap: 0.75rem; margin: 0.25rem 0 0.25rem; font-size: 0.85rem; color: var(--muted); }
+.progress-track { flex: 1; height: 0.35rem; background: var(--line); border-radius: 999px; overflow: hidden; }
+.progress-fill { display: block; height: 100%; background: var(--accent); border-radius: 999px; }
+details.info { margin: -0.2rem 0 1rem; }
+details.info > summary { list-style: none; display: inline-flex; align-items: center; gap: 0.45rem; cursor: pointer; color: var(--accent); font-weight: 600; font-size: 0.95rem; min-height: 2.25rem; }
+details.info > summary::-webkit-details-marker { display: none; }
+details.info > summary > span { display: inline-grid; place-items: center; width: 1.5rem; height: 1.5rem; border-radius: 50%; border: 2px solid var(--accent); font: italic 700 0.9rem/1 var(--serif); }
+details.info[open] > summary > span { background: var(--accent); color: var(--accent-ink); }
+.info-body { background: var(--accent-soft); border-radius: var(--radius); padding: 0.75rem 1rem; margin-top: 0.35rem; font-size: 0.95rem; line-height: 1.5; }
+.how { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 0.8rem 1rem; font-size: 0.98rem; }

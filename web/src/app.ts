@@ -81,7 +81,7 @@ const cm = (mm: number | null) => (mm === null ? '–' : t('cm', { n: Math.round
 
 /** The live distance read-out shown while the camera (or demo slider) is in use. */
 function livePill(): string {
-  return `<div class="live" aria-live="polite"><span class="live-dot" data-face></span><span data-live>${cm(state.distanceMm)}</span></div>`;
+  return `<div class="live" aria-live="polite" title="${t('live_title')}"><span class="live-dot" data-face></span><span data-live>${cm(state.distanceMm)}</span></div>`;
 }
 
 function updateLive(): void {
@@ -126,6 +126,18 @@ function liveE(canvas: HTMLCanvasElement, dir: Direction = 'right'): void {
   onDistance = draw;
 }
 
+/** A small ⓘ toggle under a heading: what this step is, why we ask, and how it works. */
+function info(key: StringKey): string {
+  return `<details class="info"><summary aria-label="${t('info_label')}"><span aria-hidden="true">i</span> ${t('info_label')}</summary><div class="info-body">${t(key)}</div></details>`;
+}
+
+const TOTAL_STEPS = 8;
+/** "Step 3 of 8" plus a thin progress bar, so first-time users know how long is left. */
+function progress(step: number): string {
+  const pct = Math.round((step / TOTAL_STEPS) * 100);
+  return `<div class="progress"><span class="progress-text">${t('step_of', { n: step, total: TOTAL_STEPS })}</span><span class="progress-track" aria-hidden="true"><span class="progress-fill" style="width:${pct}%"></span></span></div>`;
+}
+
 // ---------- screens ----------
 
 function welcome(): void {
@@ -141,6 +153,7 @@ function welcome(): void {
       <ul class="ticks">
         <li>${t('welcome_b1')}</li><li>${t('welcome_b2')}</li><li>${t('welcome_b3')}</li>
       </ul>
+      <p class="how">${t('welcome_how')}</p>
       <div class="stack">${btn('start', t('welcome_start'))}${btn('demo', t('welcome_demo'), 'secondary')}</div>
       ${t('translation_note') ? `<p class="small muted">${t('translation_note')}</p>` : ''}
     </section>`, 'welcome_say');
@@ -166,7 +179,7 @@ function safety(): void {
         <label><input type="radio" name="${key}" value="no" ${v === false ? 'checked' : ''}> ${t('no')}</label>
       </div></fieldset>`;
   }).join('');
-  show(`<section class="screen"><h1 tabindex="-1">${t('safety_h')}</h1><p>${t('safety_p')}</p>
+  show(`<section class="screen">${progress(1)}<h1 tabindex="-1">${t('safety_h')}</h1>${info('info_safety')}<p>${t('safety_p')}</p>
     <form id="sf">${rows}</form><div class="stack">${btn('next', t('continue'))}</div></section>`, 'safety_say');
   const form = document.getElementById('sf') as HTMLFormElement;
   const next = document.getElementById('next') as HTMLButtonElement;
@@ -200,7 +213,7 @@ function adviseScreen(): void {
 }
 
 function age(): void {
-  show(`<section class="screen"><h1 tabindex="-1">${t('age_h')}</h1>
+  show(`<section class="screen">${progress(2)}<h1 tabindex="-1">${t('age_h')}</h1>${info('info_age')}
     <div class="stepper">
       <button type="button" class="round" id="minus" aria-label="−1">−</button>
       <output id="age" class="big">${state.age}</output><span class="unit">${t('age_unit')}</span>
@@ -218,7 +231,7 @@ function age(): void {
 }
 
 function cameraScreen(): void {
-  show(`<section class="screen"><h1 tabindex="-1">${t('camera_h')}</h1><p class="lead">${t('camera_p')}</p>
+  show(`<section class="screen">${progress(3)}<h1 tabindex="-1">${t('camera_h')}</h1>${info('info_camera')}<p class="lead">${t('camera_p')}</p>
     <p id="cam-msg" class="muted" role="status"></p>
     <div class="stack">${btn('allow', t('camera_allow'))}${btn('demo', t('welcome_demo'), 'secondary')}</div></section>`, 'camera_say');
   on('demo', () => { state.mode = 'demo'; document.body.classList.add('demo'); document.getElementById('demo-bar')!.hidden = false; startSource().then(working); });
@@ -240,7 +253,7 @@ function cameraScreen(): void {
 
 function calScreen(): void {
   const start = loadCalibration().screen?.cssPxPerMm ?? 96 / 25.4;
-  show(`<section class="screen"><h1 tabindex="-1">${t('calscreen_h')}</h1><p>${t('calscreen_p')}</p>
+  show(`<section class="screen">${progress(4)}<h1 tabindex="-1">${t('calscreen_h')}</h1>${info('info_calscreen')}<p>${t('calscreen_p')}</p>
     <div class="card-box-wrap"><div class="card-box" id="cardbox"></div></div>
     <input type="range" id="cardr" min="150" max="900" step="1" value="${Math.round(start * ID1_CARD.widthMm)}" aria-label="${t('calscreen_h')}">
     <div class="stack">${btn('done', t('calscreen_done'))}${btn('skip', t('calscreen_skip'), 'link')}</div></section>`, 'calscreen_say');
@@ -254,7 +267,7 @@ function calScreen(): void {
 }
 
 function calCamera(): void {
-  show(`<section class="screen">${livePill()}<h1 tabindex="-1">${t('calcam_h')}</h1><p>${t('calcam_p')}</p>
+  show(`<section class="screen">${livePill()}${progress(4)}<h1 tabindex="-1">${t('calcam_h')}</h1>${info('info_calcam')}<p>${t('calcam_p')}</p>
     <div class="ruler" aria-hidden="true"><span>0</span><span>30 cm</span></div>
     <p id="hold" class="muted" role="status"></p>
     <div class="stack">${btn('cap', t('calcam_capture'))}${btn('skip', t('calcam_skip'), 'link')}</div></section>`, 'calcam_say');
@@ -280,7 +293,7 @@ function calCamera(): void {
 }
 
 function working(): void {
-  show(`<section class="screen">${livePill()}<h1 tabindex="-1">${t('working_h')}</h1><p class="lead">${t('working_p')}</p>
+  show(`<section class="screen">${livePill()}${progress(5)}<h1 tabindex="-1">${t('working_h')}</h1>${info('info_working')}<p class="lead">${t('working_p')}</p>
     <div class="meter"><div class="meter-fill" id="fill"></div></div>
     <p id="got" class="ok-text" role="status"></p>
     <div class="stack">${btn('use', t('continue'))}</div></section>`, 'working_say');
@@ -317,7 +330,7 @@ function smallPrint(): void {
   let trial = 0;
   let dir: Direction = randomDirection();
   state.smallPrintCorrect = 0;
-  show(`<section class="screen">${livePill()}<h1 tabindex="-1">${t('sp_h')}</h1><p>${t('sp_p')}</p>
+  show(`<section class="screen">${livePill()}${progress(6)}<h1 tabindex="-1">${t('sp_h')}</h1>${info('info_sp')}<p>${t('sp_p')}</p>
     <div class="stage" id="stage"><canvas id="e"></canvas></div>
     ${arrows()}
     <p class="muted" id="count" aria-live="polite">${t('sp_count', { n: 1, total: SMALL_PRINT_TRIALS })}</p>
@@ -354,7 +367,7 @@ function bindArrows(cb: (d: Direction) => void): void {
 }
 
 function nearCheck(): void {
-  show(`<section class="screen">${livePill()}<h1 tabindex="-1">${t('near_h')}</h1><p>${t('near_p')}</p>
+  show(`<section class="screen">${livePill()}${progress(7)}<h1 tabindex="-1">${t('near_h')}</h1>${info('info_near')}<p>${t('near_p')}</p>
     <div class="stage"><canvas id="e"></canvas></div>
     <div class="stack two">${btn('sharp', t('sharp'))}${btn('blurry', t('blurry'), 'secondary')}</div></section>`, 'near_say');
   liveE(document.getElementById('e') as HTMLCanvasElement, randomDirection());
@@ -364,7 +377,7 @@ function nearCheck(): void {
 
 function nearMove(direction: 'in' | 'out'): void {
   const k = direction === 'in' ? { h: 'nearin_h', p: 'nearin_p', say: 'nearin_say', b: 'nearin_btn' } : { h: 'nearout_h', p: 'nearout_p', say: 'nearout_say', b: 'nearout_btn' };
-  show(`<section class="screen">${livePill()}<h1 tabindex="-1">${t(k.h as StringKey)}</h1><p>${t(k.p as StringKey)}</p>
+  show(`<section class="screen">${livePill()}${progress(7)}<h1 tabindex="-1">${t(k.h as StringKey)}</h1>${info('info_near')}<p>${t(k.p as StringKey)}</p>
     <div class="stage"><canvas id="e"></canvas></div>
     <div class="stack">${btn('mark', t(k.b as StringKey))}${direction === 'out' ? btn('never', t('nearout_never'), 'secondary') : ''}</div></section>`, k.say as StringKey);
   liveE(document.getElementById('e') as HTMLCanvasElement, randomDirection());
@@ -445,7 +458,7 @@ function result(recompute = true): void {
   const existingOpts = powers.map((p) => `<option value="${p}">${formatPower(p)}</option>`).join('');
   show(`<section class="screen result">
       ${advised ? `<div class="banner warn">${t('advise_p')}</div>` : ''}
-      <h1 tabindex="-1">${t('result_h')}</h1>
+      ${progress(8)}<h1 tabindex="-1">${t('result_h')}</h1>${info('info_result')}
       <div class="result-card">${main}</div>
       ${rec.flags.includes('inconsistent') ? `<p class="banner">${t('result_inconsistent')}</p>` : ''}
       ${eyeAge ? `<p class="eyeage">${eyeAge}</p>` : ''}
@@ -487,7 +500,7 @@ function tryOnPick(initial: number): void {
   state.tryOnStrength = initial;
   const powers = [0.75, 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3];
   const opts = powers.map((p) => `<button type="button" class="chip power-chip ${p === initial ? 'on' : ''}" data-p="${p}">${formatPower(p)}</button>`).join('');
-  show(`<section class="screen"><h1 tabindex="-1">${t('tryon_h')}</h1><p class="lead">${t('tryon_p')}</p>
+  show(`<section class="screen"><h1 tabindex="-1">${t('tryon_h')}</h1>${info('info_tryon')}<p class="lead">${t('tryon_p')}</p>
     <div class="chips" role="group">${opts}</div><div class="stack">${btn('next', t('continue'))}</div></section>`, 'tryon_say');
   app.querySelectorAll<HTMLButtonElement>('.power-chip').forEach((b) => b.addEventListener('click', () => {
     state.tryOnStrength = Number(b.dataset.p);
@@ -499,7 +512,7 @@ function tryOnPick(initial: number): void {
 function tryOnSharp(): void {
   state.tryOnNear = null;
   state.tryMaxMm = 0;
-  show(`<section class="screen">${livePill()}<h1 tabindex="-1">${t('tryon_sharp_h')}</h1><p>${t('tryon_sharp_p')}</p>
+  show(`<section class="screen">${livePill()}<h1 tabindex="-1">${t('tryon_sharp_h')}</h1>${info('info_tryon_range')}<p>${t('tryon_sharp_p')}</p>
     <div class="stage"><canvas id="e"></canvas></div>
     <div class="stack">${btn('ok', t('tryon_sharp_btn'))}${btn('never', t('tryon_never'), 'secondary')}</div></section>`, 'tryon_sharp_say');
   liveE(document.getElementById('e') as HTMLCanvasElement, randomDirection());
@@ -508,14 +521,14 @@ function tryOnSharp(): void {
 }
 
 function tryOnNear(): void {
-  show(`<section class="screen">${livePill()}<h1 tabindex="-1">${t('tryon_near_h')}</h1><p>${t('tryon_near_p')}</p>
+  show(`<section class="screen">${livePill()}<h1 tabindex="-1">${t('tryon_near_h')}</h1>${info('info_tryon_range')}<p>${t('tryon_near_p')}</p>
     <div class="stage"><canvas id="e"></canvas></div><div class="stack">${btn('mark', t('nearin_btn'))}</div></section>`, 'tryon_near_say');
   liveE(document.getElementById('e') as HTMLCanvasElement, randomDirection());
   on('mark', () => { if (state.distanceMm === null) return; state.tryOnNear = state.distanceMm; state.tryMaxMm = state.distanceMm; tryOnFar(); });
 }
 
 function tryOnFar(): void {
-  show(`<section class="screen">${livePill()}<h1 tabindex="-1">${t('tryon_far_h')}</h1><p>${t('tryon_far_p')}</p>
+  show(`<section class="screen">${livePill()}<h1 tabindex="-1">${t('tryon_far_h')}</h1>${info('info_tryon_range')}<p>${t('tryon_far_p')}</p>
     <div class="stage"><canvas id="e"></canvas></div>
     <div class="stack">${btn('mark', t('nearin_btn'))}${btn('never', t('tryon_far_never'), 'secondary')}</div></section>`, 'tryon_far_say');
   liveE(document.getElementById('e') as HTMLCanvasElement, randomDirection());
@@ -550,7 +563,7 @@ function tryOnVerdict(farMm: number | null | undefined): void {
     ? t('tryon_good', { s: formatPower(s) }) + (confirm ? ` ${t('tryon_confirm', { s: formatPower(next) })}` : '')
     : t(r.verdict === 'stronger' ? 'tryon_stronger' : 'tryon_weaker', { s: formatPower(next) });
   const sayKey: StringKey = r.verdict === 'good' ? 'tryon_good_say' : r.verdict === 'stronger' ? 'tryon_stronger_say' : 'tryon_weaker_say';
-  show(`<section class="screen result"><h1 tabindex="-1">${t('tryon_checking', { s: formatPower(s) })}</h1>
+  show(`<section class="screen result"><h1 tabindex="-1">${t('tryon_checking', { s: formatPower(s) })}</h1>${info('info_tryon_verdict')}
     <div class="result-card ${r.verdict}"><p class="lead">${msg}</p></div>
     ${rangeBar(state.tryOnNear ?? wd * 0.7, farMm ?? null, wd)}
     <p class="small muted">${t('tryon_range', { near: cm(state.tryOnNear), far: farMm ? cm(farMm) : t('armslength'), wd: cm(wd) })}</p>

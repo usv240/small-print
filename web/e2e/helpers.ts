@@ -24,7 +24,7 @@ export async function mockApi(page: Page): Promise<{ posts: ResultPayload[]; hit
 /** Answers every safety question; `yes` lists the legends (regex) to answer Yes to. */
 export async function answerSafety(page: Page, yes: RegExp[] = []): Promise<void> {
   await expect(page.getByRole('heading', { level: 1, name: 'First, a few safety questions' })).toBeVisible();
-  const groups = page.getByRole('group');
+  const groups = page.locator('fieldset.q');
   await expect(groups).toHaveCount(6);
   for (const g of await groups.all()) {
     const legend = (await g.locator('legend').textContent()) ?? '';

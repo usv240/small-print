@@ -3,6 +3,22 @@
 
 export const en = {
   lang_name: 'English',
+  info_label: 'What is this?',
+  step_of: 'Step {n} of {total}',
+  live_title: 'Distance from your eyes to the screen, measured by the camera on this device',
+  welcome_how: 'How it works: the camera measures how far your eyes are from the screen, the test shows a letter E at exactly the right size for that distance, and you swipe the way it points. No reading needed.',
+  info_safety: '<b>Why we ask:</b> reading glasses only fix one thing, the normal stiffening of the eye’s lens after about 40. Some symptoms can be signs of eye disease that needs a professional, and some conditions (like diabetes) make a full eye exam the safer first step. Your answers stay on this device; we only count how many people were advised to see a professional.',
+  info_age: '<b>Why we ask:</b> close-up focus weakens at a predictable rate with age. Your age gives a first estimate from a standard eye-care guide (Community Eye Health Journal, 2019). Your measurements in the next steps then adjust it to you. We store only an age band, like 50–54.',
+  info_camera: '<b>How the camera is used:</b> the coloured part of your eye (the iris) is about 11.7 mm wide in almost every adult, so its size in the camera image tells us how far away your face is. This runs entirely in your browser. No photo or video is recorded, uploaded or stored.',
+  info_calscreen: '<b>Why a card:</b> phones and laptops don’t tell websites how big their pixels really are, so a letter meant to be 1 mm tall can come out much smaller or larger. Bank cards and ID cards are all the same width (85.6 mm), so matching one tells us the true size of your screen. You only do this once on this device.',
+  info_calcam: '<b>Why 30 cm:</b> every camera is slightly different. Measuring once at a known distance makes the distance reading exact for your camera and your eyes. A ruler is best; the long side of an A4 sheet is 29.7 cm. You can skip this, but the result will be less accurate.',
+  info_working: '<b>Why this matters:</b> the right strength depends on where you hold things. Someone who reads at 30 cm needs stronger glasses than someone who reads at 45 cm. Hold it where you would like to read comfortably, not stretched out, because the glasses will be chosen for that distance.',
+  info_sp: '<b>What this checks:</b> whether you can see small print, the size of a medicine label, at your reading distance without glasses. The E is drawn at its true size for how far away you are. You don’t need to read: just show which way the open side of the E faces.',
+  info_near: '<b>What this measures:</b> the closest point at which you can still see sharply. It moves farther away with age; that is why arms “get too short”. The E changes size as you move so it always looks the same size to your eye, so only your focus changes, not the letter.',
+  info_result: '<b>How we got this:</b> we combine your age with your measured reading distance and closest sharp point, using published eye-care rules. No AI guesses about your eyes. It is a starting point for ready-made reading glasses, not a prescription, and not an eye exam. The “eye age” is just for fun.',
+  info_tryon: '<b>Why check in the shop:</b> ready-made glasses vary, and everyone’s eyes are different. With the pair on, the test finds where you see sharply. Eye-care workers use one simple rule: your reading distance should sit in the middle of that sharp range. The app checks that rule for you.',
+  info_tryon_range: '<b>What we’re measuring:</b> with the glasses on, you see sharply between a near limit and a far limit. We measure both with the camera, then check that your reading distance is near the middle. If it is too close to one end, a different strength fits better.',
+  info_tryon_verdict: '<b>How to read this:</b> the green band is where you see sharply with this pair; the line is your reading distance. If the line is near the middle, the pair fits. If the far end could not be measured (still sharp at arm’s length), we suggest trying one stronger pair to be sure.',
   app_title: 'Small Print',
   skip_link: 'Skip to the test',
 
