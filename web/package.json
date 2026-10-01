@@ -1,0 +1,29 @@
+{
+  "name": "small-print-web",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build && node scripts/compress-dist.mjs",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "sim": "tsx sim/bench.ts",
+    "predev": "node scripts/copy-mediapipe.mjs",
+    "prebuild": "node scripts/copy-mediapipe.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "private": true,
+  "dependencies": {
+    "@mediapipe/tasks-vision": "^1.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.3",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.2",
+    "vitest": "^5.0.3"
+  }
+}

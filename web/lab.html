@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Measurement lab · Small Print</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/src/styles/base.css">
+  <link rel="stylesheet" href="/src/styles/pages.css">
+  <script type="module" src="/src/lab.ts"></script>
+</head>
+<body>
+  <header class="site-header"><div class="wrap"><a class="brand" href="/">Small <span>Print</span></a><nav class="nav"><a href="/validation.html">Validation</a></nav></div></header>
+  <main class="wrap">
+    <div class="page-head">
+      <h1>Measurement lab</h1>
+      <p class="lead">Checks the camera’s distance measurement against a ruler. Used to produce the numbers on the <a href="/validation.html">validation page</a>.</p>
+    </div>
+    <div class="card">
+      <p><strong>Live distance:</strong> <span id="live" class="big-num">–</span></p>
+      <dl class="kv small">
+        <dt>Camera calibrated</dt><dd id="calcam">–</dd>
+        <dt>Screen calibrated</dt><dd id="calscreen">–</dd>
+        <dt>Iris width (fraction of image)</dt><dd id="iris">–</dd>
+        <dt>Frames per second</dt><dd id="fps">–</dd>
+        <dt>Video size</dt><dd id="vsize">–</dd>
+        <dt>Device pixel ratio</dt><dd id="dpr">–</dd>
+      </dl>
+      <div class="cta"><button class="btn btn-primary" id="startcam" type="button">Start camera</button><a class="btn btn-secondary" href="/test.html?recalibrate">Recalibrate in the test</a></div>
+    </div>
+
+    <h2>1. Distance accuracy</h2>
+    <p>Hold the phone or laptop so the screen is at the ruler distance from your eyes (measure from the cheekbone just below the eye to the screen). Keep still and press the button. Repeat each distance 3 times if you can.</p>
+    <div class="cta">
+      <button class="btn btn-secondary" data-ref="250" type="button">Record at 25 cm</button>
+      <button class="btn btn-secondary" data-ref="400" type="button">Record at 40 cm</button>
+      <button class="btn btn-secondary" data-ref="600" type="button">Record at 60 cm</button>
+    </div>
+    <p id="rec-status" class="muted" role="status"></p>
+    <div class="table-wrap"><table id="rows"><thead><tr><th>Ruler</th><th>Camera</th><th>Error</th><th>Calibrated</th><th>Frames</th></tr></thead><tbody></tbody></table></div>
+    <p id="summary" class="lead"></p>
+
+    <h2>2. Screen size</h2>
+    <p>How big a CSS pixel really is on this screen, from the card calibration in the test, compared with the nominal size browsers assume (1/96 inch = 0.2646 mm).</p>
+    <p id="screen-finding" class="lead">–</p>
+
+    <h2>3. Copy results</h2>
+    <p>Send this to the team so it can go on the validation page.</p>
+    <textarea id="json" rows="8" style="width:100%;font:0.85rem ui-monospace,monospace" readonly></textarea>
+    <div class="cta"><button class="btn btn-secondary" id="copy" type="button">Copy</button></div>
+  </main>
+  <video id="cam" playsinline muted style="position:fixed;width:2px;height:2px;opacity:0.01;left:0;top:0"></video>
+</body>
+</html>

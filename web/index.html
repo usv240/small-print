@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Small Print: choose the right reading glasses in two minutes</title>
+  <meta name="description" content="A free two-minute test in your phone's browser. The camera measures how far the screen is from your eyes, so the test is always the right size. It tells you which ready-made reading glasses to buy, then checks the pair in the shop. Not an eye exam.">
+  <meta property="og:title" content="Small Print: everyone deserves to read the small print">
+  <meta property="og:description" content="Two-minute phone-camera test for choosing ready-made reading glasses. Free, private, works without reading.">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#b4410e">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/src/styles/base.css">
+  <link rel="stylesheet" href="/src/styles/pages.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/">Small <span>Print</span></a>
+      <nav class="nav" aria-label="Site">
+        <a href="/how-it-works.html">How it works</a>
+        <a href="/findings.html">Findings</a>
+        <a href="/impact.html">Impact</a>
+        <a href="/judges.html">For judges</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap">
+        <p class="eyebrow">Free · two minutes · no install</p>
+        <h1>At 40, everyone’s arms get too short.</h1>
+        <p class="lead">The lens in your eye stiffens with age, so close-up text blurs and you end up holding your phone at arm’s length. Ready-made reading glasses fix it for a few dollars. <strong>Small Print tells you which strength to buy</strong>, using only your phone’s camera.</p>
+        <div class="cta">
+          <a class="btn btn-primary" href="/test.html">Take the test</a>
+          <a class="btn btn-secondary" href="/test.html?demo">Try it without a camera</a>
+        </div>
+        <p class="small muted">Helps you choose non-prescription reading glasses. It is not an eye exam. <a href="/safety.html">Safety and scope</a>.</p>
+      </div>
+    </section>
+
+    <section class="wrap">
+      <div class="stats" aria-label="Key numbers">
+        <div class="stat"><b>826 million</b><span>people with near-vision impairment because their presbyopia was not corrected (2015)<sup><a href="#r1">1</a></sup></span></div>
+        <div class="stat"><b>1.4%</b><span>of over-50s in sub-Saharan Africa have properly corrected near vision, vs 64.7% in high-income countries<sup><a href="#r2">2</a></sup></span></div>
+        <div class="stat"><b>+22%</b><span>productivity when tea pickers were given reading glasses, in a randomised trial<sup><a href="#r3">3</a></sup></span></div>
+        <div class="stat"><b>+33%</b><span>income for people in near-vision work given reading glasses, in a randomised trial<sup><a href="#r4">4</a></sup></span></div>
+      </div>
+      <p class="small muted">The two trials measured the effect of giving people reading glasses, not of using this app. Small Print’s job is the step before: helping people find the right pair.</p>
+
+      <h2>Why choosing reading glasses goes wrong</h2>
+      <p>The usual way to choose is a little chart on the shop rack, or a printable one online. It only works if two things are true, and in practice neither usually is:</p>
+      <ul>
+        <li><strong>It must be held at exactly the right distance</strong>, usually 14 inches (35.6 cm). Hold it at 30 cm instead and the result is off by about half a dioptre, a full strength step.<sup><a href="/findings.html#card">see the maths</a></sup></li>
+        <li><strong>It must be printed or shown at exactly the right size.</strong> Browsers don’t know how big a screen pixel really is: on our test phone, an un-calibrated on-screen chart draws letters noticeably too small. <a href="/findings.html#screen">See our measurements</a>.</li>
+        <li><strong>You have to be able to read it.</strong> In one of the trials above, only 35% of participants could read.<sup><a href="#r4">4</a></sup></li>
+      </ul>
+
+      <h2>How Small Print fixes that</h2>
+      <ol class="steps">
+        <li><strong>The camera measures distance, live.</strong> The coloured part of the eye (the iris) is about the same size in every adult, so its size on camera tells us how far away your face is. This runs entirely in your browser; video never leaves the phone.</li>
+        <li><strong>The test resizes itself.</strong> A letter E is redrawn about 30 times a second so it always looks exactly the same size to your eye, wherever you hold the phone.</li>
+        <li><strong>No reading needed.</strong> You swipe in the direction the E points. A voice guide speaks every step in English, Spanish, French or Portuguese.</li>
+        <li><strong>It uses your own reading distance.</strong> A tailor holding work at 28 cm needs a different strength from someone reading at 40 cm. Printed charts assume everyone holds things the same way.</li>
+        <li><strong>It checks the pair in the shop.</strong> Put a pair on, and the test measures where you see sharply. If your reading distance isn’t in the middle of that range (the standard rule eye-care workers use), it tells you to go stronger or weaker.</li>
+      </ol>
+      <p><a href="/how-it-works.html">The full method, with every formula and source →</a></p>
+
+      <h2>Built to be trusted</h2>
+      <div class="grid2">
+        <div class="card"><h3>Private by design</h3><p>No account, no name, no images. We store only an anonymous result (age band, strength, distance) so the <a href="/impact.html">impact dashboard</a> can count screenings.</p></div>
+        <div class="card"><h3>Safe by default</h3><p>Warning signs like sudden changes, pain, or diabetes send people to an eye-care professional instead of a shop. Anything beyond the +3.00 range of ready-made readers is referred. <a href="/safety.html">Scope and limits</a>.</p></div>
+        <div class="card"><h3>No AI guessing about your eyes</h3><p>The recommendation is deterministic optics from published sources, so it can be tested and checked. We test it on <a href="/validation.html">thousands of simulated eyes</a> and publish where it fails.</p></div>
+        <div class="card"><h3>Honest about what’s proven</h3><p>Small Print has not yet been validated in a field study. We say exactly what we measured, what we simulated, and what still needs a pilot. <a href="/validation.html">Validation</a>.</p></div>
+      </div>
+
+      <h2>References</h2>
+      <ol class="refs">
+        <li id="r1">Fricke TR, et al. Global prevalence of presbyopia and vision impairment from uncorrected presbyopia. <i>Ophthalmology</i> 2018;125(10):1492–1499. A 2020 estimate (Vision Loss Expert Group) puts it at 510 million aged 50+.</li>
+        <li id="r2">Global uncorrected refractive error and presbyopia: the size of the problem. <i>Community Eye Health Journal</i> 2024 (effective near-vision coverage, adults 50+, 2021).</li>
+        <li id="r3">Reddy PA, et al. Effect of providing near glasses on productivity among rural Indian tea workers with presbyopia (PROSPER): a randomised trial. <i>Lancet Global Health</i> 2018;6(9):e1019–e1027.</li>
+        <li id="r4">Sehrin F, et al. The effect on income of providing near vision correction to workers in Bangladesh: the THRIVE randomized controlled trial. <i>PLOS ONE</i> 2024;19(4):e0296115.</li>
+      </ol>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Small Print helps you choose non-prescription reading glasses. It is not an eye exam and cannot detect eye disease. <a href="/safety.html">Safety</a> · <a href="/how-it-works.html">How it works</a> · <a href="/validation.html">Validation</a> · <a href="/evidence.html">Built on AWS</a> · <a href="/judges.html">For judges</a></p>
+      <p>Built for the AWS Builder Center “Zero to Shipped” hackathon, 2026. Open source.</p>
+    </div>
+  </footer>
+</body>
+</html>

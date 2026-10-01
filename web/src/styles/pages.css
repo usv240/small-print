@@ -1,0 +1,24 @@
+/* Content pages (index, how-it-works, findings, ...). */
+main { display: block; }
+.hero { padding: 2.5rem 0 1.5rem; border-bottom: 1px solid var(--line); margin-bottom: 1rem; }
+.hero h1 { font-size: clamp(2.3rem, 7vw, 3.4rem); max-width: 18ch; }
+.eyebrow { text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.8rem; font-weight: 700; color: var(--accent); margin-bottom: 0.25rem; }
+.cta { display: flex; flex-wrap: wrap; gap: 0.75rem; margin: 1.5rem 0 1rem; }
+.steps li { margin: 0.8rem 0; }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 0.75rem; }
+.grid2 .card { margin: 0; }
+sup a { text-decoration: none; font-size: 0.75em; }
+.page-head { padding: 2rem 0 0.5rem; }
+.kv { display: grid; grid-template-columns: max-content 1fr; gap: 0.35rem 1rem; }
+.kv dt { font-weight: 600; }
+.kv dd { margin: 0; }
+.judge-steps { counter-reset: s; list-style: none; padding: 0; }
+.judge-steps li { counter-increment: s; position: relative; padding: 0.9rem 1rem 0.9rem 3.2rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); margin: 0.6rem 0; }
+.judge-steps li::before { content: counter(s); position: absolute; left: 1rem; top: 0.85rem; width: 1.6rem; height: 1.6rem; border-radius: 50%; background: var(--accent); color: var(--accent-ink); font-weight: 700; display: grid; place-items: center; font-size: 0.9rem; }
+.expect { display: block; color: var(--ok); font-size: 0.95rem; margin-top: 0.3rem; }
+.expect::before { content: "Expect: "; font-weight: 700; }
+.bars { margin: 1rem 0; }
+.bar-row { display: grid; grid-template-columns: 6rem 1fr 3rem; gap: 0.6rem; align-items: center; margin: 0.35rem 0; font-size: 0.92rem; }
+.bar-track { height: 0.9rem; background: var(--line); border-radius: 999px; overflow: hidden; }
+.bar-fill { height: 100%; background: var(--accent); border-radius: 999px; }
+.qr { display: inline-block; background: #fff; padding: 0.6rem; border-radius: 12px; border: 1px solid var(--line); }

@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Take the test · Small Print</title>
+  <meta name="description" content="Two-minute reading glasses strength test using your phone camera. Free, private, not an eye exam.">
+  <meta name="theme-color" content="#b4410e">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <script type="module" src="/src/app.ts"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/">Small <span>Print</span></a>
+      <nav class="nav" aria-label="Site"><a href="/how-it-works.html">How it works</a><a href="/safety.html">Safety</a></nav>
+    </div>
+  </header>
+  <main class="app-main" id="app" tabindex="-1">
+    <noscript><p>Small Print needs JavaScript to run the camera test. You can still read <a href="/how-it-works.html">how it works</a>.</p></noscript>
+  </main>
+  <video id="cam" playsinline muted aria-hidden="true"></video>
+  <div class="demo-bar" id="demo-bar" hidden>
+    <div class="wrap">
+      <label for="demo-range"><span id="demo-label">Distance from your eyes</span><output id="demo-value">45 cm</output></label>
+      <input type="range" id="demo-range" min="10" max="80" value="45" step="1">
+      <p id="demo-note">Demo mode: the slider stands in for the camera.</p>
+    </div>
+  </div>
+</body>
+</html>

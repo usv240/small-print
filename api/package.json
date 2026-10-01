@@ -1,0 +1,23 @@
+{
+  "name": "small-print-api",
+  "version": "1.0.0",
+  "description": "Small Print anonymous results API (AWS Lambda handlers, bundled by CDK NodejsFunction)",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.1145.0",
+    "@aws-sdk/lib-dynamodb": "^3.1145.0"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.164",
+    "@types/node": "^22.20.4",
+    "esbuild": "^0.28.2",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.3"
+  }
+}
