@@ -77,9 +77,9 @@
     const fade = (a, d = 0.6) => clamp((t - a) / d);
     $('eb').style.opacity = fade(0.0); $('h').style.opacity = fade(0.15);
     $('h').style.transform = `translateY(${(1 - ease(fade(0.15))) * 14}px)`;
-    $('sub').style.opacity = fade(3.3, 0.7);
+    $('sub').style.opacity = fade(1.4, 0.7);
     $('panel').style.opacity = fade(0.1, 0.7);
-    const p = ease(clamp((t - 1.4) / 4.2));
+    const p = ease(clamp((t - 0.5) / 3.0));
     const hx = 262 + p * 168, hy = 236 - p * 30 + Math.sin(t * 3.1) * 1.5;
     // two-segment arm (simple inverse kinematics, elbow below)
     const dx = hx - shoulder.x, dy = hy - shoulder.y; const d = Math.min(L1 + L2 - 0.01, Math.hypot(dx, dy));
@@ -93,7 +93,7 @@
     const cm = Math.round(25 + p * 35);
     $('dl').textContent = `${cm} cm`; $('dl').setAttribute('x', (156 + hx - 30) / 2 - 16 + p * 16); $('dl').setAttribute('y', (172 + hy - 22) / 2 - 36 + p * 18);
     $('bl').setAttribute('stdDeviation', (2.6 - p * 1.3).toFixed(2));
-    $('note').setAttribute('opacity', fade(5.4, 0.6));
+    $('note').setAttribute('opacity', fade(3.0, 0.5));
   };
   window.render(0);
 </script>

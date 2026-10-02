@@ -1,16 +1,16 @@
 {
   "voice": "Joanna",
-  "rate": "105%",
+  "rate": "106%",
   "segments": [
-    { "id": "title",   "text": "At 40, everyone's arms get too short. <break time=\"350ms\"/> Close-up text blurs, so the phone goes further and further away." },
-    { "id": "stats",   "text": "826 million people can't see well up close, because their eyes aren't corrected. <break time=\"250ms\"/> Reading glasses cost about two dollars, and in randomised trials, they raised productivity by 22%, and income by a third." },
-    { "id": "card",    "text": "The hard part is choosing the strength. <break time=\"200ms\"/> Shop charts only work at exactly the right distance, at the right print size, and only if you can read." },
-    { "id": "app",     "text": "Small Print turns your phone's camera into a ruler. <break time=\"200ms\"/> It measures how far your eyes are from the screen, right on the device. First, hold the phone where you like to read." },
-    { "id": "swipe",   "text": "Then just swipe the way the E points. No reading needed." },
-    { "id": "near",    "text": "The E is redrawn about 30 times a second, so it always looks the same size to your eye, while the test finds the closest distance where you still see sharply." },
-    { "id": "result",  "text": "Out comes a starting strength for ready-made reading glasses." },
-    { "id": "tryon",   "text": "Then check a pair in the shop. <break time=\"200ms\"/> With the glasses on, the app measures where you see sharply, and checks that your reading distance sits in the middle." },
-    { "id": "aws",     "text": "Video never leaves the phone, and there are no AI guesses about your eyes. <break time=\"250ms\"/> It's built on AWS, with CloudFront, Lambda, DynamoDB and Polly, for about 60 cents per 1,000 screenings." },
+    { "id": "hook",    "text": "At forty, everyone's arms get too short." },
+    { "id": "result",  "text": "On <sub alias=\"two hundred and ninety-six\">296</sub> real patients from published clinical data, Small Print's starting strength matched the clinician <sub alias=\"eighty-six percent\">86%</sub> of the time, as often as the standard age table. <break time=\"250ms\"/> And unlike the table, it held back reading glasses from about half of the short-sighted patients." },
+    { "id": "problem", "text": "<sub alias=\"Eight hundred and twenty-six million\">826 million</sub> people can't see well up close. <break time=\"200ms\"/> Reading glasses cost about <sub alias=\"two dollars\">$2</sub>, and in randomised trials they raised productivity by <sub alias=\"twenty-two percent\">22%</sub> and income by a third." },
+    { "id": "app",     "text": "Small Print turns your phone's camera into a ruler, right on the device." },
+    { "id": "swipe",   "text": "Swipe the way the E points: no reading needed." },
+    { "id": "near",    "text": "The letter E is redrawn about thirty times a second, so it always looks the same size to your eye." },
+    { "id": "refuse",  "text": "If it can't see real eyes, it refuses to measure." },
+    { "id": "tryon",   "text": "Then check the pair at the rack: the app measures where you see sharply through the glasses, and checks your reading distance sits in the middle." },
+    { "id": "aws",     "text": "It's built on AWS with CloudFront, Lambda, DynamoDB and Polly, for about <sub alias=\"sixty cents per thousand\">60 cents per 1,000</sub> screenings, by a coding agent connected through the AWS MCP Server." },
     { "id": "end",     "text": "Small Print. <break time=\"300ms\"/> Everyone deserves to read the small print." }
   ]
 }

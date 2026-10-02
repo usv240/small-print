@@ -1,9 +1,9 @@
 // Records every shot of the demo video as numbered JPEG frames at exactly 30 fps.
 // Phone shots drive the real app (test.html, demo mode) under Playwright's fake clock, advancing
 // 1/30 s per frame, so the timing is deterministic and the E's resizing is captured frame by frame.
-// Usage: npx tsx video/record.ts [title] [stats] [card] [phone] [aws] [end]   (default: all)
+// Usage: npx tsx video/record.ts [hook] [validation] [stats] [aws] [end]   (default: all). Phone shots: rec-phone.ts
 // Needs the site served at BASE (default http://127.0.0.1:4789): node scripts/copy-mediapipe.mjs && npx vite build --outDir video/tmp/site && npx vite preview --outDir video/tmp/site --port 4789
-// Pipeline: node video/tts.mjs → npx tsx video/record.ts → npx tsx video/compose.ts → npx tsx video/stills.ts
+// Pipeline: node video/tts.mjs → npx tsx video/face.ts all → npx tsx video/rec-phone.ts → npx tsx video/record.ts → npx tsx video/compose.ts → npx tsx video/stills.ts
 import { chromium, type Browser, type Page } from '@playwright/test';
 import { mkdirSync, readFileSync, rmSync, writeFileSync, copyFileSync } from 'node:fs';
 import { resolve } from 'node:path';
@@ -227,29 +227,63 @@ async function sceneClip(browser: Browser, name: string, file: string, seconds: 
   await ctx.close();
 }
 
-async function desktopPage(browser: Browser, path: string) {
-  const ctx = await browser.newContext({ viewport: { width: DESKTOP.width, height: DESKTOP.height }, deviceScaleFactor: DESKTOP.dsf, colorScheme: 'light', locale: 'en-US' });
+async function desktopPage(browser: Browser, path: string, wide = false) {
+  // wide: 1344×708 CSS at 0.833 (same 1120×590 px), to fit the whole architecture diagram
+  const vp = wide ? { width: 1344, height: 708, dsf: 1120 / 1344 } : { width: DESKTOP.width, height: DESKTOP.height, dsf: DESKTOP.dsf };
+  const ctx = await browser.newContext({ viewport: { width: vp.width, height: vp.height }, deviceScaleFactor: vp.dsf, colorScheme: 'light', locale: 'en-US' });
   const page = await ctx.newPage();
   await page.goto(`${BASE}${path}`, { waitUntil: 'networkidle' });
   await page.evaluate(() => document.fonts.ready);
+  // load every lazy image now, so nothing shifts while the shot scrolls
+  await page.evaluate(async () => {
+    const imgs = [...document.querySelectorAll('img')] as HTMLImageElement[];
+    imgs.forEach((i) => { i.loading = 'eager'; });
+    await Promise.all(imgs.map((i) => (i.complete ? null : new Promise((r) => { i.onload = i.onerror = r; }))));
+  });
+  await page.waitForTimeout(300);
   await installFx(page);
+  await page.addStyleTag({ content: '.fx-row > td{background:#fbe9df !important;box-shadow:inset 0 2px 0 #b4410e, inset 0 -2px 0 #b4410e !important}.fx-row > td:first-child{box-shadow:inset 4px 0 0 #b4410e, inset 0 2px 0 #b4410e, inset 0 -2px 0 #b4410e !important}' });
   return { ctx, page };
 }
 
 const topOf = (page: Page, sel: string) => rectOf(page, sel).then((r) => r.top);
-const hl = (page: Page, sel: string, on: boolean) => page.evaluate(([s, on]) => document.querySelector(s as string)?.classList.toggle('fx-hl', on as boolean), [sel, on]);
+const hl = (page: Page, sel: string, on: boolean, cls = 'fx-hl') => page.evaluate(([s, on, cls]) => document.querySelector(s as string)?.classList.toggle(cls as string, on as boolean), [sel, on, cls]);
+const jump = (page: Page, y: number) => page.evaluate((y) => window.scrollTo({ top: y, behavior: 'instant' as ScrollBehavior }), y);
+/** Time (s, from the segment start) of the first caption token starting with `w` at or after `after`. */
+const tok = (id: string, w: string, after = 0) => (tts.segments[id].tokens as { tok: string; t: number }[]).find((x) => x.tok.startsWith(w) && x.t >= after)!.t;
+
+async function validation(browser: Browser) {
+  const { ctx, page } = await desktopPage(browser, '/validation.html?dev');
+  const c = new Clip('validation', page, { layout: 'desktop' });
+  await page.evaluate(() => { const li = [...document.querySelectorAll('.glance li')].find((x) => x.textContent?.includes('Real patients')) as HTMLElement; li.id = 'fx-real'; });
+  await jump(page, (await topOf(page, '#fx-real')) - 150);
+  c.cue('result', 0.35);
+  await c.hold(0.35);
+  await hl(page, '#fx-real', true);
+  const at = (w: string, after = 0, d = 0) => c.cues[0].frame + sec(tok('result', w, after) + d);
+  await c.holdUntil(at('Small', 0, -0.2));
+  await hl(page, '#fx-real', false);
+  const table = '#clinical ~ .table-wrap table';
+  await scrollTo(c, (await topOf(page, table)) - 92, 0.8);
+  await hl(page, `${table} tbody tr:nth-child(1)`, true, 'fx-row');
+  await c.holdUntil(at('And', 0, -0.1));
+  await hl(page, `${table} tbody tr:nth-child(1)`, false, 'fx-row');
+  await hl(page, `${table} tbody tr:nth-child(4)`, true, 'fx-row');
+  await c.holdUntil(c.cueEnd('result') + sec(0.45));
+  c.save();
+  await ctx.close();
+}
 
 async function stats(browser: Browser) {
-  const { ctx, page } = await desktopPage(browser, '/index.html');
+  const { ctx, page } = await desktopPage(browser, '/index.html?dev');
   const c = new Clip('stats', page, { layout: 'desktop' });
-  const statsTop = await topOf(page, '.stats');
-  await page.evaluate((y) => window.scrollTo({ top: y, behavior: 'instant' as ScrollBehavior }), Math.max(0, statsTop - 230));
-  await c.hold(0.5);
-  c.cue('stats', 0.0);
-  await scrollTo(c, statsTop - 70, 1.0);
-  const words = tts.segments.stats.words as { t: number; w: string }[];
-  const at = (w: string) => c.cues[0].frame + sec(words.find((x) => x.w.startsWith(w))!.t);
-  const stat = (i: number) => `.stats .stat:nth-child(${i})`;
+  const top = await topOf(page, '.stat-strip');
+  await jump(page, Math.max(0, top - 260));
+  await c.hold(0.2);
+  c.cue('problem', 0.15);
+  await scrollTo(c, top - 92, 0.8);
+  const at = (w: string) => c.cues[0].frame + sec(tok('problem', w));
+  const stat = (i: number) => `.stat-strip .stat:nth-child(${i})`;
   await hl(page, stat(1), true);
   await c.holdUntil(at('Reading') - 3);
   await hl(page, stat(1), false);
@@ -257,163 +291,34 @@ async function stats(browser: Browser) {
   await hl(page, stat(3), true);
   await c.holdUntil(at('income'));
   await hl(page, stat(3), false); await hl(page, stat(4), true);
-  await c.holdUntil(c.cueEnd('stats') + sec(0.5));
+  await c.holdUntil(c.cueEnd('problem') + sec(0.5));
   c.save();
   await ctx.close();
-}
-
-async function card(browser: Browser) {
-  // Part A: the findings table (distance). Part B: the three reasons on the home page.
-  const a = await desktopPage(browser, '/findings.html');
-  const c = new Clip('card', a.page, { layout: 'desktop' });
-  const top = await topOf(a.page, '#card');
-  await a.page.evaluate((y) => window.scrollTo({ top: y, behavior: 'instant' as ScrollBehavior }), top - 24);
-  const words = tts.segments.card.words as { t: number; w: string }[];
-  c.cue('card', 0.25);
-  const tbl = await topOf(a.page, '#card table');
-  await c.hold(1.2);
-  await scrollTo(c, tbl - 120, 1.0);
-  await c.holdUntil(c.cues[0].frame + sec(words.find((x) => x.w === 'distance')!.t + 0.55));
-  // switch page within the same clip
-  const b = await desktopPage(browser, '/index.html');
-  const lst = await topOf(b.page, 'main section.wrap > ul');
-  const h2 = await b.page.evaluate(() => { const h = [...document.querySelectorAll('h2')].find((x) => x.textContent?.startsWith('Why choosing')); return h!.getBoundingClientRect().top + scrollY; });
-  await b.page.evaluate((y) => window.scrollTo({ top: y, behavior: 'instant' as ScrollBehavior }), h2 - 24);
-  c.page = b.page;
-  const li = (i: number) => `main section.wrap > ul > li:nth-child(${i})`;
-  await hl(b.page, li(1), true);
-  await c.hold(0.35);
-  await hl(b.page, li(1), false); await hl(b.page, li(2), true);
-  await c.holdUntil(c.cues[0].frame + sec(words.find((x) => x.w === 'only' && x.t > 5)!.t - 0.1));
-  await hl(b.page, li(2), false); await hl(b.page, li(3), true);
-  await c.holdUntil(c.cueEnd('card') + sec(0.45));
-  void lst;
-  c.save();
-  await a.ctx.close(); await b.ctx.close();
 }
 
 async function aws(browser: Browser) {
-  const words = tts.segments.aws.words as { t: number; w: string }[];
-  const w = (s: string) => words.find((x) => x.w.startsWith(s))!.t;
-  // 1) trust cards on the home page ("video never leaves the phone", "no AI guesses")
-  const a = await desktopPage(browser, '/index.html');
+  const w = (s: string, after = 0) => tok('aws', s, after);
+  // 1) architecture diagram, whole (wide viewport)
+  const a = await desktopPage(browser, '/evidence.html?dev');
+  await a.page.addStyleTag({ content: 'svg.arch{width:540px !important;max-width:540px !important;height:auto !important;display:block;margin:0 auto}' });
+  await a.page.waitForTimeout(200);
   const c = new Clip('aws', a.page, { layout: 'desktop' });
-  const g = await a.page.evaluate(() => {
-    const h = [...document.querySelectorAll('h2')].find((x) => x.textContent?.startsWith('Built to be trusted'))!;
-    (h.nextElementSibling as HTMLElement).id = 'fx-trust';
-    return h.getBoundingClientRect().top + scrollY;
-  });
-  await a.page.evaluate((y) => window.scrollTo({ top: y, behavior: 'instant' as ScrollBehavior }), g - 24);
+  await jump(a.page, (await topOf(a.page, 'svg.arch')) - 50);
   c.cue('aws', 0.2);
-  await hl(a.page, '#fx-trust .card:nth-child(1)', true);
-  await c.holdUntil(c.cues[0].frame + sec(w('and') - 0.05));
-  await hl(a.page, '#fx-trust .card:nth-child(1)', false); await hl(a.page, '#fx-trust .card:nth-child(3)', true);
-  await scrollTo(c, await topOf(a.page, '#fx-trust .card:nth-child(3)') - 250, 0.5);
-  await c.holdUntil(c.cues[0].frame + sec(w("It's") - 0.25));
-  // 2) architecture diagram
-  const b = await desktopPage(browser, '/evidence.html');
-  const arch = await topOf(b.page, 'svg.arch');
-  await b.page.evaluate((y) => window.scrollTo({ top: y, behavior: 'instant' as ScrollBehavior }), arch - 6);
+  await c.holdUntil(c.cues[0].frame + sec(w('for') - 0.25));
+  // 2) cost per 1,000 screenings
+  await jump(a.page, (await topOf(a.page, 'tr.hl')) - 330);
+  await hl(a.page, 'tr.hl', true, 'fx-row');
+  await c.holdUntil(c.cues[0].frame + sec(w('by', 6) - 0.2));
+  // 3) proof: the AWS MCP Server connected, then CloudTrail of the agent's role (images served by the site)
+  const b = await desktopPage(browser, '/evidence.html?dev');
+  await jump(b.page, (await topOf(b.page, 'img[src*="proof-mcp"]')) - 92);
   c.page = b.page;
-  await c.holdUntil(c.cues[0].frame + sec(w('for') - 0.3));
-  // 3) cost table total
-  const cost = await b.page.evaluate(() => { const r = document.querySelector('tr.hl') as HTMLElement; return r.getBoundingClientRect().top + scrollY; });
-  await b.page.evaluate((y) => window.scrollTo({ top: y, behavior: 'instant' as ScrollBehavior }), cost - 330);
-  await hl(b.page, 'tr.hl', true);
-  await c.holdUntil(c.cueEnd('aws') + sec(0.6));
+  await c.holdUntil(c.cues[0].frame + sec(w('AWS', 8) - 0.35));
+  await jump(b.page, (await topOf(b.page, 'img[src*="proof-cloudtrail"]')) - 92);
+  await c.holdUntil(c.cueEnd('aws') + sec(0.55));
   c.save();
   await a.ctx.close(); await b.ctx.close();
-}
-
-async function phone(browser: Browser) {
-  const ctx = await browser.newContext({
-    viewport: { width: PHONE.width, height: PHONE.height }, deviceScaleFactor: PHONE.dsf, isMobile: true, hasTouch: true,
-    colorScheme: 'light', locale: 'en-US',
-  });
-  const page = await ctx.newPage();
-  await page.clock.install({ time: new Date('2026-10-01T10:00:00Z') });
-  await page.goto(`${BASE}/test.html`, { waitUntil: 'networkidle' });
-  await page.evaluate(() => document.fonts.ready);
-  await page.clock.pauseAt(new Date('2026-10-01T10:00:10Z'));
-  await installFx(page);
-
-  // --- app: welcome → demo → safety → age → reading distance
-  let c = new Clip('app', page, { layout: 'phone', clock: true, eyebrow: 'The real app · demo mode', title: 'Your camera becomes a ruler', sub: 'It measures eye-to-screen distance on the device. In this recording a slider stands in for the camera.' });
-  c.cue('app', 0.3);
-  await c.hold(1.0);
-  await tap(c, '#demo', 0.25);
-  for (const k of ['sudden-change', 'pain-redness', 'diabetes', 'glaucoma-family', 'distance-blur', 'distance-glasses']) {
-    await tap(c, `label:has(> input[name="${k}"][value="no"])`, 0.03, true);
-  }
-  await tap(c, '#next', 0.2);
-  for (let i = 0; i < 5; i++) await tap(c, '#plus', 0.03, true);
-  await c.hold(0.2);
-  await tap(c, '#next', 0.2);
-  c.mark('working');
-  await slide(c, 38, 1.0);
-  await tap(c, 'details.info summary', 0.2);
-  // hold steady until the app has locked the reading distance, and the narration has finished
-  for (let i = 0; i < sec(6); i++) {
-    if (await page.evaluate(() => !(document.getElementById('use') as HTMLButtonElement).disabled)) break;
-    await c.snap();
-  }
-  await c.hold(0.5);
-  await c.holdUntil(c.cueEnd('app') + sec(0.15));
-  await tap(c, '#use', 0);
-  c.save();
-
-  // --- swipe: small-print E (true size), 5 answers
-  c = new Clip('swipe', page, { layout: 'phone', clock: true, magnifier: true, eyebrow: 'Step 6 of 8', title: 'Swipe the way the E points', sub: 'No reading needed. This E is small print, the size of a medicine label.' });
-  c.cue('swipe', 0.15);
-  await c.hold(0.55);
-  for (let i = 0; i < 5; i++) {
-    if (i === 4) await c.holdUntil(c.cueEnd('swipe') - 8);
-    await swipe(c, await eDirection(page));
-    if (i < 4) await c.hold(0.2);
-  }
-  c.save();
-
-  // --- near point: the E keeps a constant visual angle while the distance changes
-  c = new Clip('near', page, { layout: 'phone', clock: true, magnifier: true, eyebrow: 'Step 7 of 8', title: 'Same size to your eye, at any distance', sub: 'Redrawn about 30 times a second from the measured distance, to find your closest sharp point.' });
-  c.cue('near', 0.1);
-  await c.hold(0.35);
-  await slide(c, 30, 0.8, { keepFinger: true });
-  await slide(c, 62, 2.4, { keepFinger: true });
-  await slide(c, 40, 1.3);
-  await c.hold(0.2);
-  await tap(c, '#blurry', 0.25);
-  await slide(c, 55, 1.9, { easing: (x) => x });
-  await c.holdUntil(c.cueEnd('near') - sec(0.2));
-  await tap(c, '#mark', 0);
-  c.save();
-
-  // --- result
-  c = new Clip('result', page, { layout: 'phone', clock: true, eyebrow: 'Step 8 of 8', title: 'A starting strength', sub: 'For ready-made reading glasses, from published optics. Not a prescription, and not an eye exam.' });
-  c.cue('result', 0.3);
-  await c.hold(1.8);
-  await page.screenshot({ path: resolve(TMP, 'result-card@3x.png'), type: 'png' });
-  await scrollTo(c, 150, 0.8);
-  await c.holdUntil(c.cueEnd('result') + sec(0.5));
-  c.save();
-
-  // --- try-on in the shop
-  c = new Clip('tryon', page, { layout: 'phone', clock: true, eyebrow: 'In the shop', title: 'Check the pair before you buy', sub: 'With the glasses on, it measures where you see sharply. Your reading distance should sit in the middle.' });
-  c.cue('tryon', 0.2);
-  await tap(c, '#tryon', 0.3);
-  await tap(c, '.power-chip[data-p="2"]', 0.2);
-  await tap(c, '#next', 0.25);
-  await slide(c, 40, 0.9);
-  await tap(c, '#ok', 0.2);
-  await slide(c, 27, 0.9);
-  await tap(c, '#mark', 0.2);
-  await slide(c, 60, 1.1);
-  await tap(c, '#mark', 0);
-  c.mark('verdict');
-  await c.hold(1.2);
-  await page.screenshot({ path: resolve(TMP, 'verdict@3x.png'), type: 'png' });
-  await c.holdUntil(Math.max(c.cueEnd('tryon') + sec(0.6), c.marks.verdict + sec(2.6)));
-  c.save();
-  await ctx.close();
 }
 
 // ---------- main ----------
@@ -422,12 +327,11 @@ const want = new Set(process.argv.slice(2));
 const all = want.size === 0;
 const browser = await chromium.launch();
 try {
-  if (all || want.has('title')) await sceneClip(browser, 'title', 'title.html', (c) => c.cueEnd('title') + sec(0.7), ['title', 0.45]);
+  if (all || want.has('hook')) await sceneClip(browser, 'hook', 'title.html', (c) => c.cueEnd('hook') + sec(0.75), ['hook', 0.3]);
+  if (all || want.has('validation')) await validation(browser);
   if (all || want.has('stats')) await stats(browser);
-  if (all || want.has('card')) await card(browser);
-  if (all || want.has('phone')) await phone(browser);
   if (all || want.has('aws')) await aws(browser);
-  if (all || want.has('end')) await sceneClip(browser, 'end', 'end.html', (c) => c.cueEnd('end') + sec(1.9), ['end', 0.35]);
+  if (all || want.has('end')) await sceneClip(browser, 'end', 'end.html', (c) => c.cueEnd('end') + sec(0.95), ['end', 0.3]);
 } finally {
   await browser.close();
 }

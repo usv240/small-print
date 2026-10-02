@@ -14,10 +14,10 @@ const OUT = resolve(HERE, '../public/media');
 mkdirSync(CMP, { recursive: true });
 mkdirSync(OUT, { recursive: true });
 const FPS = 30;
-const ORDER = ['title', 'stats', 'card', 'app', 'swipe', 'near', 'result', 'tryon', 'aws', 'end'];
+const ORDER = ['hook', 'validation', 'stats', 'app', 'swipe', 'near', 'result', 'refuse', 'tryon', 'aws', 'end'];
 const tts = JSON.parse(readFileSync(resolve(TMP, 'tts/manifest.json'), 'utf8'));
 
-interface Meta { name: string; layout: 'full' | 'desktop' | 'phone'; magnifier?: boolean; title?: string; sub?: string; eyebrow?: string; frames: number; cues: { id: string; frame: number }[]; dist: (number | null)[]; start: number }
+interface Meta { name: string; layout: 'full' | 'desktop' | 'phone'; magnifier?: boolean; camView?: boolean; label?: string; labelKind?: 'cam' | 'refuse' | 'demo'; distNote?: string; live?: (string | null)[]; cam?: number[]; title?: string; sub?: string; eyebrow?: string; frames: number; cues: { id: string; frame: number }[]; dist: (number | null)[]; start: number }
 const metas: Meta[] = ORDER.map((n) => JSON.parse(readFileSync(resolve(FR, n, 'meta.json'), 'utf8')));
 let acc = 0;
 for (const m of metas) { m.start = acc; acc += m.frames; }
@@ -28,26 +28,34 @@ console.log(`total ${TOTAL} frames = ${totalSec.toFixed(2)} s`);
 const ff = (args: string[], cwd = CMP) => execFileSync('ffmpeg', ['-hide_banner', '-v', 'error', '-y', ...args], { cwd, stdio: ['ignore', 'inherit', 'inherit'] });
 
 // ---------- layout ----------
-const SCREEN = { x: 830, y: 38, w: 330, h: 643 }; // phone screen (390×760 CSS at 3× → scaled)
-const MAGBOX = { x: 80, y: 372, s: 252 };
+const SCREEN = { x: 902, y: 35, w: 300, h: 650 }; // phone screen (390×844 CSS, recorded at 3×, scaled)
+const PANEL_Y = 322;
+const CAMBOX = { x: 80, y: PANEL_Y, w: 256, h: 192 };
+const MAGBOX = { x: 630, y: PANEL_Y, s: 168 };
 const DESK = { x: 80, y: 24, w: 1120, h: 590 };
-const DIST_AT = (m: Meta) => (m.magnifier ? { x: 372, y: 392 } : { x: 80, y: 392 });
+const DIST_AT = (m: Meta) => (m.camView ? { x: 372, y: PANEL_Y } : { x: 80, y: PANEL_Y });
 
 const css = `
-  :root { --bg:#fbf8f3; --ink:#1a1917; --muted:#5d5a55; --line:#e4ded4; --accent:#b4410e; --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif; --sans:"Segoe UI",system-ui,sans-serif; }
+  :root { --bg:#fbf8f3; --ink:#1a1917; --muted:#5d5a55; --line:#e4ddd2; --accent:#b4410e; --accent-soft:#fbe9df; --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif; --sans:"Segoe UI",system-ui,sans-serif; }
   html,body { margin:0; width:1280px; height:720px; overflow:hidden; background:transparent; font-family:var(--sans); color:var(--ink); }
   .bg { position:absolute; inset:0; background:var(--bg); }
-  .brand { position:absolute; left:80px; top:40px; font:700 26px var(--serif); }
+  .brand { position:absolute; left:80px; top:34px; font:700 26px var(--serif); }
   .brand span { color:var(--accent); }
-  .eyebrow { position:absolute; left:80px; top:112px; font:600 15px var(--sans); letter-spacing:.14em; text-transform:uppercase; color:var(--accent); }
-  .h { position:absolute; left:80px; top:140px; width:660px; font:600 46px/1.1 var(--serif); margin:0; }
-  .sub { position:absolute; left:80px; width:640px; font:21px/1.45 var(--sans); color:var(--muted); margin:0; }
-  .maglabel { position:absolute; left:${MAGBOX.x}px; top:${MAGBOX.y - 26}px; font:600 13px var(--sans); letter-spacing:.12em; text-transform:uppercase; color:var(--muted); }
+  .eyebrow { position:absolute; left:80px; top:96px; font:600 15px var(--sans); letter-spacing:.14em; text-transform:uppercase; color:var(--accent); }
+  .h { position:absolute; left:80px; top:120px; width:760px; font:600 40px/1.1 var(--serif); margin:0; }
+  .sub { position:absolute; left:80px; width:740px; font:19px/1.45 var(--sans); color:var(--muted); margin:0; }
+  .plabel { position:absolute; top:${PANEL_Y - 24}px; font:600 13px var(--sans); letter-spacing:.12em; text-transform:uppercase; color:var(--muted); }
   .magbox { position:absolute; left:${MAGBOX.x - 2}px; top:${MAGBOX.y - 2}px; width:${MAGBOX.s}px; height:${MAGBOX.s}px; border:2px solid var(--line); border-radius:4px; background:#fff; }
-  .bezel { position:absolute; left:${SCREEN.x - 12}px; top:${SCREEN.y - 12}px; width:${SCREEN.w + 24}px; height:${SCREEN.h + 24}px; border-radius:46px; background:#1a1917; box-shadow:0 24px 60px rgba(26,25,23,.22), 0 4px 14px rgba(26,25,23,.12); }
-  .hole { position:absolute; left:${SCREEN.x}px; top:${SCREEN.y}px; width:${SCREEN.w}px; height:${SCREEN.h}px; border-radius:34px; box-shadow:0 0 0 13px #1a1917, inset 0 0 0 1px rgba(0,0,0,.25); }
+  .cambox { position:absolute; left:${CAMBOX.x - 2}px; top:${CAMBOX.y - 2}px; width:${CAMBOX.w}px; height:${CAMBOX.h}px; border:2px solid var(--line); border-radius:6px; background:#2a2826; }
+  .chip { position:absolute; left:80px; top:${CAMBOX.y + CAMBOX.h + 22}px; max-width:730px; box-sizing:border-box; font:600 15px/1.4 var(--sans); padding:8px 16px 8px 34px; border-radius:14px; }
+  .chip::before { content:""; position:absolute; left:14px; top:14px; width:10px; height:10px; border-radius:50%; }
+  .chip.cam { background:#eef5ef; color:#1d5a32; border:1.5px solid #b9d8c1; } .chip.cam::before { background:#2f8a4c; }
+  .chip.refuse { background:var(--accent-soft); color:#8a300a; border:1.5px solid #f0c3aa; } .chip.refuse::before { background:var(--accent); }
+  .chip.demo { background:#f4efe7; color:var(--muted); border:1.5px solid var(--line); } .chip.demo::before { background:#9a948b; }
+  .bezel { position:absolute; left:${SCREEN.x - 12}px; top:${SCREEN.y - 12}px; width:${SCREEN.w + 24}px; height:${SCREEN.h + 24}px; border-radius:44px; background:#1a1917; box-shadow:0 24px 60px rgba(26,25,23,.22), 0 4px 14px rgba(26,25,23,.12); }
+  .hole { position:absolute; left:${SCREEN.x}px; top:${SCREEN.y}px; width:${SCREEN.w}px; height:${SCREEN.h}px; border-radius:32px; box-shadow:0 0 0 13px #1a1917, inset 0 0 0 1px rgba(0,0,0,.25); }
   .card { position:absolute; left:${DESK.x}px; top:${DESK.y}px; width:${DESK.w}px; height:${DESK.h}px; border-radius:14px; background:#fff; box-shadow:0 20px 50px rgba(26,25,23,.14), 0 2px 8px rgba(26,25,23,.08); }
-  .dhole { position:absolute; left:${DESK.x}px; top:${DESK.y}px; width:${DESK.w}px; height:${DESK.h}px; border-radius:14px; box-shadow:inset 0 0 0 1px #e4ded4, 0 0 0 8px #fbf8f3; }
+  .dhole { position:absolute; left:${DESK.x}px; top:${DESK.y}px; width:${DESK.w}px; height:${DESK.h}px; border-radius:14px; box-shadow:inset 0 0 0 1px #e4ddd2, 0 0 0 8px #fbf8f3; }
 `;
 
 async function renderPngs() {
@@ -64,9 +72,13 @@ async function renderPngs() {
   await shot('<div class="dhole"></div>', 'fg-desktop.png', true);
   await shot('<div class="hole"></div>', 'fg-phone.png', true);
   for (const m of metas.filter((x) => x.layout === 'phone')) {
+    const d = DIST_AT(m);
     await shot(`<div class="bg"></div><div class="brand">Small <span>Print</span></div>
       <div class="eyebrow">${m.eyebrow ?? ''}</div><p class="h">${m.title ?? ''}</p><p class="sub">${m.sub ?? ''}</p>
-      ${m.magnifier ? '<div class="maglabel">The E, zoomed in</div><div class="magbox"></div>' : ''}
+      ${m.camView ? `<div class="plabel" style="left:${CAMBOX.x}px">What the camera sees</div><div class="cambox"></div>` : ''}
+      <div class="plabel" style="left:${d.x}px">Eye-to-screen distance</div>
+      ${m.magnifier ? `<div class="plabel" style="left:${MAGBOX.x}px">The E, zoomed in</div><div class="magbox"></div>` : ''}
+      ${m.label ? `<div class="chip ${m.labelKind ?? 'cam'}" style="${m.camView ? '' : `top:${PANEL_Y + 150}px`}">${m.label}</div>` : ''}
       <div class="bezel"></div>`, `bg-${m.name}.png`);
   }
   await browser.close();
@@ -86,9 +98,16 @@ function encodeClips() {
     } else {
       const inputs = ['-loop', '1', '-framerate', String(FPS), '-i', `bg-${m.name}.png`, '-framerate', String(FPS), '-i', `${dir}/f%05d.jpg`, '-loop', '1', '-framerate', String(FPS), '-i', 'fg-phone.png'];
       let fc = `[1]scale=${SCREEN.w}:${SCREEN.h}:flags=lanczos[p];[0][p]overlay=${SCREEN.x}:${SCREEN.y}[a];[a][2]overlay=0:0`;
+      let k = 3;
       if (m.magnifier) {
         inputs.push('-framerate', String(FPS), '-i', `${dir}/m%05d.png`);
-        fc += `[b];[3]scale=${MAGBOX.s}:${MAGBOX.s}:flags=neighbor[m];[b][m]overlay=${MAGBOX.x}:${MAGBOX.y}`;
+        fc += `[b${k}];[${k}]scale=${MAGBOX.s}:${MAGBOX.s}:flags=neighbor[m];[b${k}][m]overlay=${MAGBOX.x}:${MAGBOX.y}`;
+        k++;
+      }
+      if (m.camView) {
+        inputs.push('-framerate', String(FPS), '-i', `${dir}/c%05d.jpg`);
+        fc += `[b${k}];[${k}]scale=${CAMBOX.w}:${CAMBOX.h}:flags=lanczos[c];[b${k}][c]overlay=${CAMBOX.x}:${CAMBOX.y}`;
+        k++;
       }
       ff([...inputs, '-filter_complex', `${fc},format=yuv420p`, ...enc]);
     }
@@ -105,7 +124,6 @@ const ts = (s: number) => {
   const h = Math.floor(cs / 360000), mi = Math.floor((cs % 360000) / 6000), se = Math.floor((cs % 6000) / 100), c = cs % 100;
   return `${h}:${String(mi).padStart(2, '0')}:${String(se).padStart(2, '0')}.${String(c).padStart(2, '0')}`;
 };
-const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
 const pretty = (s: string) => s.replace(/'/g, '’');
 
 function captionEvents(): string[] {
@@ -115,18 +133,7 @@ function captionEvents(): string[] {
     for (const cue of m.cues) {
       const seg = tts.segments[cue.id];
       const t0 = (m.start + cue.frame) / FPS;
-      const marks = (seg.words as { t: number; w: string }[]).filter((w) => !w.w.startsWith('<'));
-      const toks = (seg.text as string).split(/\s+/).filter(Boolean);
-      let mi = 0;
-      let last = 0;
-      const timed = toks.map((tok) => {
-        const nt = norm(tok);
-        const t = marks[mi]?.t ?? last;
-        let a = '';
-        while (nt && mi < marks.length && a.length < nt.length) { a += norm(marks[mi].w); mi++; }
-        last = t;
-        return { tok, t };
-      });
+      const timed = (seg.tokens as { tok: string; t: number }[]).map((x) => ({ tok: x.tok, t: x.t }));
       const max = m.layout === 'phone' ? 48 : 72;
       // Split each sentence into the fewest roughly equal chunks that fit, preferring breaks after commas.
       const chunks: { text: string; t: number }[] = [];
@@ -166,16 +173,23 @@ function distanceEvents(): string[] {
   const ev: string[] = [];
   for (const m of metas.filter((x) => x.layout === 'phone')) {
     const p = DIST_AT(m);
+    const key = (i: number) => (m.dist[i] !== null ? `d${m.dist[i]}` : m.live?.[i]?.startsWith('Can') ? 'refused' : (m.cam?.[i] ?? -1) < 0 && m.camView ? 'off' : 'none');
     let i = 0;
     while (i < m.dist.length) {
-      const v = m.dist[i];
+      const k = key(i);
       let j = i + 1;
-      while (j < m.dist.length && m.dist[j] === v) j++;
-      if (v !== null) {
-        const s = ts((m.start + i) / FPS), e = ts((m.start + j) / FPS);
-        ev.push(`Dialogue: 1,${s},${e},DistLabel,,0,0,0,,{\\pos(${p.x},${p.y})}EYE-TO-SCREEN DISTANCE`);
-        ev.push(`Dialogue: 1,${s},${e},Dist,,0,0,0,,{\\pos(${p.x},${p.y + 22})}${v} cm`);
-        ev.push(`Dialogue: 1,${s},${e},DistNote,,0,0,0,,{\\pos(${p.x},${p.y + 120})}set by the demo slider`);
+      while (j < m.dist.length && key(j) === k) j++;
+      const s = ts((m.start + i) / FPS), e = ts((m.start + j) / FPS);
+      const at = (dy: number) => `{\\pos(${p.x},${p.y + dy})}`;
+      if (k.startsWith('d')) {
+        ev.push(`Dialogue: 1,${s},${e},Dist,,0,0,0,,${at(-4)}${m.dist[i]} cm`);
+        ev.push(`Dialogue: 1,${s},${e},DistNote,,0,0,0,,${at(98)}${m.distNote ?? ''}`);
+      } else if (k === 'refused') {
+        ev.push(`Dialogue: 1,${s},${e},DistNone,,0,0,0,,${at(-4)}—`);
+        ev.push(`Dialogue: 1,${s},${e},DistRefuse,,0,0,0,,${at(98)}eyes not visible: no measurement`);
+      } else {
+        ev.push(`Dialogue: 1,${s},${e},DistNone,,0,0,0,,${at(-4)}–`);
+        ev.push(`Dialogue: 1,${s},${e},DistNote,,0,0,0,,${at(98)}${k === 'off' ? 'camera not started yet' : 'not shown on this screen'}`);
       }
       i = j;
     }
@@ -194,10 +208,11 @@ ScaledBorderAndShadow: yes
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
 Style: Bottom,Segoe UI Semibold,30,&H0017191A,&H0017191A,&H00F3F8FB,&H00000000,0,0,0,0,100,100,0,0,1,0,0,2,90,90,26,1
-Style: Side,Segoe UI Semibold,29,&H0017191A,&H0017191A,&H00F3F8FB,&H00000000,0,0,0,0,100,100,0,0,1,0,0,1,80,500,30,1
-Style: Dist,Palatino Linotype,88,&H000E41B4,&H000E41B4,&H00000000,&H00000000,-1,0,0,0,100,100,0,0,1,0,0,7,0,0,0,1
-Style: DistLabel,Segoe UI Semibold,14,&H00555A5D,&H00555A5D,&H00000000,&H00000000,0,0,0,0,100,100,1.5,0,1,0,0,7,0,0,0,1
+Style: Side,Segoe UI Semibold,28,&H0017191A,&H0017191A,&H00F3F8FB,&H00000000,0,0,0,0,100,100,0,0,1,0,0,1,80,450,26,1
+Style: Dist,Palatino Linotype,84,&H000E41B4,&H000E41B4,&H00000000,&H00000000,-1,0,0,0,100,100,0,0,1,0,0,7,0,0,0,1
+Style: DistNone,Palatino Linotype,84,&H00B2C1CB,&H00B2C1CB,&H00000000,&H00000000,-1,0,0,0,100,100,0,0,1,0,0,7,0,0,0,1
 Style: DistNote,Segoe UI,16,&H00555A5D,&H00555A5D,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,0,0,7,0,0,0,1
+Style: DistRefuse,Segoe UI Semibold,16,&H000A308A,&H000A308A,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,0,0,7,0,0,0,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
@@ -227,29 +242,35 @@ function final() {
     '-c:v', 'libx264', '-preset', 'slow', '-crf', '19', '-maxrate', '2600k', '-bufsize', '5200k', '-profile:v', 'high', '-level', '4.0', '-pix_fmt', 'yuv420p', '-color_range', 'tv', '-colorspace', 'bt709', '-color_primaries', 'bt709', '-color_trc', 'bt709',
     '-c:a', 'aac', '-b:a', '128k', '-ac', '2', '-movflags', '+faststart', '-shortest', 'demo.mp4']);
   copyFileSync(resolve(CMP, 'demo.mp4'), resolve(OUT, 'demo.mp4'));
-  // poster: the result card, mid-clip
-  const r = metas.find((m) => m.name === 'result')!;
-  ff(['-ss', ((r.start + 40) / FPS).toFixed(3), '-i', 'demo.mp4', '-frames:v', '1', '-q:v', '3', '-update', '1', resolve(OUT, 'demo-poster.jpg')]);
+  // poster: the near-point sweep at its farthest (big E, camera view, live distance)
+  const n = metas.find((m) => m.name === 'near')!;
+  let best = 0;
+  n.dist.forEach((d, i) => { if (d !== null && d > (n.dist[best] ?? 0) && i < n.frames * 0.6) best = i; });
+  ff(['-ss', ((n.start + best) / FPS).toFixed(3), '-i', 'demo.mp4', '-frames:v', '1', '-q:v', '3', '-update', '1', resolve(OUT, 'demo-poster.jpg')]);
 }
 
 function gif() {
-  // Seamless boomerang of the near-point sweep (30 → 62 cm and back): the real phone UI (live distance
-  // pill, E stage) above the zoomed-in E. Frames 37–112 of the near clip are the 30 → 62 cm slide.
+  // The real camera sweep (near-point screen): the illustrated face goes 40 → 25 → 62 → 38 cm and the app
+  // redraws the E from the live distance. Top: the phone (live distance pill + E). Bottom: what the camera
+  // sees and the E zoomed in. Frames from the near clip up to just before the "Blurry" tap.
+  const n = metas.find((m) => m.name === 'near')!;
   const dir = resolve(FR, 'near').replace(/\\/g, '/');
+  const end = Math.min(n.frames, ((n as any).markFrames?.nearout ?? 216) - 4);
   const font = 'C\\:/Windows/Fonts/seguisb.ttf';
-  const seq = (i: number, crop: string, label: string) =>
-    `[${i}]trim=start_frame=37:end_frame=113,setpts=PTS-STARTPTS,${crop},tpad=start_mode=clone:start_duration=0.6:stop_mode=clone:stop_duration=0.6,split[${label}f][${label}r0];[${label}r0]reverse[${label}r];[${label}f][${label}r]concat=n=2:v=1:a=0,fps=15[${label}]`;
-  const txt = (t: string, y: number, size = 17, color = '0x1a1917') => `drawtext=fontfile='${font}':text='${t}':x=206:y=${y}:fontsize=${size}:fontcolor=${color}`;
+  const cut = (i: number, f: string, label: string) => `[${i}]trim=start_frame=0:end_frame=${end},setpts=PTS-STARTPTS,${f},fps=15[${label}]`;
+  const txt = (t: string, x: number, y: number, size = 15, color = '0x5d5a55') => `drawtext=fontfile='${font}':text='${t}':x=${x}:y=${y}:fontsize=${size}:fontcolor=${color}`;
   const fc = [
-    seq(0, 'crop=1170:1290:0:150,scale=480:-2:flags=lanczos', 'top'),
-    seq(1, 'scale=168:168:flags=neighbor', 'mag'),
-    `color=c=0xfbf8f3:s=480x200:r=15[strip]`,
-    `[strip][mag]overlay=20:16:shortest=1,${txt('The E, zoomed in\\: it grows as the', 54)},${txt('phone moves away, so it always', 78)},${txt('looks the same size to your eye.', 102)},${txt('Small Print · demo mode', 144, 14, '0xb4410e')}[bot]`,
+    cut(0, 'crop=390:500:0:50,scale=480:-2:flags=lanczos', 'top'),
+    cut(1, 'scale=150:150:flags=neighbor', 'mag'),
+    cut(2, 'scale=200:150:flags=lanczos', 'cam'),
+    `color=c=0xfbf8f3:s=480x214:r=15[strip]`,
+    `[strip][cam]overlay=16:30:shortest=1[s1]`,
+    `[s1][mag]overlay=314:30:shortest=1,${txt('WHAT THE CAMERA SEES', 16, 9, 12)},${txt('THE E, ZOOMED IN', 314, 9, 12)},${txt('Illustrated face fed through Chrome’s camera into the real app', 16, 188, 13, '0x1d5a32')}[bot]`,
     `[top][bot]vstack,split[v1][v2]`,
-    `[v1]palettegen=max_colors=96:stats_mode=diff[pal]`,
+    `[v1]palettegen=max_colors=192:stats_mode=full[pal]`,
     `[v2][pal]paletteuse=dither=bayer:bayer_scale=4:diff_mode=rectangle`,
   ].join(';');
-  ff(['-framerate', String(FPS), '-i', `${dir}/f%05d.jpg`, '-framerate', String(FPS), '-i', `${dir}/m%05d.png`, '-filter_complex', fc, '-loop', '0', resolve(OUT, 'e-resize.gif')]);
+  ff(['-framerate', String(FPS), '-i', `${dir}/f%05d.jpg`, '-framerate', String(FPS), '-i', `${dir}/m%05d.png`, '-framerate', String(FPS), '-i', `${dir}/c%05d.jpg`, '-filter_complex', fc, '-loop', '0', resolve(OUT, 'e-resize.gif')]);
 }
 
 const steps = new Set(process.argv.slice(2));

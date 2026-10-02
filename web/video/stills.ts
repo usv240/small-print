@@ -1,4 +1,4 @@
-// hero.png (1600×900) and result-card.png from the real result screen recorded by record.ts.
+// hero.png (1600×900) and result-card.png from the real result screen recorded by rec-phone.ts (camera take).
 // Usage: npx tsx video/stills.ts
 import { chromium } from '@playwright/test';
 import { execFileSync } from 'node:child_process';
@@ -10,8 +10,8 @@ const TMP = resolve(HERE, 'tmp');
 const OUT = resolve(HERE, '../public/media');
 const shot = resolve(TMP, 'result-card@3x.png');
 
-// result-card.png: the real phone screenshot (390×760 CSS), saved at 2× (780×1520)
-execFileSync('ffmpeg', ['-v', 'error', '-y', '-i', shot, '-vf', 'scale=780:1520:flags=lanczos', '-update', '1', resolve(OUT, 'result-card.png')]);
+// result-card.png: the real phone screenshot from the camera take (390×844 CSS), saved at 2× (780×1688)
+execFileSync('ffmpeg', ['-v', 'error', '-y', '-i', shot, '-vf', 'scale=780:1688:flags=lanczos', '-update', '1', resolve(OUT, 'result-card.png')]);
 
 const img = `data:image/png;base64,${readFileSync(shot).toString('base64')}`;
 const html = `<!doctype html><html><head><meta charset="utf-8"><style>
@@ -29,10 +29,10 @@ const html = `<!doctype html><html><head><meta charset="utf-8"><style>
   .note { font:20px var(--sans); color:var(--muted); }
   .note b { color:var(--ink); }
   .glow { position:absolute; left:1050px; top:110px; width:520px; height:680px; border-radius:50%; background:radial-gradient(closest-side, rgba(180,65,14,.14), rgba(180,65,14,0)); }
-  .phone { position:absolute; left:1104px; top:52px; width:390px; height:760px; border:13px solid #1a1917; border-radius:48px; overflow:hidden; background:#fff;
+  .phone { position:absolute; left:1112px; top:36px; width:360px; height:779px; border:13px solid #1a1917; border-radius:48px; overflow:hidden; background:#fff;
     box-shadow:0 34px 80px rgba(26,25,23,.25), 0 6px 18px rgba(26,25,23,.14); }
-  .phone img { display:block; width:390px; height:760px; }
-  .cap { position:absolute; left:1104px; width:416px; top:852px; text-align:center; font:15px var(--sans); color:var(--muted); }
+  .phone img { display:block; width:360px; height:779px; }
+  .cap { position:absolute; left:1112px; width:386px; top:862px; text-align:center; font:15px var(--sans); color:var(--muted); }
 </style></head><body>
   <div class="brand">Small <span>Print</span></div>
   <div class="text">
@@ -43,7 +43,7 @@ const html = `<!doctype html><html><head><meta charset="utf-8"><style>
   </div>
   <div class="glow"></div>
   <div class="phone"><img src="${img}" alt=""></div>
-  <p class="cap">Real result screen (demo mode)</p>
+  <p class="cap">Real result screen from the camera test</p>
 </body></html>`;
 
 const browser = await chromium.launch();

@@ -33,8 +33,29 @@ for (const seg of cfg.segments) {
   }
   const marks = readFileSync(marksFile, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l));
   const duration = Number(execFileSync('ffprobe', ['-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', mp3]).toString().trim());
+  // Caption tokens (the plain text, so <sub> shows digits) timed by the speech mark whose SSML offset
+  // is at or before the token's own offset in the SSML.
+  const words = marks.filter((m) => m.type === 'word');
+  const tokens = [];
+  {
+    let plainIdx = [], inTag = false, buf = '';
+    for (let i = 0; i < ssml.length; i++) {
+      const ch = ssml[i];
+      if (ch === '<') inTag = true;
+      if (!inTag) { buf += ch; plainIdx.push(i); }
+      if (ch === '>') inTag = false;
+    }
+    const re = /\S+/g;
+    let m;
+    while ((m = re.exec(buf))) {
+      const at = plainIdx[m.index];
+      let t = words.length ? words[0].time / 1000 : 0;
+      for (const w of words) if (w.start <= at) t = w.time / 1000;
+      tokens.push({ tok: m[0], t });
+    }
+  }
   manifest.segments[seg.id] = {
-    hash, mp3, duration, text: plain,
+    hash, mp3, duration, text: plain, tokens,
     words: marks.filter((m) => m.type === 'word').map((m) => ({ t: m.time / 1000, w: m.value })),
     sentences: marks.filter((m) => m.type === 'sentence').map((m) => ({ t: m.time / 1000, s: m.value })),
   };
