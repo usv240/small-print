@@ -20,7 +20,7 @@ export interface MonitoringProps {
 }
 
 const NAMESPACE = 'SmallPrint';
-const CHECKS = ['site', 'health', 'stats'] as const;
+const CHECKS = ['site', 'health', 'stats', 'app'] as const;
 const TRAFFIC = ['real', 'demo', 'judge', 'dev'] as const;
 const FIVE_MINUTES = cdk.Duration.minutes(5);
 
@@ -36,10 +36,11 @@ export class Monitoring extends Construct {
     // --- Uptime: a scheduled Lambda (about $0/month) rather than a Synthetics canary (about $10/month at 5-minute runs).
     const uptime = new SmallPrintFunction(this, 'Uptime', {
       handler: 'uptime',
-      description: 'Every 5 minutes: GET /, /api/v1/health and /api/v1/stats through CloudFront; publishes SmallPrint/Uptime',
+      description: 'Every 5 minutes: /, /api/v1/health, /api/v1/stats and the camera app (test page, brotli wasm, model) via CloudFront',
       memorySize: 256, // 128 MB ran at 98 MB used and its small CPU share inflated measured latency
       timeout: cdk.Duration.seconds(30),
       environment: { SITE_URL: props.siteUrl },
+      reservedConcurrency: 2,
     });
     new events.Rule(this, 'UptimeSchedule', {
       description: 'Small Print uptime check every 5 minutes',
@@ -52,8 +53,8 @@ export class Monitoring extends Construct {
     const latencyMetric = (check: string) =>
       new cw.Metric({ namespace: NAMESPACE, metricName: 'Latency', dimensionsMap: { Check: check }, statistic: 'Average', period: FIVE_MINUTES, label: check });
     const worstUptime = new cw.MathExpression({
-      expression: 'MIN([site, health, stats])',
-      usingMetrics: { site: uptimeMetric('site'), health: uptimeMetric('health'), stats: uptimeMetric('stats') },
+      expression: 'MIN([site, health, stats, app])',
+      usingMetrics: { site: uptimeMetric('site'), health: uptimeMetric('health'), stats: uptimeMetric('stats'), app: uptimeMetric('app') },
       label: 'Uptime (worst check)',
       period: FIVE_MINUTES,
     });
@@ -65,7 +66,7 @@ export class Monitoring extends Construct {
 
     const uptimeAlarm = new cw.Alarm(this, 'UptimeAlarm', {
       alarmName: 'SmallPrint-Uptime',
-      alarmDescription: 'A public check (/, /api/v1/health or /api/v1/stats via CloudFront) failed for 2 consecutive 5-minute periods, or the checker stopped reporting.',
+      alarmDescription: 'A public check (/, /api/v1/health, /api/v1/stats or the camera app via CloudFront) failed for 2 consecutive 5-minute periods, or the checker stopped reporting.',
       metric: worstUptime,
       threshold: 1,
       comparisonOperator: cw.ComparisonOperator.LESS_THAN_THRESHOLD,
@@ -96,6 +97,44 @@ export class Monitoring extends Construct {
     const ddbMetric = (metricName: string, label: string) =>
       new cw.Metric({ namespace: 'AWS/DynamoDB', metricName, dimensionsMap: { TableName: tableName }, statistic: 'Sum', label });
 
+    // CloudFront 5xx rate covers the static site and the camera app's assets, not only /api/* (OPS08-BP04).
+    const cf5xxAlarm = new cw.Alarm(this, 'CloudFront5xxAlarm', {
+      alarmName: 'SmallPrint-CloudFront5xx',
+      alarmDescription: 'More than 5% of CloudFront responses were 5xx for 2 consecutive 5-minute periods.',
+      metric: new cw.Metric({
+        namespace: 'AWS/CloudFront',
+        metricName: '5xxErrorRate',
+        dimensionsMap: { DistributionId: distribution.distributionId, Region: 'Global' },
+        statistic: 'Average',
+        period: FIVE_MINUTES,
+      }),
+      threshold: 5,
+      comparisonOperator: cw.ComparisonOperator.GREATER_THAN_THRESHOLD,
+      evaluationPeriods: 2,
+      treatMissingData: cw.TreatMissingData.NOT_BREACHING,
+    });
+    // Any throttling of the API functions or the table in a 5-minute period (REL01-BP04).
+    const throttleMetrics: Record<string, cw.IMetric> = {
+      dr: ddbMetric('ReadThrottleEvents', 'read throttles').with({ period: FIVE_MINUTES }),
+      dw: ddbMetric('WriteThrottleEvents', 'write throttles').with({ period: FIVE_MINUTES }),
+    };
+    Object.values(api.functions).forEach((f, i) => {
+      throttleMetrics[`l${i}`] = f.fn.metricThrottles({ statistic: 'Sum', period: FIVE_MINUTES });
+    });
+    const throttleAlarm = new cw.Alarm(this, 'ThrottleAlarm', {
+      alarmName: 'SmallPrint-Throttles',
+      alarmDescription: 'API Lambda functions or the DynamoDB table throttled at least one request in 5 minutes.',
+      metric: new cw.MathExpression({ expression: 'SUM(FILL(METRICS(), 0))', usingMetrics: throttleMetrics, period: FIVE_MINUTES, label: 'throttled requests' }),
+      threshold: 1,
+      comparisonOperator: cw.ComparisonOperator.GREATER_THAN_OR_EQUAL_TO_THRESHOLD,
+      evaluationPeriods: 1,
+      treatMissingData: cw.TreatMissingData.NOT_BREACHING,
+    });
+    for (const alarm of [cf5xxAlarm, throttleAlarm]) {
+      alarm.addAlarmAction(notify);
+      alarm.addOkAction(notify);
+    }
+
     this.dashboard = new cw.Dashboard(this, 'Dashboard', {
       dashboardName: 'SmallPrint',
       defaultInterval: cdk.Duration.days(1),
@@ -110,7 +149,7 @@ export class Monitoring extends Construct {
     );
     this.dashboard.addWidgets(
       new cw.SingleValueWidget({ title: 'Screenings in time range', metrics: screenings, setPeriodToTimeRange: true, width: 12, height: 4 }),
-      new cw.AlarmStatusWidget({ title: 'Alarms', alarms: [uptimeAlarm, api5xxAlarm], width: 12, height: 4 }),
+      new cw.AlarmStatusWidget({ title: 'Alarms', alarms: [uptimeAlarm, api5xxAlarm, cf5xxAlarm, throttleAlarm], width: 12, height: 4 }),
     );
     this.dashboard.addWidgets(
       new cw.GraphWidget({ title: 'Uptime by check (1 = up)', left: CHECKS.map(uptimeMetric), leftYAxis: { min: 0, max: 1 }, width: 8 }),

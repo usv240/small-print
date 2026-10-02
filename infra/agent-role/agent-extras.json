@@ -1,0 +1,7 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    { "Sid": "AssumeCdkDeployRoles", "Effect": "Allow", "Action": "sts:AssumeRole", "Resource": "arn:aws:iam::${AWS_ACCOUNT_ID}:role/cdk-hnb659fds-*" },
+    { "Sid": "VoiceAndCache", "Effect": "Allow", "Action": ["polly:SynthesizeSpeech", "cloudfront:CreateInvalidation"], "Resource": "*" }
+  ]
+}

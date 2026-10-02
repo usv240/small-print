@@ -17,6 +17,8 @@ export interface SmallPrintFunctionProps {
   readonly handler: string;
   readonly description: string;
   readonly memorySize?: number;
+  /** Reserved concurrency: a guaranteed slice of the shared account pool and a hard cap (0 = kill switch). REL10-BP03. */
+  readonly reservedConcurrency?: number;
   readonly timeout?: cdk.Duration;
   readonly environment?: Record<string, string>;
 }
@@ -52,6 +54,7 @@ export class SmallPrintFunction extends Construct {
       runtime: lambda.Runtime.NODEJS_22_X,
       architecture: lambda.Architecture.ARM_64,
       memorySize: props.memorySize ?? 256,
+      reservedConcurrentExecutions: props.reservedConcurrency,
       timeout: props.timeout ?? cdk.Duration.seconds(10),
       role: this.role,
       logGroup: this.logGroup,
@@ -97,6 +100,8 @@ export class SmallPrintApi extends Construct {
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
       pointInTimeRecoverySpecification: { pointInTimeRecoveryEnabled: true },
       deletionProtection: true,
+      // Anonymous per-session items expire after ~400 days; aggregates have no expiresAt and never expire (SEC07-BP04).
+      timeToLiveAttribute: 'expiresAt',
       removalPolicy: cdk.RemovalPolicy.RETAIN,
     });
 
@@ -105,17 +110,20 @@ export class SmallPrintApi extends Construct {
       handler: 'results',
       description: 'POST /api/v1/results: validate and store an anonymous screening result',
       environment,
+      reservedConcurrency: 40,
     });
     const stats = new SmallPrintFunction(this, 'Stats', {
       handler: 'stats',
       description: 'GET /api/v1/stats: public aggregate counters',
       environment,
+      reservedConcurrency: 10,
     });
     const health = new SmallPrintFunction(this, 'Health', {
       handler: 'health',
       description: 'GET /api/v1/health: DynamoDB reachability',
       memorySize: 128,
       environment,
+      reservedConcurrency: 5,
     });
     this.functions = { results, stats, health };
 

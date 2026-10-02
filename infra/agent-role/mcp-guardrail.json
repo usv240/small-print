@@ -1,0 +1,12 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "ReadOnlyThroughTheAwsMcpServer",
+      "Effect": "Deny",
+      "Action": ["sts:AssumeRole", "polly:SynthesizeSpeech", "cloudfront:CreateInvalidation"],
+      "Resource": "*",
+      "Condition": { "Bool": { "aws:ViaAWSMCPService": "true" } }
+    }
+  ]
+}

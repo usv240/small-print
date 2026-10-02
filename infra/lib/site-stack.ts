@@ -1,5 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
+import * as crypto from 'crypto';
 import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import * as s3 from 'aws-cdk-lib/aws-s3';
@@ -11,10 +12,43 @@ import { SmallPrintApi } from './api';
 import { Monitoring } from './monitoring';
 import { addNagAcknowledgements } from './nag';
 
-/** Front-end build output if present, otherwise the static placeholder in site/. */
-function siteSourceDir(): string {
+/** Front-end build output. Never falls back to the placeholder silently: DeploySite prunes, so
+ *  deploying site/ would delete every real page (Well-Architected review, OPS06-BP01). */
+function siteSourceDir(scope: Construct): string {
   const webDist = path.join(__dirname, '../../web/dist');
-  return fs.existsSync(path.join(webDist, 'index.html')) ? webDist : path.join(__dirname, '../../site');
+  if (fs.existsSync(path.join(webDist, 'index.html'))) {
+    assertWasmIsBrotli(path.join(webDist, 'mediapipe', 'wasm'));
+    return webDist;
+  }
+  if (String(scope.node.tryGetContext('allowPlaceholderSite')) !== 'true') {
+    throw new Error('web/dist/index.html not found. Run `npm run build` in web/ first, or pass -c allowPlaceholderSite=true to deploy the placeholder on purpose.');
+  }
+  return path.join(__dirname, '../../site');
+}
+
+/** DeployWasm uploads every .wasm with Content-Encoding: br. Refuse raw WebAssembly (magic bytes
+ *  00 61 73 6d): it means web/scripts/compress-dist.mjs did not run and the camera test would break. */
+function assertWasmIsBrotli(dir: string): void {
+  if (!fs.existsSync(dir)) throw new Error(`${dir} is missing: the MediaPipe runtime was not copied (web prebuild)`);
+  for (const f of fs.readdirSync(dir).filter((n) => n.endsWith('.wasm'))) {
+    const head = fs.readFileSync(path.join(dir, f)).subarray(0, 4);
+    if (head.equals(Buffer.from([0x00, 0x61, 0x73, 0x6d]))) {
+      throw new Error(`${f} is raw WebAssembly but would be served with Content-Encoding: br. Run the full web build.`);
+    }
+  }
+}
+
+/** sha256 hashes of the inline scripts in the built pages, for the Content-Security-Policy. */
+function inlineScriptHashes(dist: string): string[] {
+  if (!fs.existsSync(dist)) return [];
+  const hashes = new Set<string>();
+  for (const f of fs.readdirSync(dist).filter((n) => n.endsWith('.html'))) {
+    const html = fs.readFileSync(path.join(dist, f), 'utf8');
+    for (const m of html.matchAll(/<script(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script>/g)) {
+      hashes.add(`'sha256-${crypto.createHash('sha256').update(m[1]).digest('base64')}'`);
+    }
+  }
+  return [...hashes];
 }
 
 // Static site: private S3 bucket served only through CloudFront (origin access control),
@@ -34,6 +68,9 @@ export class SmallPrintSiteStack extends cdk.Stack {
       blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
       encryption: s3.BucketEncryption.S3_MANAGED,
       enforceSSL: true,
+      // Every deploy can be rolled back object by object (OPS06-BP01); old versions expire after 30 days.
+      versioned: true,
+      lifecycleRules: [{ id: 'ExpireOldVersions', noncurrentVersionExpiration: cdk.Duration.days(30), abortIncompleteMultipartUploadAfter: cdk.Duration.days(1) }],
       removalPolicy: cdk.RemovalPolicy.DESTROY,
       autoDeleteObjects: true,
     });
@@ -47,7 +84,21 @@ export class SmallPrintSiteStack extends cdk.Stack {
         strictTransportSecurity: { accessControlMaxAge: cdk.Duration.days(365), includeSubdomains: true, override: true },
       },
       customHeadersBehavior: {
-        customHeaders: [{ header: 'Permissions-Policy', value: 'camera=(self), microphone=(), geolocation=()', override: true }],
+        customHeaders: [
+          { header: 'Permissions-Policy', value: 'camera=(self), microphone=(), geolocation=()', override: true },
+          // Report-only first (SEC01-BP06): it never blocks, so it can't break the camera test during judging.
+          {
+            header: 'Content-Security-Policy-Report-Only',
+            value: [
+              "default-src 'self'",
+              ["script-src 'self' 'wasm-unsafe-eval'", ...inlineScriptHashes(path.join(__dirname, '../../web/dist'))].join(' '),
+              "worker-src 'self' blob:", "connect-src 'self'", "img-src 'self' data: blob:", "media-src 'self' blob:",
+              "style-src 'self' 'unsafe-inline'", "font-src 'self'", "object-src 'none'", "base-uri 'self'",
+              "form-action 'self'", "frame-ancestors 'none'",
+            ].join('; '),
+            override: true,
+          },
+        ],
       },
     });
 
@@ -103,7 +154,7 @@ export class SmallPrintSiteStack extends cdk.Stack {
     // --- Site content, in three passes so each kind of file gets the right headers.
     // Content types come from the file extension (Python mimetypes in the deployment Lambda,
     // which maps .wasm to application/wasm). The order below is enforced with dependencies.
-    const source = s3deploy.Source.asset(siteSourceDir());
+    const source = s3deploy.Source.asset(siteSourceDir(this));
     const deployLogs = new logs.LogGroup(this, 'DeployLogs', {
       retention: logs.RetentionDays.TWO_WEEKS,
       removalPolicy: cdk.RemovalPolicy.DESTROY,

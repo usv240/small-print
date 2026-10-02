@@ -310,6 +310,32 @@
       </div>
     </details>
       </div>
+      <h3 id="toolkit">How we used the Agent Toolkit for AWS, beyond connecting</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Toolkit feature</th><th>What we did with it</th><th>Proof</th></tr></thead>
+          <tbody>
+            <tr><td><strong>MCP condition key</strong> <code>aws:ViaAWSMCPService</code></td><td>A guardrail on the agent's own role: an <strong>explicit Deny on every write path when the call comes through the AWS MCP Server</strong>. Through MCP the agent can only read and inspect; every change has to go through reviewed infrastructure code (<code>cdk deploy</code>).</td><td>Tested both ways (table below); policy in <a href="https://github.com/usv240/small-print/tree/main/infra/agent-role">infra/agent-role</a></td></tr>
+            <tr><td><strong>Skill</strong> <code>aws-well-architected-review</code> (via <code>aws___retrieve_skill</code>)</td><td>A full Well-Architected review: 307 best practices across 6 pillars, framework read live from AWS docs, account inspected read-only. 0 critical findings; 8 fixes deployed the same day.</td><td><a href="https://github.com/usv240/small-print/blob/main/docs/well-architected.md">docs/well-architected.md</a></td></tr>
+            <tr><td><code>aws___search_documentation</code>, <code>aws___read_documentation</code></td><td>Checked the IAM condition keys and Well-Architected best practices against current AWS documentation, not memory</td><td>CloudTrail <code>CallReadWriteTool</code> events</td></tr>
+            <tr><td><code>aws___run_script</code></td><td>Read-only inspection: CloudTrail lookups, stack events, alarm states, concurrency, TTL, versioning, and the guardrail test itself</td><td>CloudTrail image above</td></tr>
+            <tr><td><code>aws___get_regional_availability</code></td><td>Confirmed every service we use exists in Cape Town, São Paulo and Mumbai, near the users with the biggest need, for a future data-residency option</td><td><a href="https://github.com/usv240/small-print/blob/main/docs/well-architected.md">regional table</a></td></tr>
+            <tr><td><code>aws___list_regions</code></td><td>The setup guide's connection check ("What AWS Regions are available?"): 37 regions</td><td>Screenshot above</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <caption>The MCP guardrail, tested on Oct 2, 2026 (same role, same action, two paths)</caption>
+          <thead><tr><th>Action</th><th>Through the AWS MCP Server</th><th>From the CLI / CDK</th></tr></thead>
+          <tbody>
+            <tr><td>Read (<code>sts:GetCallerIdentity</code>)</td><td>allowed</td><td>allowed</td></tr>
+            <tr><td><code>polly:SynthesizeSpeech</code></td><td><strong>AccessDenied (explicit deny)</strong></td><td>allowed</td></tr>
+            <tr><td>Assume the CDK deploy role</td><td><strong>AccessDenied</strong></td><td>allowed</td></tr>
+          </tbody>
+        </table>
+      </div>
+
       <h3>What went wrong</h3>
       <details class="more">
       <summary>Nine defects the agent caused or caught, how each was found, and the fix <span class="hint">table</span></summary>

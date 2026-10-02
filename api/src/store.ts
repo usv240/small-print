@@ -16,7 +16,12 @@ export interface StoredResult extends ScreeningResult {
   updatedAt: string;
   /** Optimistic-lock revision, incremented on every repeat POST for the session. */
   rev: number;
+  /** Epoch seconds; DynamoDB TTL deletes the anonymous session item after this. Aggregates never expire. */
+  expiresAt: number;
 }
+
+/** Longer than any realistic offline-outbox delay, so a late repeat is never double counted. */
+export const SESSION_TTL_DAYS = 400;
 
 export type SaveOutcome = 'created' | 'updated';
 
@@ -36,6 +41,7 @@ export function resultItem(r: ScreeningResult, createdAt: string, updatedAt: str
     createdAt,
     updatedAt,
     rev,
+    expiresAt: Math.floor(Date.parse(updatedAt) / 1000) + SESSION_TTL_DAYS * 86_400,
   };
 }
 
