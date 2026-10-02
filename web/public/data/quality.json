@@ -1,0 +1,1603 @@
+{
+  "generatedAt": "2026-10-02T04:06:27.967Z",
+  "headline": {
+    "e2e": {
+      "phone": "17 passed, 0 failed, 0 skipped",
+      "webkit-iphone": "9 passed, 0 failed, 2 skipped",
+      "firefox-desktop": "11 passed, 0 failed, 0 skipped",
+      "lowend-perf": "0 passed, 0 failed, 3 skipped",
+      "fake-camera": "2 passed, 0 failed, 0 skipped"
+    },
+    "safariEngine": "MediaPipe Face Landmarker runs in WebKit 26.6 (GPU delegate, SIMD WASM): 478 landmarks incl. 10 iris points; distance 30.7 cm vs Chrome 30.7 cm on the same frame",
+    "offlineAllEngines": true,
+    "axe": "54 audits (27 pages/screens × light+dark): 40 clean; 3 rules violated (scrollable-region-focusable [serious], label [critical], select-name [critical]); 0 colour-contrast violations",
+    "lighthouse": {
+      "/": {
+        "performance": 98,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "/judges.html": {
+        "performance": 99,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "/test.html": {
+        "performance": 98,
+        "accessibility": 100,
+        "best-practices": 81,
+        "seo": 100
+      },
+      "/validation.html": {
+        "performance": 99,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      }
+    },
+    "readability": "English core screens: median Flesch–Kincaid grade 2.9 (ease 88); explanations grade 6.3; landing page grade 5.8",
+    "lowEnd": {
+      "ttiSlow4g6xMs": [
+        3513,
+        3332
+      ],
+      "allowCameraToFirstDistanceSlow4gMs": [
+        "1x: 36061",
+        "4x: 39545",
+        "6x: 45838"
+      ],
+      "labFpsMedian": [
+        "gpu 1x: 30 fps",
+        "gpu 4x: 13 fps",
+        "gpu 6x: 7 fps",
+        "webgl-disabled 1x: 31 fps",
+        "webgl-disabled 4x: 15 fps",
+        "webgl-disabled 6x: 9 fps"
+      ]
+    }
+  },
+  "about": "Measured quality evidence for Small Print: cross-browser (incl. the Safari engine), accessibility, Lighthouse, readability and low-end phone performance. How to re-run: web/quality/README.md.",
+  "environment": {
+    "os": "Windows_NT 10.0.26200 (Windows 11 Home)",
+    "cpu": "Intel(R) Core(TM) Ultra 9 185H × 22 threads",
+    "ramGB": 32,
+    "node": "v24.13.1",
+    "playwright": "1.63.0",
+    "chrome": "153.0.8010.54",
+    "webkit": {
+      "version": "26.6",
+      "playwrightBuild": "webkit-2359",
+      "note": "Playwright WebKit on Windows (Safari engine, not iOS Safari: no iOS media stack, no MediaStream, cannot decode video; WebGL reports \"Apple GPU\" but runs on the host GPU)."
+    },
+    "firefox": {
+      "version": "155.0",
+      "playwrightBuild": "firefox-1543"
+    },
+    "gpu": "ANGLE (Intel, Intel(R) Arc(TM) Graphics (0x00007D55) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "axeCore": "4.13.0",
+    "lighthouse": "13.5.0"
+  },
+  "crossBrowser": {
+    "e2e": {
+      "at": "2026-10-02T04:02:43.021Z",
+      "durationS": 179,
+      "totals": {
+        "phone": {
+          "passed": 17,
+          "failed": 0,
+          "skipped": 0,
+          "flaky": 0
+        },
+        "webkit-iphone": {
+          "passed": 9,
+          "failed": 0,
+          "skipped": 2,
+          "flaky": 0
+        },
+        "firefox-desktop": {
+          "passed": 11,
+          "failed": 0,
+          "skipped": 0,
+          "flaky": 0
+        },
+        "lowend-perf": {
+          "passed": 0,
+          "failed": 0,
+          "skipped": 3,
+          "flaky": 0
+        },
+        "fake-camera": {
+          "passed": 2,
+          "failed": 0,
+          "skipped": 0,
+          "flaky": 0
+        }
+      },
+      "byProject": {
+        "phone": {
+          "a11y.spec.ts": {
+            "passed": 3,
+            "failed": 0,
+            "skipped": 0,
+            "flaky": 0,
+            "tests": [
+              {
+                "title": "welcome: one h1, named buttons, lang follows the language picker",
+                "outcome": "passed"
+              },
+              {
+                "title": "safety and age screens: one h1 and named controls",
+                "outcome": "passed"
+              },
+              {
+                "title": "demo bar follows a language switch made on the welcome screen",
+                "outcome": "passed"
+              }
+            ]
+          },
+          "axe.spec.ts": {
+            "passed": 5,
+            "failed": 0,
+            "skipped": 0,
+            "flaky": 0,
+            "tests": [
+              {
+                "title": "axe: content pages (light)",
+                "outcome": "passed"
+              },
+              {
+                "title": "axe: test screens in demo mode (light)",
+                "outcome": "passed"
+              },
+              {
+                "title": "axe: content pages (dark)",
+                "outcome": "passed"
+              },
+              {
+                "title": "axe: test screens in demo mode (dark)",
+                "outcome": "passed"
+              },
+              {
+                "title": "focus not obscured by the fixed demo bar (WCAG 2.4.11)",
+                "outcome": "passed"
+              }
+            ]
+          },
+          "camp.spec.ts": {
+            "passed": 1,
+            "failed": 0,
+            "skipped": 0,
+            "flaky": 0,
+            "tests": [
+              {
+                "title": "camp mode: tally two people and suggest stock",
+                "outcome": "passed"
+              }
+            ]
+          },
+          "demo-flow.spec.ts": {
+            "passed": 2,
+            "failed": 0,
+            "skipped": 0,
+            "flaky": 0,
+            "tests": [
+              {
+                "title": "demo flow: result, existing readers update, try-on verdict",
+                "outcome": "passed"
+              },
+              {
+                "title": "result does not change after a try-on (near point beyond reach)",
+                "outcome": "passed"
+              }
+            ]
+          },
+          "engines-mediapipe.spec.ts": {
+            "passed": 3,
+            "failed": 0,
+            "skipped": 0,
+            "flaky": 0,
+            "tests": [
+              {
+                "title": "MediaPipe IMAGE mode: iris landmarks and a finite distance (GPU and CPU delegates)",
+                "outcome": "passed"
+              },
+              {
+                "title": "lab.html: live distance from the app camera code on a synthetic camera stream",
+                "outcome": "passed"
+              },
+              {
+                "title": "test.html camera flow: working distance measured from the synthetic camera",
+                "outcome": "passed"
+              }
+            ]
+          },
+          "offline.spec.ts": {
+            "passed": 1,
+            "failed": 0,
+            "skipped": 0,
+            "flaky": 0,
+            "tests": [
+              {
+                "title": "works offline after the first visit and sends queued results when back online",
+                "outcome": "passed"
+              }
+            ]
+          },
+          "safety.spec.ts": {
+            "passed": 2,
+            "failed": 0,
+            "skipped": 0,
+            "flaky": 0,
+            "tests": [
+              {
+                "title": "sudden change → stop screen, no result posted",
+                "outcome": "passed"
+              },
+              {
+                "title": "diabetes only → advise screen with \"Continue anyway\"",
+                "outcome": "passed"
+              }
+            ]
+          }
+        },
+        "webkit-iphone": {
+          "a11y.spec.ts": {
+            "passed": 3,
+            "failed": 0,
+            "skipped": 0,
+            "flaky": 0,
+            "tests": [
+              {
+                "title": "welcome: one h1, named buttons, lang follows the language picker",
+                "outcome": "passed"
+              },
+              {
+                "title": "safety and age screens: one h1 and named controls",
+                "outcome": "passed"
+              },
+              {
+                "title": "demo bar follows a language switch made on the welcome screen",
+                "outcome": "passed"
+              }
+            ]
+          },
+          "camp.spec.ts": {
+            "passed": 1,
+            "failed": 0,
+            "skipped": 0,
+            "flaky": 0,
+            "tests": [
+              {
+                "title": "camp mode: tally two people and suggest stock",
+                "outcome": "passed"
+              }
+            ]
+          },
+          "demo-flow.spec.ts": {
+            "passed": 2,
+            "failed": 0,
+            "skipped": 0,
+            "flaky": 0,
+            "tests": [
+              {
+                "title": "demo flow: result, existing readers update, try-on verdict",
+                "outcome": "passed"
+              },
+              {
+                "title": "result does not change after a try-on (near point beyond reach)",
+                "outcome": "passed"
+              }
+            ]
+          },
+          "engines-mediapipe.spec.ts": {
+            "passed": 1,
+            "failed": 0,
+            "skipped": 2,
+            "flaky": 0,
+            "tests": [
+              {
+                "title": "MediaPipe IMAGE mode: iris landmarks and a finite distance (GPU and CPU delegates)",
+                "outcome": "passed"
+              },
+              {
+                "title": "lab.html: live distance from the app camera code on a synthetic camera stream",
+                "outcome": "skipped"
+              },
+              {
+                "title": "test.html camera flow: working distance measured from the synthetic camera",
+                "outcome": "skipped"
+              }
+            ]
+          },
+          "safety.spec.ts": {
+            "passed": 2,
+            "failed": 0,
+            "skipped": 0,
+            "flaky": 0,
+            "tests": [
+              {
+                "title": "sudden change → stop screen, no result posted",
+                "outcome": "passed"
+              },
+              {
+                "title": "diabetes only → advise screen with \"Continue anyway\"",
+                "outcome": "passed"
+              }
+            ]
+          }
+        },
+        "firefox-desktop": {
+          "a11y.spec.ts": {
+            "passed": 3,
+            "failed": 0,
+            "skipped": 0,
+            "flaky": 0,
+            "tests": [
+              {
+                "title": "welcome: one h1, named buttons, lang follows the language picker",
+                "outcome": "passed"
+              },
+              {
+                "title": "safety and age screens: one h1 and named controls",
+                "outcome": "passed"
+              },
+              {
+                "title": "demo bar follows a language switch made on the welcome screen",
+                "outcome": "passed"
+              }
+            ]
+          },
+          "camp.spec.ts": {
+            "passed": 1,
+            "failed": 0,
+            "skipped": 0,
+            "flaky": 0,
+            "tests": [
+              {
+                "title": "camp mode: tally two people and suggest stock",
+                "outcome": "passed"
+              }
+            ]
+          },
+          "demo-flow.spec.ts": {
+            "passed": 2,
+            "failed": 0,
+            "skipped": 0,
+            "flaky": 0,
+            "tests": [
+              {
+                "title": "demo flow: result, existing readers update, try-on verdict",
+                "outcome": "passed"
+              },
+              {
+                "title": "result does not change after a try-on (near point beyond reach)",
+                "outcome": "passed"
+              }
+            ]
+          },
+          "engines-mediapipe.spec.ts": {
+            "passed": 3,
+            "failed": 0,
+            "skipped": 0,
+            "flaky": 0,
+            "tests": [
+              {
+                "title": "MediaPipe IMAGE mode: iris landmarks and a finite distance (GPU and CPU delegates)",
+                "outcome": "passed"
+              },
+              {
+                "title": "lab.html: live distance from the app camera code on a synthetic camera stream",
+                "outcome": "passed"
+              },
+              {
+                "title": "test.html camera flow: working distance measured from the synthetic camera",
+                "outcome": "passed"
+              }
+            ]
+          },
+          "safety.spec.ts": {
+            "passed": 2,
+            "failed": 0,
+            "skipped": 0,
+            "flaky": 0,
+            "tests": [
+              {
+                "title": "sudden change → stop screen, no result posted",
+                "outcome": "passed"
+              },
+              {
+                "title": "diabetes only → advise screen with \"Continue anyway\"",
+                "outcome": "passed"
+              }
+            ]
+          }
+        },
+        "lowend-perf": {
+          "lowend-perf.spec.ts": {
+            "passed": 0,
+            "failed": 0,
+            "skipped": 3,
+            "flaky": 0,
+            "tests": [
+              {
+                "title": "time to interactive of /test.html (cold cache)",
+                "outcome": "skipped"
+              },
+              {
+                "title": "\"Allow camera\" → first distance (cold cache: downloads runtime + model)",
+                "outcome": "skipped"
+              },
+              {
+                "title": "lab.html landmark loop fps (warm cache), GPU delegate vs WebGL disabled",
+                "outcome": "skipped"
+              }
+            ]
+          }
+        },
+        "fake-camera": {
+          "camera-fake.spec.ts": {
+            "passed": 2,
+            "failed": 0,
+            "skipped": 0,
+            "flaky": 0,
+            "tests": [
+              {
+                "title": "lab: live distance and iris width from the fake camera",
+                "outcome": "passed"
+              },
+              {
+                "title": "test flow with the camera: still image gives steady readings through to the result",
+                "outcome": "passed"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "mediapipeByEngine": [
+      {
+        "project": "phone",
+        "browserVersion": "153.0.8010.54",
+        "webglRenderer": "ANGLE (Intel, Intel(R) Arc(TM) Graphics (0x00007D55) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "wasmSimd": true,
+        "wasmFile": "/mediapipe/wasm/vision_wasm_internal.wasm",
+        "appDelegate": "GPU",
+        "appDelegateWorks": true,
+        "imageMode": [
+          {
+            "delegate": "GPU",
+            "ok": true,
+            "landmarks": 478,
+            "irisLandmarks": 10,
+            "initMs": 1112,
+            "firstDetectMs": 3458,
+            "medianDetectMs": 55,
+            "distanceCm": 39.8
+          },
+          {
+            "delegate": "CPU",
+            "ok": true,
+            "landmarks": 478,
+            "irisLandmarks": 10,
+            "initMs": 417,
+            "firstDetectMs": 119,
+            "medianDetectMs": 57,
+            "distanceCm": 40.1
+          }
+        ],
+        "videoMode": [
+          {
+            "delegate": "GPU",
+            "ok": true,
+            "framesWithIris": 30,
+            "frames": 30,
+            "medianFrameMs": 20,
+            "maxFps": 50,
+            "distanceCm": 30.7
+          },
+          {
+            "delegate": "CPU",
+            "ok": true,
+            "framesWithIris": 30,
+            "frames": 30,
+            "medianFrameMs": 25,
+            "maxFps": 40,
+            "distanceCm": 30.8
+          }
+        ],
+        "media": {
+          "getUserMedia": true,
+          "mediaStream": true,
+          "canvasCaptureStream": true,
+          "canPlayWebm": "probably",
+          "webmPlays": true
+        },
+        "labPage": {
+          "firstDistanceMs": 1991,
+          "distanceCm": 30.6,
+          "video": "640×480",
+          "fps": [
+            23,
+            37,
+            43,
+            47,
+            43,
+            33
+          ]
+        },
+        "testFlow": {
+          "cameraReadyMs": 1314,
+          "workingDistanceCm": 31
+        }
+      },
+      {
+        "project": "webkit-iphone",
+        "browserVersion": "26.6",
+        "webglRenderer": "Apple GPU",
+        "wasmSimd": true,
+        "wasmFile": "/mediapipe/wasm/vision_wasm_internal.wasm",
+        "appDelegate": "GPU",
+        "appDelegateWorks": true,
+        "imageMode": [
+          {
+            "delegate": "GPU",
+            "ok": true,
+            "landmarks": 478,
+            "irisLandmarks": 10,
+            "initMs": 1105,
+            "firstDetectMs": 3975,
+            "medianDetectMs": 25,
+            "distanceCm": 39.8
+          },
+          {
+            "delegate": "CPU",
+            "ok": true,
+            "landmarks": 478,
+            "irisLandmarks": 10,
+            "initMs": 775,
+            "firstDetectMs": 195,
+            "medianDetectMs": 64,
+            "distanceCm": 40.1
+          }
+        ],
+        "videoMode": [
+          {
+            "delegate": "GPU",
+            "ok": true,
+            "framesWithIris": 30,
+            "frames": 30,
+            "medianFrameMs": 15,
+            "maxFps": 67,
+            "distanceCm": 30.7
+          },
+          {
+            "delegate": "CPU",
+            "ok": true,
+            "framesWithIris": 30,
+            "frames": 30,
+            "medianFrameMs": 44,
+            "maxFps": 23,
+            "distanceCm": 30.8
+          }
+        ],
+        "media": {
+          "getUserMedia": false,
+          "mediaStream": false,
+          "canvasCaptureStream": false,
+          "canPlayWebm": "probably",
+          "webmPlays": false,
+          "webmError": "The operation is not supported."
+        },
+        "labPage": {
+          "skipped": "Windows WebKit cannot play video or create a MediaStream"
+        },
+        "testFlow": {
+          "skipped": "Windows WebKit cannot play video or create a MediaStream"
+        }
+      },
+      {
+        "project": "firefox-desktop",
+        "browserVersion": "155.0",
+        "webglRenderer": "ANGLE (Intel, Intel(R) Arc(TM) A750 Graphics Direct3D11 vs_5_0 ps_5_0), or similar",
+        "wasmSimd": true,
+        "wasmFile": "/mediapipe/wasm/vision_wasm_internal.wasm",
+        "appDelegate": "GPU",
+        "appDelegateWorks": true,
+        "imageMode": [
+          {
+            "delegate": "GPU",
+            "ok": true,
+            "landmarks": 478,
+            "irisLandmarks": 10,
+            "initMs": 699,
+            "firstDetectMs": 4009,
+            "medianDetectMs": 32,
+            "distanceCm": 39.8
+          },
+          {
+            "delegate": "CPU",
+            "ok": true,
+            "landmarks": 478,
+            "irisLandmarks": 10,
+            "initMs": 472,
+            "firstDetectMs": 111,
+            "medianDetectMs": 43,
+            "distanceCm": 40.1
+          }
+        ],
+        "videoMode": [
+          {
+            "delegate": "GPU",
+            "ok": true,
+            "framesWithIris": 30,
+            "frames": 30,
+            "medianFrameMs": 21,
+            "maxFps": 48,
+            "distanceCm": 30.7
+          },
+          {
+            "delegate": "CPU",
+            "ok": true,
+            "framesWithIris": 30,
+            "frames": 30,
+            "medianFrameMs": 39,
+            "maxFps": 26,
+            "distanceCm": 30.8
+          }
+        ],
+        "media": {
+          "getUserMedia": true,
+          "mediaStream": true,
+          "canvasCaptureStream": true,
+          "canPlayWebm": "probably",
+          "webmPlays": true
+        },
+        "labPage": {
+          "firstDistanceMs": 4298,
+          "distanceCm": 30.7,
+          "video": "640×480",
+          "fps": [
+            14,
+            25,
+            25,
+            25,
+            26,
+            25
+          ]
+        },
+        "testFlow": {
+          "cameraReadyMs": 4976,
+          "workingDistanceCm": 31
+        }
+      }
+    ],
+    "offlineRealOutage": {
+      "at": "2026-10-02T03:34:23.503Z",
+      "port": 4181,
+      "results": {
+        "webkit-iphone": {
+          "engine": "webkit-iphone",
+          "browserVersion": "26.6",
+          "controlled": true,
+          "precached": [
+            true,
+            true,
+            true
+          ],
+          "offlineReload": "ok",
+          "offlineH1": "First, a few safety questions",
+          "offlineModelFetch": "200 3758596 bytes",
+          "pass": true
+        },
+        "firefox-desktop": {
+          "engine": "firefox-desktop",
+          "browserVersion": "155.0",
+          "controlled": true,
+          "precached": [
+            true,
+            true,
+            true
+          ],
+          "offlineReload": "ok",
+          "offlineH1": "First, a few safety questions",
+          "offlineModelFetch": "200 3758596 bytes",
+          "pass": true
+        },
+        "chrome-phone": {
+          "engine": "chrome-phone",
+          "browserVersion": "153.0.8010.54",
+          "controlled": true,
+          "precached": [
+            true,
+            true,
+            true
+          ],
+          "offlineReload": "ok",
+          "offlineH1": "First, a few safety questions",
+          "offlineModelFetch": "200 3758596 bytes",
+          "pass": true
+        }
+      }
+    },
+    "notes": [
+      "webkit-iphone = Playwright WebKit 26.6 on Windows with the iPhone 15 profile (393×659, touch, iOS UA). Same engine as Safari, different platform layer: treat as strong evidence, not proof for iOS Safari.",
+      "WebKit/Firefox projects run with reducedMotion: reduce. The site uses scroll-behavior: smooth, which makes automated clicks land mid-scroll on the fixed demo bar in those engines.",
+      "e2e/offline.spec.ts is Chrome-only: Playwright setOffline() in WebKit also blocks service-worker cache hits. offlineRealOutage instead kills the server after the service worker installs."
+    ]
+  },
+  "accessibility": {
+    "standard": "axe-core rules tagged wcag2a, wcag2aa, wcag21a, wcag21aa, wcag22a, wcag22aa",
+    "viewport": "Pixel 7 (412×839, Chrome)",
+    "auditsRun": 54,
+    "pagesAndScreens": [
+      "/",
+      "/judges.html",
+      "/how-it-works.html",
+      "/validation.html",
+      "/findings.html",
+      "/impact.html",
+      "/safety.html",
+      "/evidence.html",
+      "/poster.html",
+      "/lab.html",
+      "test: welcome",
+      "test: safety questions",
+      "test: age",
+      "test: camera permission",
+      "test: stop (red flag)",
+      "test: advise (eye exam)",
+      "test: working distance",
+      "test: small print (arrows)",
+      "test: near check",
+      "test: near point (move away)",
+      "test: result (details open)",
+      "test: try-on: pick strength",
+      "test: try-on: find sharp",
+      "test: try-on: bring closer",
+      "test: try-on: move away",
+      "test: try-on: verdict",
+      "test: camp summary"
+    ],
+    "themes": [
+      "light",
+      "dark"
+    ],
+    "violationsByImpact": {
+      "serious": 10,
+      "critical": 4
+    },
+    "cleanAudits": 40,
+    "rules": [
+      {
+        "id": "scrollable-region-focusable",
+        "impact": "serious",
+        "help": "Scrollable region must have keyboard access",
+        "where": [
+          "/how-it-works.html",
+          "/validation.html",
+          "/findings.html",
+          "/impact.html",
+          "/evidence.html"
+        ],
+        "themes": [
+          "light",
+          "dark"
+        ],
+        "nodesAcrossThemes": 22
+      },
+      {
+        "id": "label",
+        "impact": "critical",
+        "help": "Form elements must have labels",
+        "where": [
+          "/lab.html"
+        ],
+        "themes": [
+          "light",
+          "dark"
+        ],
+        "nodesAcrossThemes": 2
+      },
+      {
+        "id": "select-name",
+        "impact": "critical",
+        "help": "Select element must have an accessible name",
+        "where": [
+          "test: result (details open)"
+        ],
+        "themes": [
+          "light",
+          "dark"
+        ],
+        "nodesAcrossThemes": 2
+      }
+    ],
+    "colorContrastViolations": 0,
+    "focusNotObscured": {
+      "at": "2026-10-02T03:38:23.840Z",
+      "viewport": {
+        "width": 412,
+        "height": 839
+      },
+      "report": [
+        {
+          "screen": "safety questions",
+          "focused": 34,
+          "hidden": [
+            "input \"\""
+          ],
+          "partlyHidden": []
+        },
+        {
+          "screen": "result",
+          "focused": 35,
+          "hidden": [
+            "button#share \"Share\""
+          ],
+          "partlyHidden": [
+            "button#tryon \"Check a pair in the shop\""
+          ]
+        }
+      ]
+    }
+  },
+  "lighthouse": {
+    "at": "2026-10-02T03:44:11.535Z",
+    "base": "https://dxug72099q2ay.cloudfront.net",
+    "settings": "mobile, simulated throttling (Lighthouse defaults)",
+    "pages": {
+      "/": {
+        "scores": {
+          "performance": 98,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        },
+        "performanceScoresAllRuns": [
+          96,
+          98,
+          99
+        ],
+        "metrics": {
+          "fcpMs": 993,
+          "lcpMs": 1443,
+          "tbtMs": 3,
+          "cls": 0,
+          "speedIndexMs": 4216,
+          "ttiMs": 1458,
+          "totalKiB": 226
+        },
+        "opportunities": [],
+        "failedAudits": {
+          "accessibility": [],
+          "best-practices": [],
+          "seo": []
+        }
+      },
+      "/judges.html": {
+        "scores": {
+          "performance": 99,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        },
+        "performanceScoresAllRuns": [
+          99,
+          98,
+          99
+        ],
+        "metrics": {
+          "fcpMs": 1110,
+          "lcpMs": 1588,
+          "tbtMs": 0,
+          "cls": 0,
+          "speedIndexMs": 2874,
+          "ttiMs": 1603,
+          "totalKiB": 169
+        },
+        "opportunities": [
+          {
+            "id": "server-response-time",
+            "title": "Initial server response time was short",
+            "savingsMs": 15,
+            "savingsKiB": 0
+          }
+        ],
+        "failedAudits": {
+          "accessibility": [],
+          "best-practices": [],
+          "seo": []
+        }
+      },
+      "/test.html": {
+        "scores": {
+          "performance": 98,
+          "accessibility": 100,
+          "best-practices": 81,
+          "seo": 100
+        },
+        "performanceScoresAllRuns": [
+          100,
+          97,
+          98
+        ],
+        "metrics": {
+          "fcpMs": 1823,
+          "lcpMs": 1973,
+          "tbtMs": 42,
+          "cls": 0,
+          "speedIndexMs": 1823,
+          "ttiMs": 1973,
+          "totalKiB": 129
+        },
+        "opportunities": [
+          {
+            "id": "unused-javascript",
+            "title": "Reduce unused JavaScript",
+            "savingsMs": 60,
+            "savingsKiB": 32
+          }
+        ],
+        "failedAudits": {
+          "accessibility": [],
+          "best-practices": [
+            {
+              "id": "deprecations",
+              "title": "Uses deprecated APIs",
+              "score": 0
+            }
+          ],
+          "seo": []
+        }
+      },
+      "/validation.html": {
+        "scores": {
+          "performance": 99,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        },
+        "performanceScoresAllRuns": [
+          99,
+          100,
+          99
+        ],
+        "metrics": {
+          "fcpMs": 1211,
+          "lcpMs": 1211,
+          "tbtMs": 96,
+          "cls": 0,
+          "speedIndexMs": 2735,
+          "ttiMs": 1358,
+          "totalKiB": 27
+        },
+        "opportunities": [],
+        "failedAudits": {
+          "accessibility": [],
+          "best-practices": [],
+          "seo": []
+        }
+      }
+    }
+  },
+  "readability": {
+    "at": "2026-10-02T03:49:35.286Z",
+    "method": "Own implementation (quality/readability.ts). EN: Flesch reading ease + Flesch–Kincaid grade; ES: Fernández-Huerta; FR: Kandel–Moles; PT: Martins et al. 1996. Rule-based syllable counts. Medians over strings of ≥5 words; totals over the concatenated group.",
+    "languages": {
+      "en": {
+        "core": {
+          "strings": 141,
+          "scoredStrings": 80,
+          "medianEase": 88,
+          "medianGrade": 2.9,
+          "total": {
+            "words": 1103,
+            "sentences": 173,
+            "syllables": 1462,
+            "ease": 88.2,
+            "grade": 2.5
+          }
+        },
+        "voice": {
+          "strings": 20,
+          "scoredStrings": 19,
+          "medianEase": 97,
+          "medianGrade": 1.5,
+          "total": {
+            "words": 263,
+            "sentences": 44,
+            "syllables": 327,
+            "ease": 95.6,
+            "grade": 1.4
+          }
+        },
+        "explanations": {
+          "strings": 14,
+          "scoredStrings": 13,
+          "medianEase": 77.5,
+          "medianGrade": 6.3,
+          "total": {
+            "words": 679,
+            "sentences": 44,
+            "syllables": 900,
+            "ease": 79,
+            "grade": 6.1
+          }
+        }
+      },
+      "es": {
+        "core": {
+          "strings": 142,
+          "scoredStrings": 84,
+          "medianEase": 82.7,
+          "medianGrade": null,
+          "total": {
+            "words": 1277,
+            "sentences": 172,
+            "syllables": 2442,
+            "ease": 84.5,
+            "grade": null
+          }
+        },
+        "voice": {
+          "strings": 20,
+          "scoredStrings": 19,
+          "medianEase": 83.2,
+          "medianGrade": null,
+          "total": {
+            "words": 291,
+            "sentences": 44,
+            "syllables": 561,
+            "ease": 84.4,
+            "grade": null
+          }
+        },
+        "explanations": {
+          "strings": 14,
+          "scoredStrings": 13,
+          "medianEase": 77,
+          "medianGrade": null,
+          "total": {
+            "words": 736,
+            "sentences": 44,
+            "syllables": 1397,
+            "ease": 75.9,
+            "grade": null
+          }
+        }
+      },
+      "fr": {
+        "core": {
+          "strings": 142,
+          "scoredStrings": 79,
+          "medianEase": 84.2,
+          "medianGrade": null,
+          "total": {
+            "words": 1262,
+            "sentences": 172,
+            "syllables": 1921,
+            "ease": 87.5,
+            "grade": null
+          }
+        },
+        "voice": {
+          "strings": 20,
+          "scoredStrings": 19,
+          "medianEase": 86.2,
+          "medianGrade": null,
+          "total": {
+            "words": 288,
+            "sentences": 44,
+            "syllables": 443,
+            "ease": 87.1,
+            "grade": null
+          }
+        },
+        "explanations": {
+          "strings": 14,
+          "scoredStrings": 13,
+          "medianEase": 81.8,
+          "medianGrade": null,
+          "total": {
+            "words": 725,
+            "sentences": 44,
+            "syllables": 1072,
+            "ease": 81.4,
+            "grade": null
+          }
+        }
+      },
+      "pt": {
+        "core": {
+          "strings": 142,
+          "scoredStrings": 82,
+          "medianEase": 73.3,
+          "medianGrade": null,
+          "total": {
+            "words": 1230,
+            "sentences": 172,
+            "syllables": 2428,
+            "ease": 74.6,
+            "grade": null
+          }
+        },
+        "voice": {
+          "strings": 20,
+          "scoredStrings": 19,
+          "medianEase": 66.5,
+          "medianGrade": null,
+          "total": {
+            "words": 276,
+            "sentences": 44,
+            "syllables": 563,
+            "ease": 69.9,
+            "grade": null
+          }
+        },
+        "explanations": {
+          "strings": 14,
+          "scoredStrings": 13,
+          "medianEase": 65.9,
+          "medianGrade": null,
+          "total": {
+            "words": 713,
+            "sentences": 44,
+            "syllables": 1376,
+            "ease": 69.1,
+            "grade": null
+          }
+        }
+      }
+    },
+    "landingPage": {
+      "file": "index.html <main>",
+      "words": 825,
+      "sentences": 82,
+      "syllables": 1218,
+      "ease": 71.7,
+      "grade": 5.8
+    },
+    "hardestCoreStringsEn": [
+      {
+        "key": "stop_h",
+        "text": "Please see an eye-care professional",
+        "grade": 10,
+        "ease": 32.6,
+        "words": 5,
+        "suggested": "Please get your eyes checked",
+        "suggestedGrade": 0.5,
+        "suggestedEase": 100.2
+      },
+      {
+        "key": "result_refer_h",
+        "text": "Please see an eye-care professional",
+        "grade": 10,
+        "ease": 32.6,
+        "words": 5,
+        "suggested": "Please get your eyes checked",
+        "suggestedGrade": 0.5,
+        "suggestedEase": 100.2
+      },
+      {
+        "key": "result_why_age",
+        "text": "Your age suggests about +2.00 at your reading distance (Community Eye Health Journal guide).",
+        "grade": 9.3,
+        "ease": 53.6,
+        "words": 14,
+        "suggested": "At your age, most people need about +2.00 to read at this distance.",
+        "suggestedGrade": 5.8,
+        "suggestedEase": 76.5
+      },
+      {
+        "key": "result_eyeage_out",
+        "text": "Just for fun: your close-up focus is beyond what we can measure, which is typical after about 55.",
+        "grade": 9.1,
+        "ease": 61.7,
+        "words": 18,
+        "suggested": "Just for fun: your eyes focus up close like most people over 55.",
+        "suggestedGrade": 6.7,
+        "suggestedEase": 70
+      },
+      {
+        "key": "result_refer_p",
+        "text": "You seem to need more than the +3.00 that ready-made reading glasses cover, or your answers suggest an eye exam first.",
+        "grade": 8.9,
+        "ease": 68.7,
+        "words": 21,
+        "suggested": "Shop reading glasses only go up to +3.00. You may need more, so get your eyes checked first.",
+        "suggestedGrade": 2.3,
+        "suggestedEase": 94.3
+      },
+      {
+        "key": "result_inconsistent",
+        "text": "Your measurements and your age point in different directions, so check the pair in the shop with the try-on test.",
+        "grade": 8.1,
+        "ease": 72.3,
+        "words": 20,
+        "suggested": "Your test and your age do not agree. Try the glasses in the shop with the try-on check.",
+        "suggestedGrade": 0.4,
+        "suggestedEase": 108.4
+      },
+      {
+        "key": "camp_link",
+        "text": "Screening many people (health worker, pharmacy, workplace)? Use camp mode",
+        "grade": 7.6,
+        "ease": 49.5,
+        "words": 10,
+        "suggested": "Testing lots of people, at a clinic, shop or work? Use camp mode",
+        "suggestedGrade": 2.4,
+        "suggestedEase": 89.6
+      },
+      {
+        "key": "result_note",
+        "text": "This is a starting point for choosing ready-made readers, not a prescription. If reading still feels hard, see an eye-care professional.",
+        "grade": 7.6,
+        "ease": 59.2,
+        "words": 21,
+        "suggested": "This is a good first pair to try. It is not a prescription. If reading is still hard, get your eyes checked.",
+        "suggestedGrade": 1.2,
+        "suggestedEase": 99.4
+      },
+      {
+        "key": "footer_privacy",
+        "text": "Video never leaves your device. We store only anonymous results.",
+        "grade": 7.6,
+        "ease": 49.5,
+        "words": 10,
+        "suggested": "Your video stays on your phone. We keep only results with no name on them.",
+        "suggestedGrade": 1.5,
+        "suggestedEase": 97.7
+      },
+      {
+        "key": "q_glaucoma",
+        "text": "Does anyone in your family have glaucoma?",
+        "grade": 7.4,
+        "ease": 54.7,
+        "words": 7,
+        "suggested": "Has anyone in your family had glaucoma? (It is an eye disease.)",
+        "suggestedGrade": 4.5,
+        "suggestedEase": 73.8
+      }
+    ],
+    "hardestExplanationsEn": [
+      {
+        "key": "info_safety",
+        "grade": 9.8,
+        "ease": 62,
+        "words": 63
+      },
+      {
+        "key": "info_camera",
+        "grade": 8,
+        "ease": 68.8,
+        "words": 52
+      },
+      {
+        "key": "info_camp",
+        "grade": 7,
+        "ease": 74.9,
+        "words": 50
+      }
+    ]
+  },
+  "lowEndPerformance": {
+    "base": "https://dxug72099q2ay.cloudfront.net",
+    "method": "Chrome (Playwright) Pixel 7 viewport; CDP Emulation.setCPUThrottlingRate; DevTools network presets; cold cache per run; fake camera = MediaPipe test portrait (.y4m). CPU throttling slows the main thread (where MediaPipe WASM runs) but not the GPU process. TTI rows: 2 runs each; the *Ms fields are the better run, ttiWorstMs the worse.",
+    "tti": [
+      {
+        "cpu": 1,
+        "net": "fast-4g",
+        "runs": 2,
+        "fcpMs": 692,
+        "lcpMs": 796,
+        "ttiMs": 678.1,
+        "tbtMs": 0,
+        "firstTapToNextScreenMs": 15.7,
+        "transferKiB": 126.6,
+        "ttiAll": [
+          678,
+          768
+        ],
+        "ttiWorstMs": 768
+      },
+      {
+        "cpu": 4,
+        "net": "fast-4g",
+        "runs": 2,
+        "fcpMs": 600,
+        "lcpMs": 916,
+        "ttiMs": 854.2,
+        "tbtMs": 136,
+        "firstTapToNextScreenMs": 61.5,
+        "transferKiB": 127.2,
+        "ttiAll": [
+          932,
+          854
+        ],
+        "ttiWorstMs": 932
+      },
+      {
+        "cpu": 6,
+        "net": "fast-4g",
+        "runs": 2,
+        "fcpMs": 740,
+        "lcpMs": 1276,
+        "ttiMs": 1210.3,
+        "tbtMs": 297,
+        "firstTapToNextScreenMs": 128.9,
+        "transferKiB": 127.2,
+        "ttiAll": [
+          1882,
+          1210
+        ],
+        "ttiWorstMs": 1882
+      },
+      {
+        "cpu": 1,
+        "net": "slow-4g",
+        "runs": 2,
+        "fcpMs": 1348,
+        "lcpMs": 1732,
+        "ttiMs": 1707.3,
+        "tbtMs": 0,
+        "firstTapToNextScreenMs": 11.6,
+        "transferKiB": 126.6,
+        "ttiAll": [
+          1785,
+          1707
+        ],
+        "ttiWorstMs": 1785
+      },
+      {
+        "cpu": 4,
+        "net": "slow-4g",
+        "runs": 2,
+        "fcpMs": 1436,
+        "lcpMs": 1920,
+        "ttiMs": 1869.3,
+        "tbtMs": 90,
+        "firstTapToNextScreenMs": 175.1,
+        "transferKiB": 126.6,
+        "ttiAll": [
+          1901,
+          1869
+        ],
+        "ttiWorstMs": 1901
+      },
+      {
+        "cpu": 6,
+        "net": "slow-4g",
+        "runs": 2,
+        "fcpMs": 1524,
+        "lcpMs": 2076,
+        "ttiMs": 3331.7,
+        "tbtMs": 226,
+        "firstTapToNextScreenMs": 196.7,
+        "transferKiB": 127.2,
+        "ttiAll": [
+          3513,
+          3332
+        ],
+        "ttiWorstMs": 3513
+      }
+    ],
+    "camera": [
+      {
+        "cpu": 1,
+        "net": "fast-4g",
+        "allowToFirstDistanceMs": 13355,
+        "downloadedKiB": 6084,
+        "shown": "30 cm"
+      },
+      {
+        "cpu": 4,
+        "net": "fast-4g",
+        "allowToFirstDistanceMs": 11327,
+        "downloadedKiB": 6084,
+        "shown": "30 cm"
+      },
+      {
+        "cpu": 6,
+        "net": "fast-4g",
+        "allowToFirstDistanceMs": 15291,
+        "downloadedKiB": 6084,
+        "shown": "30 cm"
+      },
+      {
+        "cpu": 1,
+        "net": "slow-4g",
+        "allowToFirstDistanceMs": 36061,
+        "downloadedKiB": 6084,
+        "shown": "30 cm"
+      },
+      {
+        "cpu": 4,
+        "net": "slow-4g",
+        "allowToFirstDistanceMs": 39545,
+        "downloadedKiB": 6084,
+        "shown": "30 cm"
+      },
+      {
+        "cpu": 6,
+        "net": "slow-4g",
+        "allowToFirstDistanceMs": 45838,
+        "downloadedKiB": 6084,
+        "shown": "30 cm"
+      }
+    ],
+    "labFps": [
+      {
+        "mode": "gpu",
+        "webgl2": true,
+        "cpu": 1,
+        "startToFirstDistanceMs": 1841,
+        "fpsMedian": 30,
+        "fpsMin": 30,
+        "fpsSamples": [
+          30,
+          30,
+          30,
+          30,
+          31,
+          31,
+          31,
+          30,
+          31,
+          30
+        ],
+        "distance": "30.8 cm"
+      },
+      {
+        "mode": "gpu",
+        "webgl2": true,
+        "cpu": 4,
+        "startToFirstDistanceMs": 6108,
+        "fpsMedian": 13,
+        "fpsMin": 9,
+        "fpsSamples": [
+          9,
+          11,
+          13,
+          14,
+          13,
+          13,
+          11,
+          12,
+          13,
+          12
+        ],
+        "distance": "30.7 cm"
+      },
+      {
+        "mode": "gpu",
+        "webgl2": true,
+        "cpu": 6,
+        "startToFirstDistanceMs": 11097,
+        "fpsMedian": 7,
+        "fpsMin": 5,
+        "fpsSamples": [
+          8,
+          7,
+          6,
+          7,
+          5,
+          7,
+          7,
+          8,
+          7,
+          6
+        ],
+        "distance": "30.8 cm"
+      },
+      {
+        "mode": "webgl-disabled",
+        "webgl2": false,
+        "cpu": 1,
+        "startToFirstDistanceMs": 5408,
+        "fpsMedian": 31,
+        "fpsMin": 30,
+        "fpsSamples": [
+          31,
+          30,
+          31,
+          31,
+          30,
+          30,
+          30,
+          31,
+          31,
+          30
+        ],
+        "distance": "30.8 cm"
+      },
+      {
+        "mode": "webgl-disabled",
+        "webgl2": false,
+        "cpu": 4,
+        "startToFirstDistanceMs": 4634,
+        "fpsMedian": 15,
+        "fpsMin": 12,
+        "fpsSamples": [
+          13,
+          15,
+          16,
+          15,
+          17,
+          14,
+          15,
+          17,
+          15,
+          12
+        ],
+        "distance": "30.8 cm"
+      },
+      {
+        "mode": "webgl-disabled",
+        "webgl2": false,
+        "cpu": 6,
+        "startToFirstDistanceMs": 8279,
+        "fpsMedian": 9,
+        "fpsMin": 6,
+        "fpsSamples": [
+          6,
+          12,
+          10,
+          8,
+          8,
+          9,
+          7,
+          8,
+          9,
+          9
+        ],
+        "distance": "30.8 cm"
+      }
+    ]
+  },
+  "bugs": [
+    {
+      "id": "a11y-select-name",
+      "severity": "high (axe critical)",
+      "where": "src/app.ts result(): \"Do you already have reading glasses?\" card",
+      "evidence": "axe select-name on test result screen, light and dark: <select id=\"existing\"> has no accessible name; screen readers announce only \"combo box\".",
+      "fix": "Give the <h2> an id (existing-h) and add aria-labelledby=\"existing-h\" to the select (or wrap it in a <label>)."
+    },
+    {
+      "id": "a11y-focus-obscured",
+      "severity": "medium (WCAG 2.2 SC 2.4.11 AA, demo mode only)",
+      "where": "src/styles/app.css .demo-bar",
+      "evidence": "Tabbing at 412×839 in demo mode: a safety-question radio and the result screen \"Share\" button end up entirely behind the fixed demo slider bar (122 px tall); \"Check a pair in the shop\" partly. On the small-print screen the four answer arrows start behind the bar: iPhone 15 (393×659) all four hidden, Pixel 7 \"Down\" hidden and Left/Right partly; the user has to scroll to reach them (WebKit test clicks retried for >60 s on this). On iPhone 15 the arrows start below the fold even without the bar (top at 646 px of 659).",
+      "fix": "body.demo { padding-bottom: <bar height> } and html:has(body.demo) { scroll-padding-bottom: calc(<bar height> + 1rem) }; on short screens shrink the E stage (e.g. .stage { height: min(…, 35svh) }) so the arrows fit above the fold."
+    },
+    {
+      "id": "a11y-scrollable-regions",
+      "severity": "medium (axe serious)",
+      "where": "how-it-works, validation, findings, impact, evidence pages at phone width",
+      "evidence": "axe scrollable-region-focusable: 11 sideways-scrolling .formula / .table-wrap / .arch-wrap blocks cannot be scrolled with a keyboard (Firefox and Safari do not make scrollers focusable).",
+      "fix": "Add tabindex=\"0\", role=\"region\" and an aria-label to each scroll wrapper (or let formulas wrap at narrow widths)."
+    },
+    {
+      "id": "a11y-lab-textarea",
+      "severity": "low (axe critical, internal page)",
+      "where": "lab.html #json",
+      "evidence": "axe label: the results <textarea id=\"json\"> has no label.",
+      "fix": "aria-label=\"Results as JSON\" or a visible <label for=\"json\">."
+    },
+    {
+      "id": "voice-autoplay",
+      "severity": "low (Lighthouse best-practices 81 on test.html)",
+      "where": "src/ui/voice.ts say()/speakFallback()",
+      "evidence": "On first load the welcome clip is blocked by autoplay policy, and the catch() falls back to speechSynthesis.speak() without user activation: Chrome flags it as deprecated (to be removed; Lighthouse best-practices 81) and iOS Safari also needs a user gesture for speech, so the welcome prompt is likely silent on first load.",
+      "fix": "In play().catch(e), if e.name === \"NotAllowedError\", replay the same clip on the first pointerdown/keydown ({ once: true }) instead of calling speakFallback(); only use speech synthesis when the clip is missing or fails to load."
+    },
+    {
+      "id": "outbox-retry",
+      "severity": "low",
+      "where": "src/app.ts boot() / src/api.ts flushOutbox()",
+      "evidence": "Queued results are only sent on the window \"online\" event or at the next page load. In Firefox (Playwright) a page loaded while offline never receives \"online\" after the connection returns, so the e2e offline test keeps 1 queued result for 15 s; Chrome sends it immediately.",
+      "fix": "Also flush on visibilitychange (visible) and pageshow, and retry every 30–60 s while the outbox is not empty."
+    }
+  ]
+}

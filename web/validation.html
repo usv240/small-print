@@ -45,7 +45,9 @@
     <section class="glance" aria-labelledby="glance-h">
       <h2 class="glance-title" id="glance-h"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3.5h6v3H9z"/><path d="M9 5H6.5a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1H15"/><path d="M8.5 11h7M8.5 14.5h7M8.5 18h4"/></svg>At a glance</h2>
       <ul>
-<li><strong>Refusals (negative controls):</strong> <strong>0</strong> distances invented from 2,694 frames with no face and <strong>0</strong> from 907 frames with covered eyes (sunglasses, a hand), while real eyes are accepted <strong>100%</strong> of the time; <strong>0</strong> readers recommended for short-sight patterns or outside +1.00 to +3.00 across 612,732 checked inputs.</li>
+<li><strong>Refusals (negative controls):</strong> <strong>0</strong> distances invented from 2,694 frames with no face and <strong>0</strong> from 907 frames with covered eyes (sunglasses, a hand), while real eyes are accepted <strong>100%</strong> of the time on the bench and on <strong>353 of 357</strong> photos of 51 real people; <strong>0</strong> readers recommended for short-sight patterns or outside +1.00 to +3.00 across 612,732 checked inputs.</li>
+        <li><strong>Real patients:</strong> on <strong>296 people</strong> from two published clinical datasets, Small Print's starting strength matched the clinician within ±0.50 D for <strong>86.5%</strong>, the same as the clinical age table (84.1%), and it withheld readers from <strong>12 of 23</strong> short-sighted patients that the table would have given them to.</li>
+        <li><strong>Real faces:</strong> on <strong>51 real people</strong> photographed by Caltech at measured distances, the app's face model found every face (357/357), and the implied iris size was <strong>11.1 ± 0.6 mm</strong>, close to the published 11.7 ± 0.5 mm that the distance method relies on.</li>
         <li><strong>Measured:</strong> the camera distance pipeline has a mean error of <strong>0.34%</strong> (largest 1.1%) from 22 to 70 cm, over 2,803 frames on a bench.</li>
         <li><strong>Verified:</strong> <strong>87 automated tests</strong> (optics, recommendation, API and 11 end-to-end), all passing, with 1 documented expected failure.</li>
         <li><strong>Simulated:</strong> across 20,000 virtual people, Small Print + the try-on makes the right call <strong>84.9%</strong> of the time, against 42.0% for the age table and 50.9–52.1% for a rack card.</li>
@@ -58,8 +60,11 @@
         <summary>On this page</summary>
         <ol>
           <li><a href="#refusals">0. What it refuses to do</a></li>
+          <li><a href="#real-faces">0b. 51 real people (Caltech)</a></li>
+          <li><a href="#clinical">0c. 296 real patients (clinical data)</a></li>
           <li><a href="#measured">1. Measured: camera distance</a></li>
           <li><a href="#verified">2. Verified: automated tests</a></li>
+          <li><a href="#quality">2b. Browsers, accessibility, speed</a></li>
           <li><a href="#simulated">3. Simulated: 20,000 virtual people</a></li>
           <li><a href="#not-better">Where Small Print is not better</a></li>
           <li><a href="#field-check">3b. Checked against real programmes</a></li>
@@ -98,7 +103,7 @@
         </tbody>
       </table>
     </div>
-    <p><strong>How we found and fixed the covered-eye case.</strong> With both eyes hidden, the face model still <em>places</em> iris points where the eyes should be, and the app accepted a distance from them. We added an eye-visibility check: for each eye, the centre (iris and pupil) must be clearly darker than the ring around it. Real eyes score 0.45–0.87, covered eyes −0.08 to 0.12, and the threshold is 0.25. Brightness spread alone didn't work: a hand overlapped real eyes in dim light. Code: <a href="https://github.com/usv240/small-print/blob/main/web/src/camera/distance.ts"><code>distance.ts</code></a>.</p>
+    <p><strong>How we found and fixed the covered-eye case.</strong> With both eyes hidden, the face model still <em>places</em> iris points where the eyes should be, and the app accepted a distance from them. We added an eye-visibility check: for each eye, the centre (iris and pupil) must be clearly darker than the ring around it. Real eyes score 0.45–0.87 on the bench (median 0.69 on 51 real people), covered eyes −0.08 to 0.12. The threshold is 0.16, lowered from 0.25 after the real-people check below so that people with light irises aren't refused. Brightness spread alone didn't work: a hand overlapped real eyes in dim light. Code: <a href="https://github.com/usv240/small-print/blob/main/web/src/camera/distance.ts"><code>distance.ts</code></a>.</p>
     <div class="table-wrap">
       <table>
         <caption>Recommendation logic: inputs that must <strong>not</strong> produce readers <span class="tag">Verified</span> (property tests)</caption>
@@ -113,6 +118,54 @@
     </div>
     <p><strong>In simulation</strong> <span class="tag sim">Simulation</span>, after the shop check, Small Print hands reading glasses to <strong>11%</strong> of short-sighted people and <strong>17%</strong> of people who don't need them yet. The age table and the rack card hand them to <strong>100%</strong> of both.</p>
     <p class="small muted"><strong>Measured limits:</strong> a <em>drawn</em> cartoon face still gets a distance, because its eyes look like eyes; catching drawings needs a blink check. The bench used one real face with dark irises; light irises, real sunglasses with reflections and reading glasses during the try-on still need checking on real people. Raw data: <a href="/data/negative-controls.json">negative-controls.json</a>; re-run with <code>bench-camera/negative.ts</code> and <code>npx vitest run tests/negative.test.ts</code>.</p>
+
+    <h2 id="real-faces">0b. Real people we didn't record: 51 faces from Caltech <span class="tag measured">Real data</span></h2>
+    <p>Our bench used one face. So we ran the app's own face model and iris code, unchanged, on the <strong>Caltech Multi-Distance Portraits</strong> dataset: <strong>51 real people</strong> of different sexes, ages and ethnicities, each photographed at 7 measured distances from 0.6 to 4.9 m (357 photos).<sup><a href="#r17">17</a></sup> No photo from the dataset is shown or stored on this site.</p>
+    <div class="table-wrap">
+      <table>
+        <caption>Results on 51 real people (same MediaPipe model and code as the app)</caption>
+        <thead><tr><th>Check</th><th>Result</th><th>What it shows</th></tr></thead>
+        <tbody>
+          <tr class="hl"><td>Face and iris found</td><td class="num"><strong>357 / 357</strong> photos (100%)</td><td>The model finds real faces of every kind in the set</td></tr>
+          <tr><td>Iris size across people</td><td class="num"><strong>11.1 ± 0.6 mm</strong> (43 people)</td><td>The app's key assumption: published value 11.7 ± 0.5 mm. The ±5% spread between people is why the app calibrates once at 30 cm, which cancels each person's own iris size</td></tr>
+          <tr><td>Iris measurement stable within a person</td><td class="num"><strong>1.2%</strong> median variation over 7 distances</td><td>Iris width relative to eye spacing stays the same at every distance, so the measurement scales correctly</td></tr>
+          <tr><td>Eye-visibility check passes</td><td class="num"><strong>353 / 357</strong> photos; every person passes</td><td>Real eyes are accepted. One person with light irises and half-closed lids scored low; we lowered the threshold from 0.25 to 0.16 so they are not refused, and every covered-eye frame we recorded (max 0.121) is still rejected</td></tr>
+          <tr><td>Distance accuracy</td><td class="num">about 5–7%</td><td>Limited by the dataset, not the method: the photographer re-zoomed for every shot and the distance marks don't say where the lens and eyes were. After one fitted offset for that, the median error was 6.6%. We don't claim better than this from these data</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <figure>
+      <img src="/figures/cmdp-iris.svg" alt="Histogram of implied iris diameter for 43 real people from the Caltech dataset: centred near 11.1 mm with a spread of about 0.6 mm, close to the published 11.7 plus or minus 0.5 mm." loading="lazy">
+      <figcaption>Implied iris diameter per person, Caltech data. Method and every caveat: <a href="https://github.com/usv240/small-print/tree/main/web/bench-camera/cmdp">bench-camera/cmdp</a>; numbers: <a href="/data/cmdp.json">cmdp.json</a>.</figcaption>
+    </figure>
+    <p class="small muted">Limits: the dataset was taken at 0.6–4.9 m with a zoom lens; the app works at 25–70 cm with a fixed phone camera. So this tests the face model and the physics on real faces, not the full app in use. That still needs a field pilot.</p>
+
+    <h2 id="clinical">0c. Real patients: two published clinical datasets <span class="tag measured">Real data</span></h2>
+    <p>We ran the app's recommendation code, unchanged, on <strong>per-person clinical records we did not collect</strong>: a south Indian eye clinic (Khurana et al., <i>Scientific Reports</i> 2023, n = 342)<sup><a href="#r18">18</a></sup> and a Madrid study (García-del-Castillo et al., 2026, n = 30)<sup><a href="#r19">19</a></sup>, both CC BY 4.0. Each record has the clinic's measured near point, the person's age and the reading prescription a clinician chose. The near points come from the clinics, not from our camera, so this tests the decision logic, not the camera.</p>
+    <div class="table-wrap">
+      <table>
+        <caption>296 people who needed readers, reading at 40 cm</caption>
+        <thead><tr><th>Against the clinician's choice</th><th class="num">Small Print (starting strength)</th><th class="num">Age table</th></tr></thead>
+        <tbody>
+          <tr class="hl"><td>Within ±0.50 D</td><td class="num"><strong>86.5%</strong> (95% CI 82–90%)</td><td class="num">84.1%</td></tr>
+          <tr><td>Within ±0.25 D</td><td class="num">62.8%</td><td class="num">58.8%</td></tr>
+          <tr><td>Average error</td><td class="num">0.32 D (tends 0.21 D weak)</td><td class="num">0.35 D</td></tr>
+          <tr><td>Short-sighted people offered readers (n = 23)</td><td class="num"><strong>11 of 23</strong></td><td class="num">23 of 23</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <figure>
+      <img src="/figures/clinical-accuracy.svg" alt="Bar chart comparing Small Print and the age table against clinicians' choices on 296 real patients: both are within plus or minus 0.50 dioptres for about 85% of people; Small Print withholds readers from 12 of 23 short-sighted patients while the age table offers readers to all of them." loading="lazy">
+    </figure>
+    <p><strong>What this means, plainly.</strong></p>
+    <ul>
+      <li><strong>Accuracy is the same, not better.</strong> On strength alone, Small Print's starting estimate is as accurate as the clinical age table on real patients. The difference (86.5% vs 84.1%) is not statistically significant (p = 0.28).</li>
+      <li><strong>The real-data advantage is refusals.</strong> It withheld readers from 12 of 23 short-sighted patients, who would be harmed by them. The age table offered readers to all 23.</li>
+      <li><strong>The second real dataset confirms our simulation's warning.</strong> The starting estimate runs about 0.2–0.3 D weak, matching what we saw against the Kenya data. That is why the app always offers the shop check, which uses real lenses. No public dataset lets us test that step on real people, so it remains the main thing a field pilot must measure.</li>
+      <li><strong>Long-sighted people needing more than +3.00</strong> (n = 42) were missed by both methods. Only the shop check can catch them.</li>
+      <li><strong>The short-sight check can't fire for people under about 46</strong> who are only mildly short-sighted: their closest sharp point is nearer than a phone camera can measure. We disclose this rather than claim coverage.</li>
+    </ul>
+    <p class="small muted">Assumptions and sensitivity tests (33 cm and 45 cm reading distance, arm reach, stricter "clear" criteria, dropping inconsistent rows): <a href="https://github.com/usv240/small-print/blob/main/web/sim/CLINICAL.md">sim/CLINICAL.md</a>; per-person results without identifiers: <a href="/data/clinical.json">clinical.json</a>. Re-run: <code>npx tsx sim/clinical.ts</code>.</p>
 
     <h2 id="measured">1. Measured: the camera distance pipeline <span class="tag measured">Measured</span></h2>
     <h3 id="distance-bench">Distance pipeline: bench measurement</h3>
@@ -204,6 +257,21 @@
       </div>
     </details>
     <p>Tests show the code does what the published formulas say. They cannot show that the formulas, or the camera, are accurate on real people.</p>
+
+    <h2 id="quality">2b. Measured: browsers, accessibility, speed and plain language <span class="tag measured">Measured</span></h2>
+    <div class="table-wrap">
+      <table>
+        <caption>Quality checks (Oct 2, 2026). Raw numbers: <a href="/data/quality.json">quality.json</a>; how to re-run: <a href="https://github.com/usv240/small-print/tree/main/web/quality">web/quality</a></caption>
+        <thead><tr><th>Check</th><th>Result</th></tr></thead>
+        <tbody>
+          <tr><td>Browsers</td><td>39 automated end-to-end tests pass across <strong>Chrome</strong> (Pixel-sized), <strong>WebKit</strong> (Safari's engine, iPhone-sized) and <strong>Firefox</strong>. The face model runs on the GPU in all three and gives the same distance on the same frame (30.7 cm). WebKit on Windows can't play camera video, so iPhone's live camera path is still untested on a real device.</td></tr>
+          <tr><td>Lighthouse (live site, mobile)</td><td>Accessibility <strong>100</strong> and SEO <strong>100</strong> on every page tested; Performance <strong>98–99</strong>; largest paint 1.2–2.0 s; layout shift 0</td></tr>
+          <tr><td>Accessibility scan (axe-core, WCAG 2.2 AA)</td><td>54 audits (10 pages and 17 test screens, light and dark): <strong>0 serious or critical issues</strong> after fixing the 4 the scan found, now enforced in the test suite. No colour-contrast failures in either theme</td></tr>
+          <tr><td>Plain language (Flesch–Kincaid)</td><td>Test screens read at a median <strong>grade 2.9</strong>; voice prompts grade 1.5. The 9 hardest strings were rewritten</td></tr>
+          <tr><td>Cheap phone (4–6× slower CPU, slow 4G)</td><td>Test page usable in 1–3.5 s; the face model still runs at 7–15 frames a second, and the steps are time-based so they still complete. Weak spot: the first camera start downloads about 6 MB (about 40 s on slow 4G); after one visit everything is cached and works offline</td></tr>
+        </tbody>
+      </table>
+    </div>
 
     <h2 id="simulated">3. Simulated: 20,000 virtual people <span class="tag sim">Simulation</span></h2>
     <div class="callout warn">
@@ -424,6 +492,9 @@
       <li id="r11" value="11">World Health Organization. Training in Assistive Products (TAP), reading-glasses content based on VisionSpring's community screening method. <a href="https://invisionmag.com/visionsprings-screening-methodology-adopted-by-who/">report</a></li>
       <li id="r15" value="15">Katibeh M, Watts E, Gichangi M, Latorre-Arteaga S, Bolster NM, Bastawrous A. Near vision data and near correction requirements from community eye health programmes in nine countries. <i>Eye</i> 2024;38:2150–2155. <a href="https://doi.org/10.1038/s41433-023-02910-4">doi:10.1038/s41433-023-02910-4</a></li>
       <li id="r16" value="16">Smret TM, Weldegergis RK, Achila OO, Tekle AM. Understanding presbyopia in Asmara: prevalence, association with refractive error, and age-based addition. <i>Clinical Optometry</i> 2023. <a href="https://doi.org/10.2147/OPTO.S421366">doi:10.2147/OPTO.S421366</a></li>
+      <li id="r17" value="17">Burgos-Artizzu XP, Ronchi MR, Perona P. Distance estimation of an unknown person from a portrait. <i>ECCV 2014</i>, LNCS 8689:313–327. Caltech Multi-Distance Portraits dataset, CC-BY: <a href="https://data.caltech.edu/records/n5vnm-mqr05">data.caltech.edu/records/n5vnm-mqr05</a></li>
+      <li id="r18" value="18">Khurana R, et al. <i>Scientific Reports</i> 2023;13:22906 (south India clinic; push-up near point, near add, refraction; per-person supplementary data, CC BY 4.0). <a href="https://doi.org/10.1038/s41598-023-50288-w">doi:10.1038/s41598-023-50288-w</a></li>
+      <li id="r19" value="19">García-del-Castillo, et al. <i>J Pers Med</i> 2026;16(9):465 (Madrid; defocus curves, near add at 40 cm). Data: Zenodo <a href="https://doi.org/10.5281/zenodo.22013721">10.5281/zenodo.22013721</a>, CC BY 4.0.</li>
     </ol>
       </div>
     </details>

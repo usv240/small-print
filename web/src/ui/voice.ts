@@ -23,14 +23,39 @@ export function stopVoice(): void {
   window.speechSynthesis?.cancel();
 }
 
+/** A prompt the browser refused to autoplay; it is played on the person's next tap or key press. */
+let pending: StringKey | null = null;
+let unlockBound = false;
+
+function bindUnlock(): void {
+  if (unlockBound) return;
+  unlockBound = true;
+  const unlock = () => {
+    const key = pending;
+    pending = null;
+    if (key && enabled) say(key);
+  };
+  window.addEventListener('pointerdown', unlock, { capture: true });
+  window.addEventListener('keydown', unlock, { capture: true });
+}
+
 export function say(key: StringKey): void {
   if (!enabled) return;
   stopVoice();
+  pending = null;
   const lang = getLang();
   const file = (manifest as Record<string, Record<string, string>>)[lang]?.[key];
   if (file) {
     player = new Audio(`/audio/${lang}/${file}`);
-    player.play().catch(() => speakFallback(key));
+    player.play().catch((e: unknown) => {
+      // Autoplay is blocked until the first interaction: wait for it rather than speaking without a gesture.
+      if (e instanceof DOMException && e.name === 'NotAllowedError') {
+        pending = key;
+        bindUnlock();
+      } else {
+        speakFallback(key);
+      }
+    });
     return;
   }
   speakFallback(key);

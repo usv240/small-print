@@ -1,0 +1,17 @@
+{
+  "at": "2026-10-02T03:53:27.229Z",
+  "project": "firefox-desktop",
+  "browserVersion": "155.0",
+  "firstDistanceMs": 4298,
+  "distanceCm": 30.7,
+  "irisNorm": 0.0272,
+  "video": "640×480",
+  "fps": [
+    14,
+    25,
+    25,
+    25,
+    26,
+    25
+  ]
+}

@@ -1,0 +1,162 @@
+{
+  "at": "2026-10-02T03:38:42.711Z",
+  "theme": "light",
+  "tags": [
+    "wcag2a",
+    "wcag2aa",
+    "wcag21a",
+    "wcag21aa",
+    "wcag22a",
+    "wcag22aa"
+  ],
+  "byImpact": {
+    "serious": 5,
+    "critical": 1
+  },
+  "findings": [
+    {
+      "where": "/how-it-works.html",
+      "theme": "light",
+      "id": "scrollable-region-focusable",
+      "impact": "serious",
+      "help": "Scrollable region must have keyboard access",
+      "nodes": 4,
+      "targets": [
+        ".formula:nth-child(7)",
+        ".formula:nth-child(12)",
+        ".formula:nth-child(24)",
+        ".formula:nth-child(33)"
+      ]
+    },
+    {
+      "where": "/validation.html",
+      "theme": "light",
+      "id": "scrollable-region-focusable",
+      "impact": "serious",
+      "help": "Scrollable region must have keyboard access",
+      "nodes": 3,
+      "targets": [
+        ".table-wrap:nth-child(4)",
+        ".table-wrap:nth-child(6)",
+        ".table-wrap:nth-child(27)"
+      ]
+    },
+    {
+      "where": "/findings.html",
+      "theme": "light",
+      "id": "scrollable-region-focusable",
+      "impact": "serious",
+      "help": "Scrollable region must have keyboard access",
+      "nodes": 1,
+      "targets": [
+        "#card > .formula"
+      ]
+    },
+    {
+      "where": "/impact.html",
+      "theme": "light",
+      "id": "scrollable-region-focusable",
+      "impact": "serious",
+      "help": "Scrollable region must have keyboard access",
+      "nodes": 1,
+      "targets": [
+        "section[aria-labelledby=\"other-h\"] > .table-wrap"
+      ]
+    },
+    {
+      "where": "/evidence.html",
+      "theme": "light",
+      "id": "scrollable-region-focusable",
+      "impact": "serious",
+      "help": "Scrollable region must have keyboard access",
+      "nodes": 2,
+      "targets": [
+        ".arch-wrap",
+        ".doc-body > .table-wrap"
+      ]
+    },
+    {
+      "where": "/lab.html",
+      "theme": "light",
+      "id": "label",
+      "impact": "critical",
+      "help": "Form elements must have labels",
+      "nodes": 1,
+      "targets": [
+        "#json"
+      ]
+    }
+  ],
+  "audits": [
+    {
+      "where": "/",
+      "theme": "light",
+      "violations": 0,
+      "passes": 22,
+      "incomplete": 2
+    },
+    {
+      "where": "/judges.html",
+      "theme": "light",
+      "violations": 0,
+      "passes": 24,
+      "incomplete": 1
+    },
+    {
+      "where": "/how-it-works.html",
+      "theme": "light",
+      "violations": 1,
+      "passes": 22,
+      "incomplete": 0
+    },
+    {
+      "where": "/validation.html",
+      "theme": "light",
+      "violations": 1,
+      "passes": 25,
+      "incomplete": 2
+    },
+    {
+      "where": "/findings.html",
+      "theme": "light",
+      "violations": 1,
+      "passes": 23,
+      "incomplete": 1
+    },
+    {
+      "where": "/impact.html",
+      "theme": "light",
+      "violations": 1,
+      "passes": 28,
+      "incomplete": 1
+    },
+    {
+      "where": "/safety.html",
+      "theme": "light",
+      "violations": 0,
+      "passes": 24,
+      "incomplete": 1
+    },
+    {
+      "where": "/evidence.html",
+      "theme": "light",
+      "violations": 1,
+      "passes": 29,
+      "incomplete": 1
+    },
+    {
+      "where": "/poster.html",
+      "theme": "light",
+      "violations": 0,
+      "passes": 28,
+      "incomplete": 0
+    },
+    {
+      "where": "/lab.html",
+      "theme": "light",
+      "violations": 1,
+      "passes": 27,
+      "incomplete": 2
+    }
+  ]
+}

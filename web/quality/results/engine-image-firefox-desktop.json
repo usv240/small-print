@@ -1,0 +1,69 @@
+{
+  "at": "2026-10-02T03:53:18.792Z",
+  "project": "firefox-desktop",
+  "browserVersion": "155.0",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+  "webgl2": true,
+  "webglRenderer": "ANGLE (Intel, Intel(R) Arc(TM) A750 Graphics Direct3D11 vs_5_0 ps_5_0), or similar",
+  "wasmSimd": true,
+  "wasmFile": "/mediapipe/wasm/vision_wasm_internal.wasm",
+  "image": {
+    "width": 820,
+    "height": 1024
+  },
+  "runs": [
+    {
+      "delegate": "GPU",
+      "ok": true,
+      "created": true,
+      "initMs": 699,
+      "firstDetectMs": 4009,
+      "medianDetectMs": 32,
+      "landmarks": 478,
+      "irisLandmarks": 10,
+      "irisNorm": 0.020977434164832144,
+      "distanceCm": 39.82691960224403
+    },
+    {
+      "delegate": "CPU",
+      "ok": true,
+      "created": true,
+      "initMs": 472,
+      "firstDetectMs": 111,
+      "medianDetectMs": 43,
+      "landmarks": 478,
+      "irisLandmarks": 10,
+      "irisNorm": 0.020849641607136503,
+      "distanceCm": 40.071028542676245
+    }
+  ],
+  "video": [
+    {
+      "delegate": "GPU",
+      "ok": true,
+      "framesWithIris": 30,
+      "frames": 30,
+      "medianFrameMs": 21,
+      "maxFps": 47.61904761904762,
+      "distanceCm": 30.658700336829106
+    },
+    {
+      "delegate": "CPU",
+      "ok": true,
+      "framesWithIris": 30,
+      "frames": 30,
+      "medianFrameMs": 39,
+      "maxFps": 25.641025641025642,
+      "distanceCm": 30.7799379656423
+    }
+  ],
+  "media": {
+    "getUserMedia": true,
+    "mediaStream": true,
+    "canvasCaptureStream": true,
+    "canPlayWebm": "probably",
+    "webmPlays": true
+  },
+  "appDelegate": "GPU",
+  "appDelegateWorks": true
+}

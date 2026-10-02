@@ -1,0 +1,27 @@
+{
+  "at": "2026-10-02T03:38:23.840Z",
+  "viewport": {
+    "width": 412,
+    "height": 839
+  },
+  "report": [
+    {
+      "screen": "safety questions",
+      "focused": 34,
+      "hidden": [
+        "input \"\""
+      ],
+      "partlyHidden": []
+    },
+    {
+      "screen": "result",
+      "focused": 35,
+      "hidden": [
+        "button#share \"Share\""
+      ],
+      "partlyHidden": [
+        "button#tryon \"Check a pair in the shop\""
+      ]
+    }
+  ]
+}

@@ -46,10 +46,15 @@ export const EYE_CHECK_EVERY = 3;
  *  light level. Fake-camera bench (bench-camera/negative.ts --set=eyecheck; public/data/
  *  negative-controls.json → eyeCheck), better eye of each check: real eyes 0.45–0.87 (lowest:
  *  3 px blur 0.45; at 22–70 cm, 30–50% brightness, warm/cool tint, turned 90°: 0.62 or more);
- *  covered eyes −0.08 to 0.12 (hand 0.12, sunglasses 0.04, black bars 0). 0.25 sits about 2× from
- *  both. Luminance SD was not used: a hand over the eyes (SD 12.6–14.4) overlaps real eyes at 30%
- *  brightness (SD 12.4–12.8). */
-export const EYE_MIN_CONTRAST = 0.25;
+ *  covered eyes −0.08 to 0.12 (hand 0.12, sunglasses 0.04, black bars 0).
+ *  Real people (Caltech CMDP, 51 people, 357 photos; public/data/cmdp.json): best-eye contrast
+ *  median 0.69, but one person with light irises and half-closed lids scored 0.13–0.19 and was
+ *  refused on every photo at the first threshold (0.25). At 0.16 every person passes on some photos
+ *  (353/357 photos) while every recorded covered-eye frame (max 0.121) is still rejected. Wrongly
+ *  accepting a covered eye costs about 0.2 D; wrongly refusing a person blocks them, so we lean to
+ *  acceptance. Luminance SD was not used: a hand over the eyes (SD 12.6–14.4) overlaps real eyes at
+ *  30% brightness (SD 12.4–12.8). */
+export const EYE_MIN_CONTRAST = 0.16;
 
 /** (ring mean − centre mean) ÷ patch mean of the luminance of a square RGBA patch centred on the iris:
  *  centre = within 0.75 iris radii, ring = beyond 1.15 iris radii (the patch is 3 radii wide). */

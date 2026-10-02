@@ -1,0 +1,300 @@
+{
+  "at": "2026-10-02T03:49:35.286Z",
+  "method": "Own implementation (quality/readability.ts). EN: Flesch reading ease + Flesch–Kincaid grade; ES: Fernández-Huerta; FR: Kandel–Moles; PT: Martins et al. 1996. Rule-based syllable counts. Medians over strings of ≥5 words; totals over the concatenated group.",
+  "languages": {
+    "en": {
+      "core": {
+        "strings": 141,
+        "scoredStrings": 80,
+        "medianEase": 88,
+        "medianGrade": 2.9,
+        "total": {
+          "words": 1103,
+          "sentences": 173,
+          "syllables": 1462,
+          "ease": 88.2,
+          "grade": 2.5
+        }
+      },
+      "voice": {
+        "strings": 20,
+        "scoredStrings": 19,
+        "medianEase": 97,
+        "medianGrade": 1.5,
+        "total": {
+          "words": 263,
+          "sentences": 44,
+          "syllables": 327,
+          "ease": 95.6,
+          "grade": 1.4
+        }
+      },
+      "explanations": {
+        "strings": 14,
+        "scoredStrings": 13,
+        "medianEase": 77.5,
+        "medianGrade": 6.3,
+        "total": {
+          "words": 679,
+          "sentences": 44,
+          "syllables": 900,
+          "ease": 79,
+          "grade": 6.1
+        }
+      }
+    },
+    "es": {
+      "core": {
+        "strings": 142,
+        "scoredStrings": 84,
+        "medianEase": 82.7,
+        "medianGrade": null,
+        "total": {
+          "words": 1277,
+          "sentences": 172,
+          "syllables": 2442,
+          "ease": 84.5,
+          "grade": null
+        }
+      },
+      "voice": {
+        "strings": 20,
+        "scoredStrings": 19,
+        "medianEase": 83.2,
+        "medianGrade": null,
+        "total": {
+          "words": 291,
+          "sentences": 44,
+          "syllables": 561,
+          "ease": 84.4,
+          "grade": null
+        }
+      },
+      "explanations": {
+        "strings": 14,
+        "scoredStrings": 13,
+        "medianEase": 77,
+        "medianGrade": null,
+        "total": {
+          "words": 736,
+          "sentences": 44,
+          "syllables": 1397,
+          "ease": 75.9,
+          "grade": null
+        }
+      }
+    },
+    "fr": {
+      "core": {
+        "strings": 142,
+        "scoredStrings": 79,
+        "medianEase": 84.2,
+        "medianGrade": null,
+        "total": {
+          "words": 1262,
+          "sentences": 172,
+          "syllables": 1921,
+          "ease": 87.5,
+          "grade": null
+        }
+      },
+      "voice": {
+        "strings": 20,
+        "scoredStrings": 19,
+        "medianEase": 86.2,
+        "medianGrade": null,
+        "total": {
+          "words": 288,
+          "sentences": 44,
+          "syllables": 443,
+          "ease": 87.1,
+          "grade": null
+        }
+      },
+      "explanations": {
+        "strings": 14,
+        "scoredStrings": 13,
+        "medianEase": 81.8,
+        "medianGrade": null,
+        "total": {
+          "words": 725,
+          "sentences": 44,
+          "syllables": 1072,
+          "ease": 81.4,
+          "grade": null
+        }
+      }
+    },
+    "pt": {
+      "core": {
+        "strings": 142,
+        "scoredStrings": 82,
+        "medianEase": 73.3,
+        "medianGrade": null,
+        "total": {
+          "words": 1230,
+          "sentences": 172,
+          "syllables": 2428,
+          "ease": 74.6,
+          "grade": null
+        }
+      },
+      "voice": {
+        "strings": 20,
+        "scoredStrings": 19,
+        "medianEase": 66.5,
+        "medianGrade": null,
+        "total": {
+          "words": 276,
+          "sentences": 44,
+          "syllables": 563,
+          "ease": 69.9,
+          "grade": null
+        }
+      },
+      "explanations": {
+        "strings": 14,
+        "scoredStrings": 13,
+        "medianEase": 65.9,
+        "medianGrade": null,
+        "total": {
+          "words": 713,
+          "sentences": 44,
+          "syllables": 1376,
+          "ease": 69.1,
+          "grade": null
+        }
+      }
+    }
+  },
+  "landingPage": {
+    "file": "index.html <main>",
+    "words": 825,
+    "sentences": 82,
+    "syllables": 1218,
+    "ease": 71.7,
+    "grade": 5.8
+  },
+  "hardestCoreStringsEn": [
+    {
+      "key": "stop_h",
+      "text": "Please see an eye-care professional",
+      "grade": 10,
+      "ease": 32.6,
+      "words": 5,
+      "suggested": "Please get your eyes checked",
+      "suggestedGrade": 0.5,
+      "suggestedEase": 100.2
+    },
+    {
+      "key": "result_refer_h",
+      "text": "Please see an eye-care professional",
+      "grade": 10,
+      "ease": 32.6,
+      "words": 5,
+      "suggested": "Please get your eyes checked",
+      "suggestedGrade": 0.5,
+      "suggestedEase": 100.2
+    },
+    {
+      "key": "result_why_age",
+      "text": "Your age suggests about +2.00 at your reading distance (Community Eye Health Journal guide).",
+      "grade": 9.3,
+      "ease": 53.6,
+      "words": 14,
+      "suggested": "At your age, most people need about +2.00 to read at this distance.",
+      "suggestedGrade": 5.8,
+      "suggestedEase": 76.5
+    },
+    {
+      "key": "result_eyeage_out",
+      "text": "Just for fun: your close-up focus is beyond what we can measure, which is typical after about 55.",
+      "grade": 9.1,
+      "ease": 61.7,
+      "words": 18,
+      "suggested": "Just for fun: your eyes focus up close like most people over 55.",
+      "suggestedGrade": 6.7,
+      "suggestedEase": 70
+    },
+    {
+      "key": "result_refer_p",
+      "text": "You seem to need more than the +3.00 that ready-made reading glasses cover, or your answers suggest an eye exam first.",
+      "grade": 8.9,
+      "ease": 68.7,
+      "words": 21,
+      "suggested": "Shop reading glasses only go up to +3.00. You may need more, so get your eyes checked first.",
+      "suggestedGrade": 2.3,
+      "suggestedEase": 94.3
+    },
+    {
+      "key": "result_inconsistent",
+      "text": "Your measurements and your age point in different directions, so check the pair in the shop with the try-on test.",
+      "grade": 8.1,
+      "ease": 72.3,
+      "words": 20,
+      "suggested": "Your test and your age do not agree. Try the glasses in the shop with the try-on check.",
+      "suggestedGrade": 0.4,
+      "suggestedEase": 108.4
+    },
+    {
+      "key": "camp_link",
+      "text": "Screening many people (health worker, pharmacy, workplace)? Use camp mode",
+      "grade": 7.6,
+      "ease": 49.5,
+      "words": 10,
+      "suggested": "Testing lots of people, at a clinic, shop or work? Use camp mode",
+      "suggestedGrade": 2.4,
+      "suggestedEase": 89.6
+    },
+    {
+      "key": "result_note",
+      "text": "This is a starting point for choosing ready-made readers, not a prescription. If reading still feels hard, see an eye-care professional.",
+      "grade": 7.6,
+      "ease": 59.2,
+      "words": 21,
+      "suggested": "This is a good first pair to try. It is not a prescription. If reading is still hard, get your eyes checked.",
+      "suggestedGrade": 1.2,
+      "suggestedEase": 99.4
+    },
+    {
+      "key": "footer_privacy",
+      "text": "Video never leaves your device. We store only anonymous results.",
+      "grade": 7.6,
+      "ease": 49.5,
+      "words": 10,
+      "suggested": "Your video stays on your phone. We keep only results with no name on them.",
+      "suggestedGrade": 1.5,
+      "suggestedEase": 97.7
+    },
+    {
+      "key": "q_glaucoma",
+      "text": "Does anyone in your family have glaucoma?",
+      "grade": 7.4,
+      "ease": 54.7,
+      "words": 7,
+      "suggested": "Has anyone in your family had glaucoma? (It is an eye disease.)",
+      "suggestedGrade": 4.5,
+      "suggestedEase": 73.8
+    }
+  ],
+  "hardestExplanationsEn": [
+    {
+      "key": "info_safety",
+      "grade": 9.8,
+      "ease": 62,
+      "words": 63
+    },
+    {
+      "key": "info_camera",
+      "grade": 8,
+      "ease": 68.8,
+      "words": 52
+    },
+    {
+      "key": "info_camp",
+      "grade": 7,
+      "ease": 74.9,
+      "words": 50
+    }
+  ]
+}

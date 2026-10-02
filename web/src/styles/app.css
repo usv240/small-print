@@ -147,3 +147,14 @@ details.info[open] > summary > span { background: var(--accent); color: var(--ac
 /* camp mode */
 .btn-link.inline { min-height: 0; padding: 0; border: 0; background: none; color: var(--accent); font: inherit; text-decoration: underline; cursor: pointer; }
 .card.camp { border-color: var(--accent); }
+
+/* The fixed demo bar must never cover focused controls or the answer arrows (WCAG 2.4.11). */
+body.demo { padding-bottom: 8.5rem; }
+html:has(body.demo) { scroll-padding-bottom: 8.5rem; }
+@media (max-height: 760px) {
+  body.demo .stage { min-height: 7.5rem; margin: var(--s-3) 0; }
+  body.demo .demo-bar { padding-top: var(--s-1); padding-bottom: var(--s-2); }
+  body.demo .demo-bar p { display: none; }
+  body.demo { padding-bottom: 6.5rem; }
+  html:has(body.demo) { scroll-padding-bottom: 6.5rem; }
+}

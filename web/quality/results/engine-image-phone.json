@@ -1,0 +1,69 @@
+{
+  "at": "2026-10-02T03:52:27.990Z",
+  "project": "phone",
+  "browserVersion": "153.0.8010.54",
+  "userAgent": "Mozilla/5.0 (Linux; Android 14; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.8010.12 Mobile Safari/537.36",
+  "webgl2": true,
+  "webglRenderer": "ANGLE (Intel, Intel(R) Arc(TM) Graphics (0x00007D55) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+  "wasmSimd": true,
+  "wasmFile": "/mediapipe/wasm/vision_wasm_internal.wasm",
+  "image": {
+    "width": 820,
+    "height": 1024
+  },
+  "runs": [
+    {
+      "delegate": "GPU",
+      "ok": true,
+      "created": true,
+      "initMs": 1111.699999988079,
+      "firstDetectMs": 3458.2000000476837,
+      "medianDetectMs": 54.5,
+      "landmarks": 478,
+      "irisLandmarks": 10,
+      "irisNorm": 0.020977434164832144,
+      "distanceCm": 39.82691960224403
+    },
+    {
+      "delegate": "CPU",
+      "ok": true,
+      "created": true,
+      "initMs": 416.5999999642372,
+      "firstDetectMs": 118.80000001192093,
+      "medianDetectMs": 57.299999952316284,
+      "landmarks": 478,
+      "irisLandmarks": 10,
+      "irisNorm": 0.020849641607136503,
+      "distanceCm": 40.071028542676245
+    }
+  ],
+  "video": [
+    {
+      "delegate": "GPU",
+      "ok": true,
+      "framesWithIris": 30,
+      "frames": 30,
+      "medianFrameMs": 19.899999976158142,
+      "maxFps": 50.251256341612226,
+      "distanceCm": 30.652660577812394
+    },
+    {
+      "delegate": "CPU",
+      "ok": true,
+      "framesWithIris": 30,
+      "frames": 30,
+      "medianFrameMs": 24.900000035762787,
+      "maxFps": 40.16064251260014,
+      "distanceCm": 30.770884600759025
+    }
+  ],
+  "media": {
+    "getUserMedia": true,
+    "mediaStream": true,
+    "canvasCaptureStream": true,
+    "canPlayWebm": "probably",
+    "webmPlays": true
+  },
+  "appDelegate": "GPU",
+  "appDelegateWorks": true
+}

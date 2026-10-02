@@ -1,0 +1,17 @@
+{
+  "at": "2026-10-02T03:52:34.705Z",
+  "project": "phone",
+  "browserVersion": "153.0.8010.54",
+  "firstDistanceMs": 1991,
+  "distanceCm": 30.6,
+  "irisNorm": 0.02726,
+  "video": "640×480",
+  "fps": [
+    23,
+    37,
+    43,
+    47,
+    43,
+    33
+  ]
+}

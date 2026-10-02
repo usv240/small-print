@@ -277,6 +277,10 @@
         <figcaption>Claude Code's MCP panel in VS Code, Oct 1, 2026: the project-scoped <code>aws-mcp</code> server (AWS MCP Server via <code>mcp-proxy-for-aws</code>, profile <code>small-print-agent</code>) is connected. <a href="/media/proof-vscode-mcp.png">Full-window screenshot</a>. The connection check from the setup guide ("What AWS Regions are available?") returned all 37 regions through it.</figcaption>
       </figure>
       <h3>CloudTrail: the agent's calls</h3>
+      <figure>
+        <img src="/media/proof-cloudtrail.png" alt="Table of CloudTrail events by user claude-code-agent: 384 events from Oct 1 18:47 to Oct 2 03:11 UTC, including 21 aws-mcp CallReadWriteTool events, calls originating from aws-mcp.amazonaws.com, CDK AssumeRole deploys, and an s3 CreateBucket refused with AccessDenied." width="1180" height="530" loading="lazy">
+        <figcaption>Rendered from the live CloudTrail <code>LookupEvents</code> response, retrieved through the AWS MCP Server itself (account ID hidden). Every event ID can be looked up in the account's Event history.</figcaption>
+      </figure>
       <div id="cloudtrail-table">
         <p>Totals for the role <code>small-print-agent</code>, session name <code>claude-code-agent</code>, from 18:00 to 21:30 UTC on 1 October 2026 (205 events). <span class="tag measured">Measured</span></p>
         <div class="table-wrap"><table>

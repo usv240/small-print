@@ -1,0 +1,271 @@
+{
+  "at": "2026-10-02T03:51:59.579Z",
+  "base": "https://dxug72099q2ay.cloudfront.net",
+  "chrome": "153.0.8010.54",
+  "results": {
+    "tti": [
+      {
+        "cpu": 1,
+        "net": "fast-4g",
+        "runs": 2,
+        "fcpMs": 692,
+        "lcpMs": 796,
+        "ttiMs": 678.1,
+        "tbtMs": 0,
+        "firstTapToNextScreenMs": 15.7,
+        "transferKiB": 126.6,
+        "ttiAll": [
+          678,
+          768
+        ]
+      },
+      {
+        "cpu": 4,
+        "net": "fast-4g",
+        "runs": 2,
+        "fcpMs": 600,
+        "lcpMs": 916,
+        "ttiMs": 854.2,
+        "tbtMs": 136,
+        "firstTapToNextScreenMs": 61.5,
+        "transferKiB": 127.2,
+        "ttiAll": [
+          932,
+          854
+        ]
+      },
+      {
+        "cpu": 6,
+        "net": "fast-4g",
+        "runs": 2,
+        "fcpMs": 740,
+        "lcpMs": 1276,
+        "ttiMs": 1210.3,
+        "tbtMs": 297,
+        "firstTapToNextScreenMs": 128.9,
+        "transferKiB": 127.2,
+        "ttiAll": [
+          1882,
+          1210
+        ]
+      },
+      {
+        "cpu": 1,
+        "net": "slow-4g",
+        "runs": 2,
+        "fcpMs": 1348,
+        "lcpMs": 1732,
+        "ttiMs": 1707.3,
+        "tbtMs": 0,
+        "firstTapToNextScreenMs": 11.6,
+        "transferKiB": 126.6,
+        "ttiAll": [
+          1785,
+          1707
+        ]
+      },
+      {
+        "cpu": 4,
+        "net": "slow-4g",
+        "runs": 2,
+        "fcpMs": 1436,
+        "lcpMs": 1920,
+        "ttiMs": 1869.3,
+        "tbtMs": 90,
+        "firstTapToNextScreenMs": 175.1,
+        "transferKiB": 126.6,
+        "ttiAll": [
+          1901,
+          1869
+        ]
+      },
+      {
+        "cpu": 6,
+        "net": "slow-4g",
+        "runs": 2,
+        "fcpMs": 1524,
+        "lcpMs": 2076,
+        "ttiMs": 3331.7,
+        "tbtMs": 226,
+        "firstTapToNextScreenMs": 196.7,
+        "transferKiB": 127.2,
+        "ttiAll": [
+          3513,
+          3332
+        ]
+      }
+    ],
+    "camera": [
+      {
+        "cpu": 1,
+        "net": "fast-4g",
+        "allowToFirstDistanceMs": 13355,
+        "downloadedKiB": 6084,
+        "shown": "30 cm"
+      },
+      {
+        "cpu": 4,
+        "net": "fast-4g",
+        "allowToFirstDistanceMs": 11327,
+        "downloadedKiB": 6084,
+        "shown": "30 cm"
+      },
+      {
+        "cpu": 6,
+        "net": "fast-4g",
+        "allowToFirstDistanceMs": 15291,
+        "downloadedKiB": 6084,
+        "shown": "30 cm"
+      },
+      {
+        "cpu": 1,
+        "net": "slow-4g",
+        "allowToFirstDistanceMs": 36061,
+        "downloadedKiB": 6084,
+        "shown": "30 cm"
+      },
+      {
+        "cpu": 4,
+        "net": "slow-4g",
+        "allowToFirstDistanceMs": 39545,
+        "downloadedKiB": 6084,
+        "shown": "30 cm"
+      },
+      {
+        "cpu": 6,
+        "net": "slow-4g",
+        "allowToFirstDistanceMs": 45838,
+        "downloadedKiB": 6084,
+        "shown": "30 cm"
+      }
+    ],
+    "labFps": [
+      {
+        "mode": "gpu",
+        "webgl2": true,
+        "cpu": 1,
+        "startToFirstDistanceMs": 1841,
+        "fpsMedian": 30,
+        "fpsMin": 30,
+        "fpsSamples": [
+          30,
+          30,
+          30,
+          30,
+          31,
+          31,
+          31,
+          30,
+          31,
+          30
+        ],
+        "distance": "30.8 cm"
+      },
+      {
+        "mode": "gpu",
+        "webgl2": true,
+        "cpu": 4,
+        "startToFirstDistanceMs": 6108,
+        "fpsMedian": 13,
+        "fpsMin": 9,
+        "fpsSamples": [
+          9,
+          11,
+          13,
+          14,
+          13,
+          13,
+          11,
+          12,
+          13,
+          12
+        ],
+        "distance": "30.7 cm"
+      },
+      {
+        "mode": "gpu",
+        "webgl2": true,
+        "cpu": 6,
+        "startToFirstDistanceMs": 11097,
+        "fpsMedian": 7,
+        "fpsMin": 5,
+        "fpsSamples": [
+          8,
+          7,
+          6,
+          7,
+          5,
+          7,
+          7,
+          8,
+          7,
+          6
+        ],
+        "distance": "30.8 cm"
+      },
+      {
+        "mode": "webgl-disabled",
+        "webgl2": false,
+        "cpu": 1,
+        "startToFirstDistanceMs": 5408,
+        "fpsMedian": 31,
+        "fpsMin": 30,
+        "fpsSamples": [
+          31,
+          30,
+          31,
+          31,
+          30,
+          30,
+          30,
+          31,
+          31,
+          30
+        ],
+        "distance": "30.8 cm"
+      },
+      {
+        "mode": "webgl-disabled",
+        "webgl2": false,
+        "cpu": 4,
+        "startToFirstDistanceMs": 4634,
+        "fpsMedian": 15,
+        "fpsMin": 12,
+        "fpsSamples": [
+          13,
+          15,
+          16,
+          15,
+          17,
+          14,
+          15,
+          17,
+          15,
+          12
+        ],
+        "distance": "30.8 cm"
+      },
+      {
+        "mode": "webgl-disabled",
+        "webgl2": false,
+        "cpu": 6,
+        "startToFirstDistanceMs": 8279,
+        "fpsMedian": 9,
+        "fpsMin": 6,
+        "fpsSamples": [
+          6,
+          12,
+          10,
+          8,
+          8,
+          9,
+          7,
+          8,
+          9,
+          9
+        ],
+        "distance": "30.8 cm"
+      }
+    ]
+  }
+}

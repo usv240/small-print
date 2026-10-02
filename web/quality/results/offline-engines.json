@@ -1,0 +1,48 @@
+{
+  "at": "2026-10-02T03:34:23.503Z",
+  "port": 4181,
+  "results": {
+    "webkit-iphone": {
+      "engine": "webkit-iphone",
+      "browserVersion": "26.6",
+      "controlled": true,
+      "precached": [
+        true,
+        true,
+        true
+      ],
+      "offlineReload": "ok",
+      "offlineH1": "First, a few safety questions",
+      "offlineModelFetch": "200 3758596 bytes",
+      "pass": true
+    },
+    "firefox-desktop": {
+      "engine": "firefox-desktop",
+      "browserVersion": "155.0",
+      "controlled": true,
+      "precached": [
+        true,
+        true,
+        true
+      ],
+      "offlineReload": "ok",
+      "offlineH1": "First, a few safety questions",
+      "offlineModelFetch": "200 3758596 bytes",
+      "pass": true
+    },
+    "chrome-phone": {
+      "engine": "chrome-phone",
+      "browserVersion": "153.0.8010.54",
+      "controlled": true,
+      "precached": [
+        true,
+        true,
+        true
+      ],
+      "offlineReload": "ok",
+      "offlineH1": "First, a few safety questions",
+      "offlineModelFetch": "200 3758596 bytes",
+      "pass": true
+    }
+  }
+}

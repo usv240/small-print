@@ -13,7 +13,7 @@ test('sudden change → stop screen, no result posted', async ({ page }) => {
   await expect(next).toBeEnabled();
   await next.click();
 
-  await expect(page.getByRole('heading', { level: 1, name: 'Please see an eye-care professional' })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1, name: 'Please get your eyes checked soon' })).toBeVisible();
   await expect(page.getByText('Reading glasses will not fix it.')).toBeVisible();
   await expect(page.getByRole('button', { name: 'Continue' })).toHaveCount(0);
   await page.waitForTimeout(500);

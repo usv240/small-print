@@ -1,0 +1,156 @@
+{
+  "at": "2026-10-02T03:44:11.535Z",
+  "base": "https://dxug72099q2ay.cloudfront.net",
+  "settings": "mobile, simulated throttling (Lighthouse defaults)",
+  "chrome": "C:/Program Files/Google/Chrome/Application/chrome.exe",
+  "pages": {
+    "/": {
+      "url": "https://dxug72099q2ay.cloudfront.net/",
+      "lighthouseVersion": "13.5.0",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36",
+      "scores": {
+        "performance": 98,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "fcpMs": 993,
+        "lcpMs": 1443,
+        "tbtMs": 3,
+        "cls": 0,
+        "speedIndexMs": 4216,
+        "ttiMs": 1458,
+        "totalKiB": 226
+      },
+      "opportunities": [],
+      "failedAudits": {
+        "accessibility": [],
+        "best-practices": [],
+        "seo": []
+      },
+      "runs": 3,
+      "performanceScores": [
+        96,
+        98,
+        99
+      ]
+    },
+    "/judges.html": {
+      "url": "https://dxug72099q2ay.cloudfront.net/judges.html",
+      "lighthouseVersion": "13.5.0",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36",
+      "scores": {
+        "performance": 99,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "fcpMs": 1110,
+        "lcpMs": 1588,
+        "tbtMs": 0,
+        "cls": 0,
+        "speedIndexMs": 2874,
+        "ttiMs": 1603,
+        "totalKiB": 169
+      },
+      "opportunities": [
+        {
+          "id": "server-response-time",
+          "title": "Initial server response time was short",
+          "savingsMs": 15,
+          "savingsKiB": 0
+        }
+      ],
+      "failedAudits": {
+        "accessibility": [],
+        "best-practices": [],
+        "seo": []
+      },
+      "runs": 3,
+      "performanceScores": [
+        99,
+        98,
+        99
+      ]
+    },
+    "/test.html": {
+      "url": "https://dxug72099q2ay.cloudfront.net/test.html",
+      "lighthouseVersion": "13.5.0",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36",
+      "scores": {
+        "performance": 98,
+        "accessibility": 100,
+        "best-practices": 81,
+        "seo": 100
+      },
+      "metrics": {
+        "fcpMs": 1823,
+        "lcpMs": 1973,
+        "tbtMs": 42,
+        "cls": 0,
+        "speedIndexMs": 1823,
+        "ttiMs": 1973,
+        "totalKiB": 129
+      },
+      "opportunities": [
+        {
+          "id": "unused-javascript",
+          "title": "Reduce unused JavaScript",
+          "savingsMs": 60,
+          "savingsKiB": 32
+        }
+      ],
+      "failedAudits": {
+        "accessibility": [],
+        "best-practices": [
+          {
+            "id": "deprecations",
+            "title": "Uses deprecated APIs",
+            "score": 0
+          }
+        ],
+        "seo": []
+      },
+      "runs": 3,
+      "performanceScores": [
+        100,
+        97,
+        98
+      ]
+    },
+    "/validation.html": {
+      "url": "https://dxug72099q2ay.cloudfront.net/validation.html",
+      "lighthouseVersion": "13.5.0",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36",
+      "scores": {
+        "performance": 99,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "fcpMs": 1211,
+        "lcpMs": 1211,
+        "tbtMs": 96,
+        "cls": 0,
+        "speedIndexMs": 2735,
+        "ttiMs": 1358,
+        "totalKiB": 27
+      },
+      "opportunities": [],
+      "failedAudits": {
+        "accessibility": [],
+        "best-practices": [],
+        "seo": []
+      },
+      "runs": 3,
+      "performanceScores": [
+        99,
+        100,
+        99
+      ]
+    }
+  }
+}

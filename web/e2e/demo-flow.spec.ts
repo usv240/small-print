@@ -7,7 +7,7 @@
 import { expect, test } from '@playwright/test';
 import { answerArrows, answerSafety, mockApi, PAYLOAD_KEYS, setDemoDistance } from './helpers';
 
-test('demo flow: result, existing readers update, try-on verdict', async ({ page }) => {
+test('demo flow: result, existing readers update, try-on verdict', async ({ page, isMobile }) => {
   const { posts } = await mockApi(page);
   await page.goto('/test.html?demo&dev');
 
@@ -53,7 +53,7 @@ test('demo flow: result, existing readers update, try-on verdict', async ({ page
     traffic: 'dev',
     mode: 'demo',
     lang: 'en',
-    device: 'phone',
+    device: isMobile ? 'phone' : 'desktop', // src/api.ts deviceType(): coarse pointer → phone
     ageBand: '50-54',
     outcome: 'readers',
     referReasons: [],

@@ -1,0 +1,149 @@
+{
+  "at": "2026-10-02T03:39:04.007Z",
+  "theme": "dark",
+  "tags": [
+    "wcag2a",
+    "wcag2aa",
+    "wcag21a",
+    "wcag21aa",
+    "wcag22a",
+    "wcag22aa"
+  ],
+  "byImpact": {
+    "critical": 1
+  },
+  "findings": [
+    {
+      "where": "test: result (details open)",
+      "theme": "dark",
+      "id": "select-name",
+      "impact": "critical",
+      "help": "Select element must have an accessible name",
+      "nodes": 1,
+      "targets": [
+        "#existing"
+      ]
+    }
+  ],
+  "audits": [
+    {
+      "where": "test: welcome",
+      "theme": "dark",
+      "violations": 0,
+      "passes": 22,
+      "incomplete": 0
+    },
+    {
+      "where": "test: safety questions",
+      "theme": "dark",
+      "violations": 0,
+      "passes": 21,
+      "incomplete": 0
+    },
+    {
+      "where": "test: age",
+      "theme": "dark",
+      "violations": 0,
+      "passes": 21,
+      "incomplete": 1
+    },
+    {
+      "where": "test: camera permission",
+      "theme": "dark",
+      "violations": 0,
+      "passes": 22,
+      "incomplete": 0
+    },
+    {
+      "where": "test: stop (red flag)",
+      "theme": "dark",
+      "violations": 0,
+      "passes": 20,
+      "incomplete": 0
+    },
+    {
+      "where": "test: advise (eye exam)",
+      "theme": "dark",
+      "violations": 0,
+      "passes": 20,
+      "incomplete": 0
+    },
+    {
+      "where": "test: working distance",
+      "theme": "dark",
+      "violations": 0,
+      "passes": 25,
+      "incomplete": 0
+    },
+    {
+      "where": "test: small print (arrows)",
+      "theme": "dark",
+      "violations": 0,
+      "passes": 25,
+      "incomplete": 1
+    },
+    {
+      "where": "test: near check",
+      "theme": "dark",
+      "violations": 0,
+      "passes": 22,
+      "incomplete": 0
+    },
+    {
+      "where": "test: near point (move away)",
+      "theme": "dark",
+      "violations": 0,
+      "passes": 22,
+      "incomplete": 0
+    },
+    {
+      "where": "test: result (details open)",
+      "theme": "dark",
+      "violations": 1,
+      "passes": 24,
+      "incomplete": 0
+    },
+    {
+      "where": "test: try-on: pick strength",
+      "theme": "dark",
+      "violations": 0,
+      "passes": 24,
+      "incomplete": 0
+    },
+    {
+      "where": "test: try-on: find sharp",
+      "theme": "dark",
+      "violations": 0,
+      "passes": 22,
+      "incomplete": 0
+    },
+    {
+      "where": "test: try-on: bring closer",
+      "theme": "dark",
+      "violations": 0,
+      "passes": 22,
+      "incomplete": 0
+    },
+    {
+      "where": "test: try-on: move away",
+      "theme": "dark",
+      "violations": 0,
+      "passes": 22,
+      "incomplete": 0
+    },
+    {
+      "where": "test: try-on: verdict",
+      "theme": "dark",
+      "violations": 0,
+      "passes": 21,
+      "incomplete": 0
+    },
+    {
+      "where": "test: camp summary",
+      "theme": "dark",
+      "violations": 0,
+      "passes": 19,
+      "incomplete": 0
+    }
+  ]
+}

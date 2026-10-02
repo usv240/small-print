@@ -12,7 +12,7 @@ import { LANGS, detectLang, formatPower, getLang, langName, setLang, t, type Lan
 import type { StringKey } from './i18n/en';
 import { drawE, onDirection, randomDirection, type Direction } from './ui/optotype';
 import { say, setVoice, stopVoice, voiceEnabled } from './ui/voice';
-import { ageBand, deviceType, flushOutbox, sendResult, trafficType, type ReferReasonApi, type ResultPayload } from './api';
+import { ageBand, deviceType, flushOutbox, pendingResults, sendResult, trafficType, type ReferReasonApi, type ResultPayload } from './api';
 import { campActive, enableCamp, loadTally, recordPerson, resetTally, stockList, tallyCsv } from './camp';
 
 /** The near-point E keeps the angular size of N6 print at 40 cm (logMAR ≈ 0.27) at every distance. */
@@ -477,8 +477,8 @@ function result(recompute = true): void {
         ${btn('share', t('share'), 'secondary')}
       </div>
       <div class="card">
-        <h2>${t('existing_h')}</h2><p class="small">${t('existing_p')}</p>
-        <select id="existing"><option value="">—</option><option value="none">${t('existing_none')}</option><option value="unsure">${t('existing_unsure')}</option>${existingOpts}</select>
+        <h2 id="existing-h">${t('existing_h')}</h2><p class="small" id="existing-p">${t('existing_p')}</p>
+        <select id="existing" aria-labelledby="existing-h" aria-describedby="existing-p"><option value="">—</option><option value="none">${t('existing_none')}</option><option value="unsure">${t('existing_unsure')}</option>${existingOpts}</select>
         <p id="existing-thanks" class="ok-text" role="status"></p>
       </div>
       ${campActive() ? campCard() : btn('again', t('start_again'), 'link')}
@@ -657,6 +657,9 @@ function boot(): void {
   // Offline support: cache the app after the first visit, and send any results queued while offline.
   if ('serviceWorker' in navigator && import.meta.env.PROD) navigator.serviceWorker.register('/sw.js').catch(() => {});
   window.addEventListener('online', () => void flushOutbox());
+  window.addEventListener('pageshow', () => void flushOutbox());
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') void flushOutbox(); });
+  window.setInterval(() => { if (pendingResults() > 0) void flushOutbox(); }, 45_000);
   void flushOutbox();
   if (q.has('recalibrate')) clearCalibration();
   const slider = document.getElementById('demo-range') as HTMLInputElement;

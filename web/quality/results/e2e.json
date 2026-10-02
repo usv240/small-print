@@ -1,0 +1,1905 @@
+{
+  "config": {
+    "argv": [
+      "C:\\Program Files\\nodejs\\node.exe",
+      "C:\\Hackathons\\Zero to Shipped\\small-print\\web\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "--reporter=list,json"
+    ],
+    "configFile": "C:\\Hackathons\\Zero to Shipped\\small-print\\web\\playwright.config.ts",
+    "rootDir": "C:/Hackathons/Zero to Shipped/small-print/web/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": "C:\\Hackathons\\Zero to Shipped\\small-print\\web\\e2e\\global-setup.ts",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 11
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Hackathons/Zero to Shipped/small-print/web/e2e/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 11
+        },
+        "id": "phone",
+        "name": "phone",
+        "testDir": "C:/Hackathons/Zero to Shipped/small-print/web/e2e",
+        "testIgnore": [
+          "/camera-fake/",
+          "/lowend-perf/"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "C:/Hackathons/Zero to Shipped/small-print/web/e2e/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 11
+        },
+        "id": "webkit-iphone",
+        "name": "webkit-iphone",
+        "testDir": "C:/Hackathons/Zero to Shipped/small-print/web/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "/(demo-flow|safety|camp|a11y|engines-mediapipe)\\.spec/"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "C:/Hackathons/Zero to Shipped/small-print/web/e2e/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 11
+        },
+        "id": "firefox-desktop",
+        "name": "firefox-desktop",
+        "testDir": "C:/Hackathons/Zero to Shipped/small-print/web/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "/(demo-flow|safety|camp|a11y|engines-mediapipe)\\.spec/"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "C:/Hackathons/Zero to Shipped/small-print/web/e2e/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 11
+        },
+        "id": "lowend-perf",
+        "name": "lowend-perf",
+        "testDir": "C:/Hackathons/Zero to Shipped/small-print/web/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "/lowend-perf/"
+        ],
+        "timeout": 600000
+      },
+      {
+        "outputDir": "C:/Hackathons/Zero to Shipped/small-print/web/e2e/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 11
+        },
+        "id": "fake-camera",
+        "name": "fake-camera",
+        "testDir": "C:/Hackathons/Zero to Shipped/small-print/web/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "/camera-fake/"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 11,
+    "webServer": {
+      "command": "node scripts/copy-mediapipe.mjs && npx vite build && npx vite preview --port 4173 --strictPort",
+      "url": "http://localhost:4173/test.html",
+      "reuseExistingServer": true,
+      "timeout": 180000
+    }
+  },
+  "suites": [
+    {
+      "title": "a11y.spec.ts",
+      "file": "a11y.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "welcome: one h1, named buttons, lang follows the language picker",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "phone",
+              "projectName": "phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 16798,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-02T04:02:49.594Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "aa3ad05f8c0e05077efb-e901187e80598002d6fa",
+          "file": "a11y.spec.ts",
+          "line": 12,
+          "column": 1
+        },
+        {
+          "title": "safety and age screens: one h1 and named controls",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "phone",
+              "projectName": "phone",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 9078,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-02T04:02:49.515Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "aa3ad05f8c0e05077efb-6a62b5cde5501fc54f72",
+          "file": "a11y.spec.ts",
+          "line": 33,
+          "column": 1
+        },
+        {
+          "title": "demo bar follows a language switch made on the welcome screen",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "phone",
+              "projectName": "phone",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 2,
+                  "status": "passed",
+                  "duration": 5877,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-02T04:02:49.540Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "aa3ad05f8c0e05077efb-ba9f38755aa56a280eb5",
+          "file": "a11y.spec.ts",
+          "line": 51,
+          "column": 1
+        },
+        {
+          "title": "welcome: one h1, named buttons, lang follows the language picker",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-iphone",
+              "projectName": "webkit-iphone",
+              "results": [
+                {
+                  "workerIndex": 12,
+                  "parallelIndex": 7,
+                  "status": "passed",
+                  "duration": 17232,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-02T04:03:32.812Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "aa3ad05f8c0e05077efb-44440977f0d509270b17",
+          "file": "a11y.spec.ts",
+          "line": 12,
+          "column": 1
+        },
+        {
+          "title": "safety and age screens: one h1 and named controls",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-iphone",
+              "projectName": "webkit-iphone",
+              "results": [
+                {
+                  "workerIndex": 14,
+                  "parallelIndex": 9,
+                  "status": "passed",
+                  "duration": 36705,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-02T04:03:34.848Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "aa3ad05f8c0e05077efb-56b0fe3d2447ed8cba42",
+          "file": "a11y.spec.ts",
+          "line": 33,
+          "column": 1
+        },
+        {
+          "title": "demo bar follows a language switch made on the welcome screen",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-iphone",
+              "projectName": "webkit-iphone",
+              "results": [
+                {
+                  "workerIndex": 12,
+                  "parallelIndex": 7,
+                  "status": "passed",
+                  "duration": 8536,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-02T04:03:51.699Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "aa3ad05f8c0e05077efb-286051b71786d2715563",
+          "file": "a11y.spec.ts",
+          "line": 51,
+          "column": 1
+        },
+        {
+          "title": "welcome: one h1, named buttons, lang follows the language picker",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox-desktop",
+              "projectName": "firefox-desktop",
+              "results": [
+                {
+                  "workerIndex": 11,
+                  "parallelIndex": 8,
+                  "status": "passed",
+                  "duration": 38902,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-02T04:03:32.572Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "aa3ad05f8c0e05077efb-06b2359734e74e3657cd",
+          "file": "a11y.spec.ts",
+          "line": 12,
+          "column": 1
+        },
+        {
+          "title": "safety and age screens: one h1 and named controls",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox-desktop",
+              "projectName": "firefox-desktop",
+              "results": [
+                {
+                  "workerIndex": 13,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 44509,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-02T04:03:32.240Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "aa3ad05f8c0e05077efb-c0599632ec56e6db338e",
+          "file": "a11y.spec.ts",
+          "line": 33,
+          "column": 1
+        },
+        {
+          "title": "demo bar follows a language switch made on the welcome screen",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox-desktop",
+              "projectName": "firefox-desktop",
+              "results": [
+                {
+                  "workerIndex": 16,
+                  "parallelIndex": 2,
+                  "status": "passed",
+                  "duration": 28984,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-02T04:03:41.038Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "aa3ad05f8c0e05077efb-7173b0949468235ce1e1",
+          "file": "a11y.spec.ts",
+          "line": 51,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "axe.spec.ts",
+      "file": "axe.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "axe: content pages (light)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "phone",
+              "projectName": "phone",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 3,
+                  "status": "passed",
+                  "duration": 54812,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-02T04:02:49.944Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9abf67be62d153b4ed8c-15fef8a35f425b9b3cee",
+          "file": "axe.spec.ts",
+          "line": 64,
+          "column": 3
+        },
+        {
+          "title": "axe: test screens in demo mode (light)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "phone",
+              "projectName": "phone",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 4,
+                  "status": "passed",
+                  "duration": 82994,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-02T04:02:49.889Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9abf67be62d153b4ed8c-e1e2410246948e0d3ccc",
+          "file": "axe.spec.ts",
+          "line": 79,
+          "column": 3
+        },
+        {
+          "title": "axe: content pages (dark)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "phone",
+              "projectName": "phone",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 5,
+                  "status": "passed",
+                  "duration": 63323,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-02T04:02:49.999Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9abf67be62d153b4ed8c-adedcd8cb9d8777af9c5",
+          "file": "axe.spec.ts",
+          "line": 64,
+          "column": 3
+        },
+        {
+          "title": "axe: test screens in demo mode (dark)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "phone",
+              "projectName": "phone",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 6,
+                  "status": "passed",
+                  "duration": 75358,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-02T04:02:50.020Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9abf67be62d153b4ed8c-823044217e4b88e51431",
+          "file": "axe.spec.ts",
+          "line": 79,
+          "column": 3
+        },
+        {
+          "title": "focus not obscured by the fixed demo bar (WCAG 2.4.11)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "phone",
+              "projectName": "phone",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 7,
+                  "status": "passed",
+                  "duration": 19938,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "[focus-not-obscured] [{\"screen\":\"safety questions\",\"focused\":34,\"hidden\":[\"input[name=glaucoma-family] \\\"\\\"\"],\"partlyHidden\":[]},{\"screen\":\"result\",\"focused\":35,\"hidden\":[\"button#share \\\"Share\\\"\"],\"partlyHidden\":[\"button#tryon \\\"Check a pair in the shop\\\"\"]}]\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-02T04:02:49.977Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9abf67be62d153b4ed8c-35b6c91725e6d9fbca81",
+          "file": "axe.spec.ts",
+          "line": 160,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "camp.spec.ts",
+      "file": "camp.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "camp mode: tally two people and suggest stock",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "phone",
+              "projectName": "phone",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 8,
+                  "status": "passed",
+                  "duration": 30418,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-02T04:02:49.738Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "341c37cbaa3c9a603bae-49a8baa0abd680a14b0e",
+          "file": "camp.spec.ts",
+          "line": 22,
+          "column": 1
+        },
+        {
+          "title": "camp mode: tally two people and suggest stock",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-iphone",
+              "projectName": "webkit-iphone",
+              "results": [
+                {
+                  "workerIndex": 12,
+                  "parallelIndex": 7,
+                  "status": "passed",
+                  "duration": 70557,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-02T04:04:00.292Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "341c37cbaa3c9a603bae-d543fe7f7b151b84dbbc",
+          "file": "camp.spec.ts",
+          "line": 22,
+          "column": 1
+        },
+        {
+          "title": "camp mode: tally two people and suggest stock",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox-desktop",
+              "projectName": "firefox-desktop",
+              "results": [
+                {
+                  "workerIndex": 16,
+                  "parallelIndex": 2,
+                  "status": "passed",
+                  "duration": 20986,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-02T04:04:17.275Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "341c37cbaa3c9a603bae-0b869bb56cc29fa6f09f",
+          "file": "camp.spec.ts",
+          "line": 22,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "demo-flow.spec.ts",
+      "file": "demo-flow.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "demo flow: result, existing readers update, try-on verdict",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "phone",
+              "projectName": "phone",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 9,
+                  "status": "passed",
+                  "duration": 19090,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-02T04:02:49.710Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "83ec109edb6e6af9bb9f-7c3b6920fe6ec6560f6b",
+          "file": "demo-flow.spec.ts",
+          "line": 10,
+          "column": 1
+        },
+        {
+          "title": "result does not change after a try-on (near point beyond reach)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "phone",
+              "projectName": "phone",
+              "results": [
+                {
+                  "workerIndex": 10,
+                  "parallelIndex": 10,
+                  "status": "passed",
+                  "duration": 17431,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-02T04:02:49.811Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "83ec109edb6e6af9bb9f-32337d5d34e0b7476539",
+          "file": "demo-flow.spec.ts",
+          "line": 113,
+          "column": 1
+        },
+        {
+          "title": "demo flow: result, existing readers update, try-on verdict",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-iphone",
+              "projectName": "webkit-iphone",
+              "results": [
+                {
+                  "workerIndex": 14,
+                  "parallelIndex": 9,
+                  "status": "passed",
+                  "duration": 48274,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-02T04:04:12.160Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "83ec109edb6e6af9bb9f-e23b52c74a89799674b7",
+          "file": "demo-flow.spec.ts",
+          "line": 10,
+          "column": 1
+        },
+        {
+          "title": "result does not change after a try-on (near point beyond reach)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-iphone",
+              "projectName": "webkit-iphone",
+              "results": [
+                {
+                  "workerIndex": 14,
+                  "parallelIndex": 9,
+                  "status": "passed",
+                  "duration": 28274,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-02T04:05:00.466Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "83ec109edb6e6af9bb9f-e004156376cfecaff54a",
+          "file": "demo-flow.spec.ts",
+          "line": 113,
+          "column": 1
+        },
+        {
+          "title": "demo flow: result, existing readers update, try-on verdict",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox-desktop",
+              "projectName": "firefox-desktop",
+              "results": [
+                {
+                  "workerIndex": 11,
+                  "parallelIndex": 8,
+                  "status": "passed",
+                  "duration": 14147,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-02T04:04:21.636Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "83ec109edb6e6af9bb9f-3b79219abb762db23bbc",
+          "file": "demo-flow.spec.ts",
+          "line": 10,
+          "column": 1
+        },
+        {
+          "title": "result does not change after a try-on (near point beyond reach)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox-desktop",
+              "projectName": "firefox-desktop",
+              "results": [
+                {
+                  "workerIndex": 13,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 13178,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-02T04:04:22.457Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "83ec109edb6e6af9bb9f-d23fbe8c1cb465a9d3e6",
+          "file": "demo-flow.spec.ts",
+          "line": 113,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "engines-mediapipe.spec.ts",
+      "file": "engines-mediapipe.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "MediaPipe IMAGE mode: iris landmarks and a finite distance (GPU and CPU delegates)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "phone",
+              "projectName": "phone",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 2,
+                  "status": "passed",
+                  "duration": 29224,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "[phone] {\"userAgent\":\"Mozilla/5.0 (Linux; Android 14; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.8010.12 Mobile Safari/537.36\",\"webgl2\":true,\"webglRenderer\":\"ANGLE (Intel, Intel(R) Arc(TM) Graphics (0x00007D55) Direct3D11 vs_5_0 ps_5_0, D3D11)\",\"wasmSimd\":true,\"wasmFile\":\"/mediapipe/wasm/vision_wasm_internal.wasm\",\"image\":{\"width\":820,\"height\":1024},\"runs\":[{\"delegate\":\"GPU\",\"ok\":true,\"created\":true,\"initMs\":2007.6000000238419,\"firstDetectMs\":6238.800000011921,\"medianDetectMs\":104.59999996423721,\"landmarks\":478,\"irisLandmarks\":10,\"irisNorm\":0.020977434164832144,\"distanceCm\":39.82691960224403},{\"delegate\":\"CPU\",\"ok\":true,\"created\":true,\"initMs\":1177.4000000357628,\"firstDetectMs\":239.89999997615814,\"medianDetectMs\":109.39999997615814,\"landmarks\":478,\"irisLandmarks\":10,\"irisNorm\":0.020849641607136503,\"distanceCm\":40.071028542676245}],\"video\":[{\"delegate\":\"GPU\",\"ok\":true,\"framesWithIris\":30,\"frames\":30,\"medianFrameMs\":40.30000001192093,\"maxFps\":24.81389577429765,\"distanceCm\":30.673704263924122},{\"delegate\":\"CPU\",\"ok\":true,\"framesWithIris\":30,\"frames\":30,\"medianFrameMs\":52.5,\"maxFps\":19.047619047619047,\"distanceCm\":30.78387200880548}],\"media\":{\"getUserMedia\":true,\"mediaStream\":true,\"canvasCaptureStream\":true,\"canPlayWebm\":\"probably\",\"webmPlays\":true},\"appDelegate\":\"GPU\",\"appDelegateWorks\":true}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-02T04:02:57.659Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "645e00c90f7e158126a3-3d0101e5d2bd873464e8",
+          "file": "engines-mediapipe.spec.ts",
+          "line": 84,
+          "column": 1
+        },
+        {
+          "title": "lab.html: live distance from the app camera code on a synthetic camera stream",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "phone",
+              "projectName": "phone",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 26014,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "[phone] lab {\"project\":\"phone\",\"browserVersion\":\"153.0.8010.54\",\"firstDistanceMs\":10112,\"distanceCm\":30.6,\"irisNorm\":0.02733,\"video\":\"640×480\",\"fps\":[9,11,17,17,4,17]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-02T04:03:00.651Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "645e00c90f7e158126a3-519c1ca97dfa5bf20a7b",
+          "file": "engines-mediapipe.spec.ts",
+          "line": 106,
+          "column": 1
+        },
+        {
+          "title": "test.html camera flow: working distance measured from the synthetic camera",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "phone",
+              "projectName": "phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 28654,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "[phone] flow {\"project\":\"phone\",\"cameraReadyMs\":10013,\"workingCm\":31}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-02T04:03:07.696Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "645e00c90f7e158126a3-e5d309ebc82cc326661d",
+          "file": "engines-mediapipe.spec.ts",
+          "line": 133,
+          "column": 1
+        },
+        {
+          "title": "MediaPipe IMAGE mode: iris landmarks and a finite distance (GPU and CPU delegates)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-iphone",
+              "projectName": "webkit-iphone",
+              "results": [
+                {
+                  "workerIndex": 12,
+                  "parallelIndex": 7,
+                  "status": "passed",
+                  "duration": 23662,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "[webkit-iphone] {\"userAgent\":\"Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6 Mobile/15E148 Safari/604.1\",\"webgl2\":true,\"webglRenderer\":\"Apple GPU\",\"wasmSimd\":true,\"wasmFile\":\"/mediapipe/wasm/vision_wasm_internal.wasm\",\"image\":{\"width\":820,\"height\":1024},\"runs\":[{\"delegate\":\"GPU\",\"ok\":true,\"created\":true,\"initMs\":1209,\"firstDetectMs\":5940,\"medianDetectMs\":36,\"landmarks\":478,\"irisLandmarks\":10,\"irisNorm\":0.020972497945798828,\"distanceCm\":39.83629351655253},{\"delegate\":\"CPU\",\"ok\":true,\"created\":true,\"initMs\":1684,\"firstDetectMs\":283,\"medianDetectMs\":107,\"landmarks\":478,\"irisLandmarks\":10,\"irisNorm\":0.020849641607136503,\"distanceCm\":40.071028542676245}],\"video\":[{\"delegate\":\"GPU\",\"ok\":true,\"framesWithIris\":30,\"frames\":30,\"medianFrameMs\":25,\"maxFps\":40,\"distanceCm\":30.67866800464966},{\"delegate\":\"CPU\",\"ok\":true,\"framesWithIris\":30,\"frames\":30,\"medianFrameMs\":69,\"maxFps\":14.492753623188406,\"distanceCm\":30.7844072734044}],\"media\":{\"getUserMedia\":false,\"mediaStream\":false,\"canvasCaptureStream\":false,\"canPlayWebm\":\"probably\",\"webmPlays\":false,\"webmError\":\"The operation is not supported.\"},\"appDelegate\":\"GPU\",\"appDelegateWorks\":true}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-02T04:05:10.961Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "645e00c90f7e158126a3-bbbf5e9aa2c89ddd9e8f",
+          "file": "engines-mediapipe.spec.ts",
+          "line": 84,
+          "column": 1
+        },
+        {
+          "title": "lab.html: live distance from the app camera code on a synthetic camera stream",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Playwright Windows WebKit cannot play video or build a MediaStream (see first test, report.media)",
+                  "location": {
+                    "file": "C:\\Hackathons\\Zero to Shipped\\small-print\\web\\e2e\\engines-mediapipe.spec.ts",
+                    "line": 107,
+                    "column": 8
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-iphone",
+              "projectName": "webkit-iphone",
+              "results": [
+                {
+                  "workerIndex": 14,
+                  "parallelIndex": 9,
+                  "status": "skipped",
+                  "duration": 481,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-02T04:05:28.834Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Playwright Windows WebKit cannot play video or build a MediaStream (see first test, report.media)",
+                      "location": {
+                        "file": "C:\\Hackathons\\Zero to Shipped\\small-print\\web\\e2e\\engines-mediapipe.spec.ts",
+                        "line": 107,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "645e00c90f7e158126a3-b4cb39d9af4b5badebf9",
+          "file": "engines-mediapipe.spec.ts",
+          "line": 106,
+          "column": 1
+        },
+        {
+          "title": "test.html camera flow: working distance measured from the synthetic camera",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Playwright Windows WebKit cannot play video or build a MediaStream (see first test, report.media)",
+                  "location": {
+                    "file": "C:\\Hackathons\\Zero to Shipped\\small-print\\web\\e2e\\engines-mediapipe.spec.ts",
+                    "line": 134,
+                    "column": 8
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-iphone",
+              "projectName": "webkit-iphone",
+              "results": [
+                {
+                  "workerIndex": 14,
+                  "parallelIndex": 9,
+                  "status": "skipped",
+                  "duration": 548,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-02T04:05:29.336Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Playwright Windows WebKit cannot play video or build a MediaStream (see first test, report.media)",
+                      "location": {
+                        "file": "C:\\Hackathons\\Zero to Shipped\\small-print\\web\\e2e\\engines-mediapipe.spec.ts",
+                        "line": 134,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "645e00c90f7e158126a3-7a3b73c70fcb7caf0eb3",
+          "file": "engines-mediapipe.spec.ts",
+          "line": 133,
+          "column": 1
+        },
+        {
+          "title": "MediaPipe IMAGE mode: iris landmarks and a finite distance (GPU and CPU delegates)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox-desktop",
+              "projectName": "firefox-desktop",
+              "results": [
+                {
+                  "workerIndex": 13,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 28722,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "[firefox-desktop] {\"userAgent\":\"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0\",\"webgl2\":true,\"webglRenderer\":\"ANGLE (Intel, Intel(R) Arc(TM) A750 Graphics Direct3D11 vs_5_0 ps_5_0), or similar\",\"wasmSimd\":true,\"wasmFile\":\"/mediapipe/wasm/vision_wasm_internal.wasm\",\"image\":{\"width\":820,\"height\":1024},\"runs\":[{\"delegate\":\"GPU\",\"ok\":true,\"created\":true,\"initMs\":1248,\"firstDetectMs\":7475,\"medianDetectMs\":46,\"landmarks\":478,\"irisLandmarks\":10,\"irisNorm\":0.020977434164832144,\"distanceCm\":39.82691960224403},{\"delegate\":\"CPU\",\"ok\":true,\"created\":true,\"initMs\":2545,\"firstDetectMs\":176,\"medianDetectMs\":87,\"landmarks\":478,\"irisLandmarks\":10,\"irisNorm\":0.020849641607136503,\"distanceCm\":40.071028542676245}],\"video\":[{\"delegate\":\"GPU\",\"ok\":true,\"framesWithIris\":30,\"frames\":30,\"medianFrameMs\":35,\"maxFps\":28.571428571428573,\"distanceCm\":30.656775173357808},{\"delegate\":\"CPU\",\"ok\":true,\"framesWithIris\":30,\"frames\":30,\"medianFrameMs\":61,\"maxFps\":16.39344262295082,\"distanceCm\":30.77973095181456}],\"media\":{\"getUserMedia\":true,\"mediaStream\":true,\"canvasCaptureStream\":true,\"canPlayWebm\":\"probably\",\"webmPlays\":true},\"appDelegate\":\"GPU\",\"appDelegateWorks\":true}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-02T04:04:35.814Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "645e00c90f7e158126a3-18552833fe1e47ba715a",
+          "file": "engines-mediapipe.spec.ts",
+          "line": 84,
+          "column": 1
+        },
+        {
+          "title": "lab.html: live distance from the app camera code on a synthetic camera stream",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox-desktop",
+              "projectName": "firefox-desktop",
+              "results": [
+                {
+                  "workerIndex": 11,
+                  "parallelIndex": 8,
+                  "status": "passed",
+                  "duration": 17776,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "[firefox-desktop] lab {\"project\":\"firefox-desktop\",\"browserVersion\":\"155.0\",\"firstDistanceMs\":10324,\"distanceCm\":30.7,\"irisNorm\":0.02721,\"video\":\"640×480\",\"fps\":[24,23,25,24,23,23]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-02T04:04:35.939Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "645e00c90f7e158126a3-4932210e5cb3bc56da93",
+          "file": "engines-mediapipe.spec.ts",
+          "line": 106,
+          "column": 1
+        },
+        {
+          "title": "test.html camera flow: working distance measured from the synthetic camera",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox-desktop",
+              "projectName": "firefox-desktop",
+              "results": [
+                {
+                  "workerIndex": 16,
+                  "parallelIndex": 2,
+                  "status": "passed",
+                  "duration": 18540,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "[firefox-desktop] flow {\"project\":\"firefox-desktop\",\"cameraReadyMs\":8868,\"workingCm\":31}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-02T04:04:38.366Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "645e00c90f7e158126a3-4c7fc1020031b6b49bd0",
+          "file": "engines-mediapipe.spec.ts",
+          "line": 133,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "offline.spec.ts",
+      "file": "offline.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "works offline after the first visit and sends queued results when back online",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "phone",
+              "projectName": "phone",
+              "results": [
+                {
+                  "workerIndex": 10,
+                  "parallelIndex": 10,
+                  "status": "passed",
+                  "duration": 18679,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-02T04:03:08.896Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "586fc5283fd8ec7c7982-8c6924cf05d8817ba327",
+          "file": "offline.spec.ts",
+          "line": 7,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "safety.spec.ts",
+      "file": "safety.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "sudden change → stop screen, no result posted",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "phone",
+              "projectName": "phone",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 9,
+                  "status": "passed",
+                  "duration": 9554,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-02T04:03:11.288Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "373fb75b781aed161569-a30ec3dbc70e05941f5b",
+          "file": "safety.spec.ts",
+          "line": 6,
+          "column": 1
+        },
+        {
+          "title": "diabetes only → advise screen with \"Continue anyway\"",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "phone",
+              "projectName": "phone",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 7,
+                  "status": "passed",
+                  "duration": 5449,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-02T04:03:12.489Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "373fb75b781aed161569-74264492e8b976f410db",
+          "file": "safety.spec.ts",
+          "line": 27,
+          "column": 1
+        },
+        {
+          "title": "sudden change → stop screen, no result posted",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-iphone",
+              "projectName": "webkit-iphone",
+              "results": [
+                {
+                  "workerIndex": 14,
+                  "parallelIndex": 9,
+                  "status": "passed",
+                  "duration": 6845,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-02T04:05:29.925Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "373fb75b781aed161569-d1e942d2a6c61d87b30c",
+          "file": "safety.spec.ts",
+          "line": 6,
+          "column": 1
+        },
+        {
+          "title": "diabetes only → advise screen with \"Continue anyway\"",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-iphone",
+              "projectName": "webkit-iphone",
+              "results": [
+                {
+                  "workerIndex": 12,
+                  "parallelIndex": 7,
+                  "status": "passed",
+                  "duration": 5554,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-02T04:05:34.666Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "373fb75b781aed161569-37df3c93d2baf52c60ed",
+          "file": "safety.spec.ts",
+          "line": 27,
+          "column": 1
+        },
+        {
+          "title": "sudden change → stop screen, no result posted",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox-desktop",
+              "projectName": "firefox-desktop",
+              "results": [
+                {
+                  "workerIndex": 11,
+                  "parallelIndex": 8,
+                  "status": "passed",
+                  "duration": 4068,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-02T04:04:53.793Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "373fb75b781aed161569-2f841c40421b875ef526",
+          "file": "safety.spec.ts",
+          "line": 6,
+          "column": 1
+        },
+        {
+          "title": "diabetes only → advise screen with \"Continue anyway\"",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox-desktop",
+              "projectName": "firefox-desktop",
+              "results": [
+                {
+                  "workerIndex": 16,
+                  "parallelIndex": 2,
+                  "status": "passed",
+                  "duration": 4429,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-02T04:04:56.948Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "373fb75b781aed161569-bdfa5999f5d47593e203",
+          "file": "safety.spec.ts",
+          "line": 27,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "lowend-perf.spec.ts",
+      "file": "lowend-perf.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "time to interactive of /test.html (cold cache)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "C:\\Hackathons\\Zero to Shipped\\small-print\\web\\e2e\\lowend-perf.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                },
+                {
+                  "type": "skip",
+                  "description": "set QUALITY_PERF=1 to run the low-end phone measurements",
+                  "location": {
+                    "file": "C:\\Hackathons\\Zero to Shipped\\small-print\\web\\e2e\\lowend-perf.spec.ts",
+                    "line": 34,
+                    "column": 6
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "lowend-perf",
+              "projectName": "lowend-perf",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-02T04:03:27.600Z",
+                  "annotations": [
+                    {
+                      "type": "serial",
+                      "location": {
+                        "file": "C:\\Hackathons\\Zero to Shipped\\small-print\\web\\e2e\\lowend-perf.spec.ts",
+                        "line": 0,
+                        "column": 0
+                      }
+                    },
+                    {
+                      "type": "skip",
+                      "description": "set QUALITY_PERF=1 to run the low-end phone measurements",
+                      "location": {
+                        "file": "C:\\Hackathons\\Zero to Shipped\\small-print\\web\\e2e\\lowend-perf.spec.ts",
+                        "line": 34,
+                        "column": 6
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "b499fdb17d86fa8a6d2e-42a9f4ba961ced08bf3d",
+          "file": "lowend-perf.spec.ts",
+          "line": 83,
+          "column": 1
+        },
+        {
+          "title": "\"Allow camera\" → first distance (cold cache: downloads runtime + model)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "C:\\Hackathons\\Zero to Shipped\\small-print\\web\\e2e\\lowend-perf.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                },
+                {
+                  "type": "skip",
+                  "description": "set QUALITY_PERF=1 to run the low-end phone measurements",
+                  "location": {
+                    "file": "C:\\Hackathons\\Zero to Shipped\\small-print\\web\\e2e\\lowend-perf.spec.ts",
+                    "line": 34,
+                    "column": 6
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "lowend-perf",
+              "projectName": "lowend-perf",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-02T04:03:27.600Z",
+                  "annotations": [
+                    {
+                      "type": "serial",
+                      "location": {
+                        "file": "C:\\Hackathons\\Zero to Shipped\\small-print\\web\\e2e\\lowend-perf.spec.ts",
+                        "line": 0,
+                        "column": 0
+                      }
+                    },
+                    {
+                      "type": "skip",
+                      "description": "set QUALITY_PERF=1 to run the low-end phone measurements",
+                      "location": {
+                        "file": "C:\\Hackathons\\Zero to Shipped\\small-print\\web\\e2e\\lowend-perf.spec.ts",
+                        "line": 34,
+                        "column": 6
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "b499fdb17d86fa8a6d2e-d49968888bc06b2fca49",
+          "file": "lowend-perf.spec.ts",
+          "line": 130,
+          "column": 1
+        },
+        {
+          "title": "lab.html landmark loop fps (warm cache), GPU delegate vs WebGL disabled",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "C:\\Hackathons\\Zero to Shipped\\small-print\\web\\e2e\\lowend-perf.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                },
+                {
+                  "type": "skip",
+                  "description": "set QUALITY_PERF=1 to run the low-end phone measurements",
+                  "location": {
+                    "file": "C:\\Hackathons\\Zero to Shipped\\small-print\\web\\e2e\\lowend-perf.spec.ts",
+                    "line": 34,
+                    "column": 6
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "lowend-perf",
+              "projectName": "lowend-perf",
+              "results": [
+                {
+                  "workerIndex": -1,
+                  "parallelIndex": -1,
+                  "status": "skipped",
+                  "duration": 0,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-02T04:03:27.601Z",
+                  "annotations": [
+                    {
+                      "type": "serial",
+                      "location": {
+                        "file": "C:\\Hackathons\\Zero to Shipped\\small-print\\web\\e2e\\lowend-perf.spec.ts",
+                        "line": 0,
+                        "column": 0
+                      }
+                    },
+                    {
+                      "type": "skip",
+                      "description": "set QUALITY_PERF=1 to run the low-end phone measurements",
+                      "location": {
+                        "file": "C:\\Hackathons\\Zero to Shipped\\small-print\\web\\e2e\\lowend-perf.spec.ts",
+                        "line": 34,
+                        "column": 6
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "b499fdb17d86fa8a6d2e-a5132efa58748282ee07",
+          "file": "lowend-perf.spec.ts",
+          "line": 155,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "camera-fake.spec.ts",
+      "file": "camera-fake.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "lab: live distance and iris width from the fake camera",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "fake-camera",
+              "projectName": "fake-camera",
+              "results": [
+                {
+                  "workerIndex": 15,
+                  "parallelIndex": 10,
+                  "status": "passed",
+                  "duration": 13351,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "[fake camera] lab: distance 30.8 cm (uncalibrated), iris 0.02709 of frame width, video 640×480, 23 fps\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-02T04:03:38.646Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e51e423a127b25860fbc-87bb4812af3174c4ba44",
+          "file": "camera-fake.spec.ts",
+          "line": 10,
+          "column": 1
+        },
+        {
+          "title": "test flow with the camera: still image gives steady readings through to the result",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "fake-camera",
+              "projectName": "fake-camera",
+              "results": [
+                {
+                  "workerIndex": 17,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 26031,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "[fake camera] test flow: working distance 31 cm (uncalibrated)\n"
+                    },
+                    {
+                      "text": "[fake camera] posted: outcome readers, strength 2, working 31 cm, near point 31 cm\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-02T04:03:43.613Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e51e423a127b25860fbc-7d1828db13362f50582d",
+          "file": "camera-fake.spec.ts",
+          "line": 32,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-02T04:02:43.021Z",
+    "duration": 178971.548,
+    "expected": 39,
+    "skipped": 5,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
