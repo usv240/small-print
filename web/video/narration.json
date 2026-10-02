@@ -1,16 +1,50 @@
 {
   "voice": "Joanna",
-  "rate": "106%",
+  "rate": "110%",
   "segments": [
-    { "id": "hook",    "text": "At forty, everyone's arms get too short." },
-    { "id": "result",  "text": "On <sub alias=\"two hundred and ninety-six\">296</sub> real patients from published clinical data, Small Print's starting strength matched the clinician <sub alias=\"eighty-six percent\">86%</sub> of the time, as often as the standard age table. <break time=\"250ms\"/> And unlike the table, it held back reading glasses from about half of the short-sighted patients." },
-    { "id": "problem", "text": "<sub alias=\"Eight hundred and twenty-six million\">826 million</sub> people can't see well up close. <break time=\"200ms\"/> Reading glasses cost about <sub alias=\"two dollars\">$2</sub>, and in randomised trials they raised productivity by <sub alias=\"twenty-two percent\">22%</sub> and income by a third." },
-    { "id": "app",     "text": "Small Print turns your phone's camera into a ruler, right on the device." },
-    { "id": "swipe",   "text": "Swipe the way the E points: no reading needed." },
-    { "id": "near",    "text": "The letter E is redrawn about thirty times a second, so it always looks the same size to your eye." },
-    { "id": "refuse",  "text": "If it can't see real eyes, it refuses to measure." },
-    { "id": "tryon",   "text": "Then check the pair at the rack: the app measures where you see sharply through the glasses, and checks your reading distance sits in the middle." },
-    { "id": "aws",     "text": "It's built on AWS with CloudFront, Lambda, DynamoDB and Polly, for about <sub alias=\"sixty cents per thousand\">60 cents per 1,000</sub> screenings, by a coding agent connected through the AWS MCP Server." },
-    { "id": "end",     "text": "Small Print. <break time=\"300ms\"/> Everyone deserves to read the small print." }
+    {
+      "id": "hook",
+      "text": "At forty, everyone's arms get too short. <break time=\"350ms\"/> So which reading glasses should you buy?"
+    },
+    {
+      "id": "problem",
+      "text": "<sub alias=\"Eight hundred and twenty-six million\">826 million</sub> people can't see well up close, for lack of reading glasses. In sub-Saharan Africa, only <sub alias=\"one point four percent\">1.4%</sub> of over-fifties have their near vision corrected. <break time=\"150ms\"/> Yet in trials, reading glasses raised productivity by <sub alias=\"twenty-two percent\">22%</sub> and income by a third."
+    },
+    {
+      "id": "app",
+      "text": "Small Print tells you which strength to buy, in two minutes, free, in your phone's browser. The camera becomes a ruler, and the video never leaves the phone."
+    },
+    {
+      "id": "swipe",
+      "text": "Swipe the way the E points: no reading needed."
+    },
+    {
+      "id": "near",
+      "text": "The E is redrawn about thirty times a second, so it always looks the same size to your eye. <break time=\"1500ms\"/> Move away until it turns sharp."
+    },
+    {
+      "id": "strength",
+      "text": "Your answer: start with <sub alias=\"plus one seventy-five\">+1.75</sub>."
+    },
+    {
+      "id": "refuse",
+      "text": "If it can't see real eyes, it refuses to guess."
+    },
+    {
+      "id": "tryon",
+      "text": "Then, at the shop, try the pair on: the app checks that your reading distance sits right in its sharp zone, before you pay."
+    },
+    {
+      "id": "result",
+      "text": "Does it work? On <sub alias=\"two hundred and ninety-six\">296</sub> real patients from published clinical data, it matched the clinician <sub alias=\"eighty-six percent\">86%</sub> of the time. <break time=\"150ms\"/> And unlike the standard age table, it held back readers from about half the short-sighted patients, who'd be harmed by them."
+    },
+    {
+      "id": "aws",
+      "text": "It runs serverless on AWS, for about <sub alias=\"sixty cents per thousand\">60 cents per 1,000</sub> screenings. A coding agent built it through the AWS MCP Server, behind a guardrail that only lets it read. <break time=\"150ms\"/> And AWS's own Well-Architected review found zero critical issues."
+    },
+    {
+      "id": "end",
+      "text": "Small Print. <break time=\"400ms\"/> Because everyone deserves to read the small print."
+    }
   ]
 }

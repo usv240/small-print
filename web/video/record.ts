@@ -261,7 +261,7 @@ async function validation(browser: Browser) {
   await c.hold(0.35);
   await hl(page, '#fx-real', true);
   const at = (w: string, after = 0, d = 0) => c.cues[0].frame + sec(tok('result', w, after) + d);
-  await c.holdUntil(at('Small', 0, -0.2));
+  await c.holdUntil(at('matched', 0, -1.0));
   await hl(page, '#fx-real', false);
   const table = '#clinical ~ .table-wrap table';
   await scrollTo(c, (await topOf(page, table)) - 92, 0.8);
@@ -285,8 +285,10 @@ async function stats(browser: Browser) {
   const at = (w: string) => c.cues[0].frame + sec(tok('problem', w));
   const stat = (i: number) => `.stat-strip .stat:nth-child(${i})`;
   await hl(page, stat(1), true);
-  await c.holdUntil(at('Reading') - 3);
-  await hl(page, stat(1), false);
+  await c.holdUntil(at('In') - 3);
+  await hl(page, stat(1), false); await hl(page, stat(2), true);
+  await c.holdUntil(at('Yet') - 3);
+  await hl(page, stat(2), false);
   await c.holdUntil(at('productivity'));
   await hl(page, stat(3), true);
   await c.holdUntil(at('income'));
@@ -309,14 +311,22 @@ async function aws(browser: Browser) {
   // 2) cost per 1,000 screenings
   await jump(a.page, (await topOf(a.page, 'tr.hl')) - 330);
   await hl(a.page, 'tr.hl', true, 'fx-row');
-  await c.holdUntil(c.cues[0].frame + sec(w('by', 6) - 0.2));
-  // 3) proof: the AWS MCP Server connected, then CloudTrail of the agent's role (images served by the site)
+  await c.holdUntil(c.cues[0].frame + sec(w('A', 3) - 0.2));
+  // 3) proof: the AWS MCP Server connected (image served by the site)
   const b = await desktopPage(browser, '/evidence.html?dev');
   await jump(b.page, (await topOf(b.page, 'img[src*="proof-mcp"]')) - 92);
   c.page = b.page;
-  await c.holdUntil(c.cues[0].frame + sec(w('AWS', 8) - 0.35));
-  await jump(b.page, (await topOf(b.page, 'img[src*="proof-cloudtrail"]')) - 92);
-  await c.holdUntil(c.cueEnd('aws') + sec(0.55));
+  await c.holdUntil(c.cues[0].frame + sec(w('behind') - 0.1));
+  // 4) the MCP guardrail, tested both ways: writes through MCP are denied
+  const guard = '#toolkit + .table-wrap + .table-wrap table';
+  await jump(b.page, (await topOf(b.page, guard)) - 120);
+  await hl(b.page, `${guard} tbody tr:nth-child(2)`, true, 'fx-row');
+  await c.holdUntil(c.cues[0].frame + sec(w('And', 9) - 0.2));
+  // 5) the Well-Architected review row of the toolkit table
+  const wa = '#toolkit + .table-wrap table tbody tr:nth-child(2)';
+  await jump(b.page, (await topOf(b.page, '#toolkit')) - 40);
+  await hl(b.page, wa, true, 'fx-row');
+  await c.holdUntil(c.cueEnd('aws') + sec(0.7));
   c.save();
   await a.ctx.close(); await b.ctx.close();
 }

@@ -447,7 +447,7 @@ export const CLIPS: ClipSpec[] = [
       { from: 'locked+0.5', to: 'infoOpen', speed: 1.4 },
       { from: 'infoOpen', to: 'swipe', speed: 1.5 },
     ],
-    cues: [{ id: 'app', at: 'camera', delay: 0.1 }],
+    cues: [{ id: 'app', at: 'start', delay: 0.5 }],
   },
   {
     name: 'swipe', take: 'main', camView: 'main', magnifier: true, labelKind: 'cam', label: CAM_LABEL, distNote: 'measured live by the camera',
@@ -464,8 +464,9 @@ export const CLIPS: ClipSpec[] = [
   {
     name: 'result', take: 'main', camView: 'main', labelKind: 'cam', label: CAM_LABEL, distNote: 'measured live by the camera',
     eyebrow: 'Step 8 of 8', title: 'A starting strength', sub: 'For ready-made reading glasses, from published optics. Not a prescription, and not an eye exam.',
-    pieces: [{ from: 'result', to: 'end-1.4', speed: 1 }],
-    cues: [],
+    // the tail is the static result screen, slowed to a hold so the answer can be read and spoken
+    pieces: [{ from: 'result', to: 'end-1.45', speed: 1 }, { from: 'end-1.45', to: 'end-1.4', speed: 0.02 }],
+    cues: [{ id: 'strength', at: 'result', delay: 0.4 }],
   },
   {
     name: 'refuse', take: 'shades', camView: 'shades', labelKind: 'refuse', label: 'Eyes covered → the app refuses to measure', distNote: 'measured live by the camera',

@@ -14,7 +14,7 @@ const OUT = resolve(HERE, '../public/media');
 mkdirSync(CMP, { recursive: true });
 mkdirSync(OUT, { recursive: true });
 const FPS = 30;
-const ORDER = ['hook', 'validation', 'stats', 'app', 'swipe', 'near', 'result', 'refuse', 'tryon', 'aws', 'end'];
+const ORDER = ['hook', 'stats', 'app', 'swipe', 'near', 'result', 'refuse', 'tryon', 'validation', 'aws', 'end'];
 const tts = JSON.parse(readFileSync(resolve(TMP, 'tts/manifest.json'), 'utf8'));
 
 interface Meta { name: string; layout: 'full' | 'desktop' | 'phone'; magnifier?: boolean; camView?: boolean; label?: string; labelKind?: 'cam' | 'refuse' | 'demo'; distNote?: string; live?: (string | null)[]; cam?: number[]; title?: string; sub?: string; eyebrow?: string; frames: number; cues: { id: string; frame: number }[]; dist: (number | null)[]; start: number }
