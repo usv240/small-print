@@ -5,6 +5,8 @@
 Small Print is a free, two-minute test in the phone's browser. It tells people over about 40 which ready-made (non-prescription) reading glasses to buy, then checks the pair at the shop rack. The front camera measures the distance from the eyes to the screen on the device, so a tumbling-E test is always drawn at the right size. You swipe the way the E points, so no reading is needed. A voice guide speaks every step in English, Spanish, French or Portuguese.
 
 - Live app: https://dxug72099q2ay.cloudfront.net
+- Hackathon entry (AWS Builder Center): https://builder.aws.com/project/3K783tuLkhG3LbF650fHi9JrOWe/small-print-your-phone-camera-picks-the-right-dollar2-reading-glasses
+- Demo video (100 s): https://youtu.be/8UddcGrUgBk
 - Try it: [`/test.html`](https://dxug72099q2ay.cloudfront.net/test.html), or [`/test.html?demo`](https://dxug72099q2ay.cloudfront.net/test.html?demo) without a camera
 - For judges: [`/judges.html`](https://dxug72099q2ay.cloudfront.net/judges.html), each step with its expected result
 - Method: [`/how-it-works.html`](https://dxug72099q2ay.cloudfront.net/how-it-works.html) · Evidence: [`/validation.html`](https://dxug72099q2ay.cloudfront.net/validation.html) · Built on AWS: [`/evidence.html`](https://dxug72099q2ay.cloudfront.net/evidence.html)
