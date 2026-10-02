@@ -87,7 +87,7 @@ export const pt: Partial<Strings> = {
   camera_allow: 'Permitir a câmera',
   camera_denied: 'Não conseguimos usar a câmera. Mesmo assim, você pode fazer o teste sem ela.',
   camera_loading: 'Ligando a câmera…',
-  no_face: 'Não estamos vendo seu rosto. Segure o celular na sua frente, num lugar bem iluminado.',
+  no_face: 'Não estamos vendo seus olhos. Segure o celular na sua frente, num lugar bem iluminado e sem óculos de sol.',
 
   calscreen_h: 'Compare um cartão com a tela',
   calscreen_p: 'Encoste qualquer cartão de banco, documento de identidade em cartão ou carteirinha de biblioteca na tela. Arraste o controle até o retângulo ficar exatamente da largura do cartão.',

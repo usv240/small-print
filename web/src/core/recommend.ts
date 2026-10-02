@@ -40,6 +40,9 @@ export interface Recommendation {
 
 /** Weight of the measured near point vs. the age table when both are available. */
 export const NEAR_POINT_WEIGHT = 0.6;
+/** From this age a starter pair (+1.00) can be offered, so the short-sight check must run from here too
+ *  (negative-control property test: 4,252 violations at ages 35–39 when it started at 40). */
+export const MYOPIA_CHECK_MIN_AGE = 35;
 /** Disagreement (D) between the two estimates above which we flag possible uncorrected refractive error. */
 export const DISAGREEMENT_D = 1.0;
 
@@ -69,7 +72,7 @@ export function recommend(m: Measurements): Recommendation {
 
   // Far more close-up focus than anyone that age has: likely short-sighted, and readers would blur things.
   const expected = hofstetter(m.age);
-  if (amplitudeD !== null && m.age >= 40 && amplitudeD > expected.max + 1.5) flags.push('possible-myopia');
+  if (amplitudeD !== null && m.age >= MYOPIA_CHECK_MIN_AGE && amplitudeD > expected.max + 1.5) flags.push('possible-myopia');
 
   let estimate: number;
   if (fromNearPoint === null) estimate = fromAge;

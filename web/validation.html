@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>try{var t=localStorage.getItem('small-print.theme');if(t==='dark'||t==='light')document.documentElement.dataset.theme=t}catch(e){}document.documentElement.classList.add('js')</script>
   <title>Validation: what is measured, verified, simulated and not yet done · Small Print</title>
   <meta name="description" content="The honest evidence for Small Print: the camera distance pipeline measured on a bench (0.34% mean error), 87 automated tests against published references, a 20,000-person simulation checked against real programme data from Kenya, India and Eritrea, with every weak spot, and the field study that has not been done yet.">
   <meta property="og:title" content="Small Print: the evidence, labelled honestly">
@@ -12,26 +13,63 @@
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/src/styles/base.css">
   <link rel="stylesheet" href="/src/styles/pages.css">
+  <script type="module" src="/src/ui/site.ts"></script>
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
-    <div class="wrap">
-      <a class="brand" href="/">Small <span>Print</span></a>
-      <nav class="nav" aria-label="Site">
+    <div class="header-inner">
+      <a class="brand" href="/"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6.5" cy="14.5" r="3.5"/><circle cx="17.5" cy="14.5" r="3.5"/><path d="M10 14c.7-.8 3.3-.8 4 0M3.2 13.4 5 7.5M20.8 13.4 19 7.5"/></svg>Small <span>Print</span></a>
+      <nav class="site-nav" id="site-nav" aria-label="Site">
+        <a href="/test.html">Test</a>
         <a href="/how-it-works.html">How it works</a>
-        <a href="/findings.html">Findings</a>
+        <a href="/validation.html" aria-current="page">Evidence</a>
         <a href="/impact.html">Impact</a>
         <a href="/judges.html">For judges</a>
       </nav>
+      <div class="header-actions">
+        <button type="button" class="icon-btn theme-toggle" data-theme-toggle aria-label="Switch to dark mode" title="Switch to dark mode"><svg class="icon i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.6A8 8 0 1 1 9.4 4a6.4 6.4 0 0 0 10.6 10.6z"/></svg><svg class="icon i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg></button>
+        <a class="btn btn-primary btn-sm header-cta" href="/test.html">Take the test</a>
+        <button type="button" class="icon-btn menu-btn" aria-expanded="false" aria-controls="site-nav" aria-label="Menu"><svg class="icon i-menu" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><svg class="icon i-close" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+      </div>
     </div>
   </header>
 
-  <main class="wrap">
+  <main id="main" class="doc">
+    <div class="doc-layout">
     <div class="page-head">
       <p class="eyebrow">Validation</p>
       <h1>What we know, and how we know it</h1>
       <p class="lead">Every claim about Small Print falls into one of four kinds of evidence, and we label which. <strong>Small Print has not been validated in a field study with real participants.</strong> We say exactly what has been measured, what has been checked against published references, what has only been simulated, and what still needs to be done.</p>
     </div>
+    <section class="glance" aria-labelledby="glance-h">
+      <h2 class="glance-title" id="glance-h"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3.5h6v3H9z"/><path d="M9 5H6.5a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1H15"/><path d="M8.5 11h7M8.5 14.5h7M8.5 18h4"/></svg>At a glance</h2>
+      <ul>
+<li><strong>Refusals (negative controls):</strong> <strong>0</strong> distances invented from 2,694 frames with no face and <strong>0</strong> from 907 frames with covered eyes (sunglasses, a hand), while real eyes are accepted <strong>100%</strong> of the time; <strong>0</strong> readers recommended for short-sight patterns or outside +1.00 to +3.00 across 612,732 checked inputs.</li>
+        <li><strong>Measured:</strong> the camera distance pipeline has a mean error of <strong>0.34%</strong> (largest 1.1%) from 22 to 70 cm, over 2,803 frames on a bench.</li>
+        <li><strong>Verified:</strong> <strong>87 automated tests</strong> (optics, recommendation, API and 11 end-to-end), all passing, with 1 documented expected failure.</li>
+        <li><strong>Simulated:</strong> across 20,000 virtual people, Small Print + the try-on makes the right call <strong>84.9%</strong> of the time, against 42.0% for the age table and 50.9–52.1% for a rack card.</li>
+        <li><strong>Real data:</strong> the strengths our virtual people need match programmes in <strong>Kenya</strong> (31,474 people), India and Eritrea within about 0.2 D.</li>
+        <li><strong>Not done yet:</strong> no field validation with real participants. A 200-person pilot against a trained screener is proposed.</li>
+      </ul>
+    </section>
+    <nav class="toc-nav" aria-label="On this page">
+      <details class="toc-box">
+        <summary>On this page</summary>
+        <ol>
+          <li><a href="#refusals">0. What it refuses to do</a></li>
+          <li><a href="#measured">1. Measured: camera distance</a></li>
+          <li><a href="#verified">2. Verified: automated tests</a></li>
+          <li><a href="#simulated">3. Simulated: 20,000 virtual people</a></li>
+          <li><a href="#not-better">Where Small Print is not better</a></li>
+          <li><a href="#field-check">3b. Checked against real programmes</a></li>
+          <li><a href="#not-done">4. Not done yet: field validation</a></li>
+          <li><a href="#refs">References</a></li>
+        </ol>
+      </details>
+    </nav>
+    <div class="doc-body">
+
 
     <div class="table-wrap">
       <table>
@@ -47,16 +85,53 @@
       </table>
     </div>
 
+    <h2 id="refusals">0. What it refuses to do: negative controls <span class="tag measured">Measured</span></h2>
+    <p>A tool that picks reading glasses must also know when <em>not</em> to answer. We measured that directly, as the first result rather than a footnote.</p>
+    <div class="table-wrap">
+      <table>
+        <caption>Camera: frames that must <strong>not</strong> produce a distance <span class="tag measured">Measured</span> (bench, real MediaPipe pipeline in Chrome)</caption>
+        <thead><tr><th>Scene</th><th class="num">Frames</th><th class="num">Distances reported</th></tr></thead>
+        <tbody>
+          <tr><td>No face: wall, printed text, eye chart, blurred face, mouth only, near-darkness</td><td class="num">2,694</td><td class="num"><strong>0</strong></td></tr>
+          <tr><td>Eyes covered: black bars, dark sunglasses, a hand</td><td class="num">907</td><td class="num"><strong>0</strong> (was 652 before the eye check below)</td></tr>
+          <tr class="hl"><td>Positive control: a real face at 22–70 cm, 30–100% brightness, warm and cool light, slight blur, turned 90°</td><td class="num">3,583</td><td class="num">3,583 (100%)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p><strong>How we found and fixed the covered-eye case.</strong> With both eyes hidden, the face model still <em>places</em> iris points where the eyes should be, and the app accepted a distance from them. We added an eye-visibility check: for each eye, the centre (iris and pupil) must be clearly darker than the ring around it. Real eyes score 0.45–0.87, covered eyes −0.08 to 0.12, and the threshold is 0.25. Brightness spread alone didn't work: a hand overlapped real eyes in dim light. Code: <a href="https://github.com/usv240/small-print/blob/main/web/src/camera/distance.ts"><code>distance.ts</code></a>.</p>
+    <div class="table-wrap">
+      <table>
+        <caption>Recommendation logic: inputs that must <strong>not</strong> produce readers <span class="tag">Verified</span> (property tests)</caption>
+        <thead><tr><th>Property</th><th class="num">Inputs checked</th><th class="num">Violations</th></tr></thead>
+        <tbody>
+          <tr><td>Measurements suggest short sight (any age 18–90) → never readers</td><td class="num">240,608</td><td class="num"><strong>0</strong> (was 4,252 at ages 35–39, fixed)</td></tr>
+          <tr><td>Estimate above +3.00 → never readers</td><td class="num">96,601</td><td class="num"><strong>0</strong></td></tr>
+          <tr><td>Every readers result is +1.00 to +3.00 in 0.25 steps</td><td class="num">227,590</td><td class="num"><strong>0</strong></td></tr>
+          <tr><td>Urgent symptom answers → stop screen, no result posted</td><td class="num">end-to-end test</td><td class="num"><strong>0</strong> results posted</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p><strong>In simulation</strong> <span class="tag sim">Simulation</span>, after the shop check, Small Print hands reading glasses to <strong>11%</strong> of short-sighted people and <strong>17%</strong> of people who don't need them yet. The age table and the rack card hand them to <strong>100%</strong> of both.</p>
+    <p class="small muted"><strong>Measured limits:</strong> a <em>drawn</em> cartoon face still gets a distance, because its eyes look like eyes; catching drawings needs a blink check. The bench used one real face with dark irises; light irises, real sunglasses with reflections and reading glasses during the try-on still need checking on real people. Raw data: <a href="/data/negative-controls.json">negative-controls.json</a>; re-run with <code>bench-camera/negative.ts</code> and <code>npx vitest run tests/negative.test.ts</code>.</p>
+
     <h2 id="measured">1. Measured: the camera distance pipeline <span class="tag measured">Measured</span></h2>
     <h3 id="distance-bench">Distance pipeline: bench measurement</h3>
     <p><span class="tag measured">Measured</span> <strong>Bench measurement: a real face photo, rescaled to simulate distance, through the real MediaPipe pipeline in Chrome on a Windows laptop.</strong> This is not a physical ruler test on phones or laptops.</p>
+    <details class="more">
+      <summary>Method: a face photo rescaled to 22–70 cm, run through the shipped pipeline in Chrome</summary>
+      <div class="more-body">
     <p><strong>Method.</strong> In a pinhole camera, moving a face from distance <i>d</i> to <i>d</i>/<i>s</i> makes its image <i>s</i> times bigger. So drawing the same face photo <i>s</i> times bigger is, for the camera, the same face <i>s</i> times closer. We took MediaPipe's public test portrait<sup><a href="#r-mp-portrait">a</a></sup> and drew it at 10 sizes on a 640×480 frame, equivalent to 22–70 cm. Chrome played each frame as its webcam (its built-in fake camera), and the <a href="/lab.html">measurement lab</a> ran Small Print's shipped code unchanged: MediaPipe Face Landmarker, then iris width, then distance. For each size we opened 3 fresh browser sessions, waited 2.5 s for the face tracker to settle, then recorded every frame for 3 s: 2,803 frames in all. The 30 cm size stands in for the app's one-time 30 cm camera calibration; every other size is then read as distance and compared with its true relative distance. Error = (camera − true) ÷ true. Code: <code>web/bench-camera/</code>. Raw frames: <a href="/data/camera-bench.json">camera-bench.json</a>.</p>
+      </div>
+    </details>
     <div class="stats" aria-label="Bench headline">
       <div class="stat"><b>0.3%</b><span>mean error over the 9 non-calibration distances (22–70 cm)</span></div>
       <div class="stat"><b>1.1%</b><span>largest error, at 22 cm (camera read 21.8 cm)</span></div>
       <div class="stat"><b>≤ 0.3 mm</b><span>frame-to-frame jitter (1 SD, ≤ 0.06% of the distance)</span></div>
       <div class="stat"><b>30 fps</b><span>the camera's full frame rate, on the laptop GPU</span></div>
     </div>
+    <details class="more">
+      <summary>Per-distance results: 10 distances, 3 browser sessions each <span class="hint">table</span></summary>
+      <div class="more-body">
     <div class="table-wrap">
       <table id="distance-results">
         <caption>Camera distance vs a known reference. Bench rows: the face photo at each simulated distance, 3 browser sessions, median of all frames; the 30 cm row is the calibration, so its error is 0 by definition; jitter is the per-frame SD before the app's smoothing (0.03–0.06% of the distance). Ruler rows from real devices are added only if measured. Nothing here is estimated. <span class="tag measured">Measured</span></caption>
@@ -78,11 +153,16 @@
         </tbody>
       </table>
     </div>
+      </div>
+    </details>
     <figure>
       <img src="/figures/camera-linearity.svg" width="780" height="484" loading="lazy" alt="Bench measurement. Left: camera reading after calibration plotted against the true simulated distance from 22 to 70 cm; all points lie on the identity line. Right: error at each distance: −1.10% at 22 cm, +0.27% at 25 cm, 0 at the 30 cm calibration point, +0.52% at 35 cm, +0.31% at 40 cm, +0.06% at 45 cm, +0.50% at 50 cm, −0.16% at 55 cm, −0.07% at 60 cm, −0.09% at 70 cm. Jitter bars of ±1 SD (0.03–0.06%) are smaller than the dots.">
       <figcaption><span class="tag measured">Measured</span> Bench measurement: the shipped distance pipeline is linear to within 1.1% from 22 to 70 cm on a still face photo. The hollow point is the 30 cm calibration.</figcaption>
     </figure>
     <p><strong>What it shows.</strong> After a single 30 cm calibration, the pipeline turns image size into distance correctly across the whole reading range: a straight-line fit of camera against true distance has a slope of 1.000. The three sessions at each distance agreed to within 0.07 percentage points, so these small errors are systematic rather than random. The largest, −1.1% at 22 cm, is where the face nearly fills the frame and the photo had to be enlarged 1.4 times. Landmark jitter on an unchanging image was at most 0.26 mm per frame, before the app's own smoothing.</p>
+    <details class="more">
+      <summary>Speed, what the bench does not show (real faces, real phones), and how to read the error</summary>
+      <div class="more-body">
     <p><strong>Speed.</strong> MediaPipe loaded its GPU (WebGL) path on the laptop's Intel Arc graphics (Intel Core Ultra 9 185H, headless Chrome 153); no fallback to the CPU path was logged. It kept up with the fake camera's full 30 fps: 95% of one-second readings were 30 or 31. Fed 60 fps instead, it processed a median of 43 fps (39–46). Three of the 30 sessions had brief dips (lowest one-second reading 8 fps) while other jobs were running on the laptop. Phones will be slower.</p>
     <p><strong>What it does not show.</strong></p>
     <ul>
@@ -97,9 +177,14 @@
     </ol>
     <p><strong>How to read it.</strong> Demand is 1/distance, so a distance error of <i>e</i>% changes the demand by about <i>e</i>% of its value. At 40 cm (2.50 D), 4% is 0.10 D and 10% is 0.25 D. Reader strengths are usually stocked 0.50 D apart. The bench's largest error, 1.1% at 22 cm (4.5 D), is 0.05 D.</p>
     <p>How big a CSS pixel really is on common phones and laptops, computed from published specs, is on <a href="/findings.html#screen">Findings</a>.</p>
+      </div>
+    </details>
 
     <h2 id="verified">2. Verified: automated tests <span class="tag">Verified</span></h2>
     <p>The arithmetic is checked by 76 automated tests (<code>npm test</code> in <code>web/</code> and <code>api/</code>). 75 pass. One is a deliberate "expected failure" that documents a known limitation of the try-on and will start failing, as a reminder, once that limitation is fixed.</p>
+    <details class="more">
+      <summary>Tests by suite: 8 suites, 76 unit and API tests <span class="hint">table</span></summary>
+      <div class="more-body">
     <div class="table-wrap">
       <table>
         <thead><tr><th>Suite</th><th class="num">Tests</th><th>What it checks</th></tr></thead>
@@ -116,6 +201,8 @@
         </tbody>
       </table>
     </div>
+      </div>
+    </details>
     <p>Tests show the code does what the published formulas say. They cannot show that the formulas, or the camera, are accurate on real people.</p>
 
     <h2 id="simulated">3. Simulated: 20,000 virtual people <span class="tag sim">Simulation</span></h2>
@@ -146,13 +233,21 @@
         </tbody>
       </table>
     </div>
+    <details class="more">
+      <summary>How the other methods are modelled, and what the stronger-pair check adds</summary>
+      <div class="more-body">
     <p>"Rack card" is modelled as an ideal blur meter whose reserve was tuned to maximise the card's own score, which is deliberately generous to the card. The age table and rack card never ask about short sight, so they hand readers to nearly every short-sighted person and to everyone who doesn't need them yet.</p>
     <p><strong>The stronger-pair check.</strong> The highlighted row is what ships, including the step described on <a href="/how-it-works.html#tryon">How it works</a>: when a pair is still sharp at arm's length, so the far end of the clear range can't be measured, the app asks you to also try one pair 0.50 stronger, and to keep the first pair if that one is too strong. The rows without the check are kept for comparison. The check adds about 1 point within ±0.25 D with 0.50 stock (72.9% vs 71.8%) and about 3 points with 0.25 stock (76.7% vs 74.0%), at the cost of trying more pairs (1.88 on average with 0.50 stock, against 1.30 without it). In bench.json and the bench summary the shipped check still carries its earlier label, "try-on + probe pair". Estimating the far end from the lens power instead was tried and rejected: in this bench it is less accurate for people who need readers (69.6% / 81.6%) and tells more of them they don't need readers yet (7.9% vs 4.8%), even though it hands readers too early to far fewer people (4.3%).</p>
+      </div>
+    </details>
 
     <figure>
       <img src="/figures/bench-accuracy.svg" width="780" height="554" loading="lazy" alt="Simulation. Grouped bar chart of the share of in-scope virtual people within ±0.25 D and within ±0.50 D of their ideal strength. Age table at 40 cm: 49.4% and 75.1%. Age table with measured distance: 42.2% and 63.2%. Rack card at 14 inches: 47.2% and 63.9%. Rack card where they read: 46.7% and 64.3%. Small Print start: 58.7% and 80.1%. Small Print with try-on, 0.50 stock: 71.8% and 84.6%. Small Print with try-on, 0.25 stock: 74.0% and 86.6%.">
       <figcaption><span class="tag sim">Simulation</span> How often each method lands within ±0.25 D and ±0.50 D of the ideal strength, for the 10,763 in-scope virtual people. The try-on bars are the try-on without the stronger-pair check; the shipped check is about 1 point higher (table above).</figcaption>
     </figure>
+    <details class="more">
+      <summary>Two more charts: where each method goes wrong, and how much camera error matters <span class="hint">2 charts</span></summary>
+      <div class="more-body">
     <figure>
       <img src="/figures/bench-error-distribution.svg" width="780" height="958" loading="lazy" alt="Simulation. Small-multiple histograms of the error between each method's choice and the ideal strength, in 0.25 D steps, for in-scope virtual people, with the share given no pair. Within ±0.25 D: age table 49.4% (0.0% given no pair), age table with measured distance 42.2% (5.8%), rack card at 14 inches 47.2% (5.7%), rack card where they read 46.7% (3.8%), Small Print start 58.7% (7.5%), Small Print with try-on 0.50 stock 71.8% (8.4%), 0.25 stock 74.0% (8.2%).">
       <figcaption><span class="tag sim">Simulation</span> Where each method goes wrong: the distribution of errors (chosen minus ideal strength) for in-scope virtual people, and the share given no pair at all. The try-on panels are the try-on without the stronger-pair check.</figcaption>
@@ -161,6 +256,8 @@
       <img src="/figures/bench-distance-error.svg" width="780" height="484" loading="lazy" alt="Simulation. Line chart of within ±0.25 D accuracy as camera distance error grows from 0% to 8%. With error shared across all readings (a calibration error), Small Print with try-on falls only from 72.5% to 69.6%. With independent error on every reading, it falls from 72.7% to 60.1%. The age table is flat at 49.4% because it measures nothing.">
       <figcaption><span class="tag sim">Simulation</span> How much camera distance error matters: a shared calibration error largely cancels; independent reading-to-reading error does not. The try-on line is the try-on without the stronger-pair check; the shipped check is in the sensitivity table below.</figcaption>
     </figure>
+      </div>
+    </details>
 
     <h3 id="not-better">Where Small Print is not better</h3>
     <p>"After the try-on" here means the shipped try-on with the stronger-pair check, 0.50 stock (its breakdowns by age and refractive error are in bench.json).</p>
@@ -173,7 +270,9 @@
       <li><strong>The short-sight check catches only some short-sighted people at the start.</strong> 33.0% of them are still given a starting strength; after the try-on, 11.1%.</li>
     </ul>
 
-    <h3 id="sensitivity">Sensitivity: what changes the results</h3>
+    <details class="more" id="sensitivity">
+      <summary>Sensitivity: what changes the results (7 factors tested) <span class="hint">table</span></summary>
+      <div class="more-body">
     <div class="table-wrap">
       <table>
         <caption>Small Print + try-on (0.50 stock), in-scope within ±0.25 D / ±0.50 D, as shipped (with the stronger-pair check) and without the check. Age table (40 cm) for comparison: 49.4% / 75.1% throughout (49.8% / 76.0% in the lower-accommodation population). Shipped values are from bench.json; the bench summary and the distance-error chart show the try-on without the check. <span class="tag sim">Simulation</span></caption>
@@ -190,8 +289,12 @@
       </table>
     </div>
     <p>The near-point weight of 0.6 is close to the best of the values tried (0.6: 58.7% / 80.1% at the start; 0.8: 59.2% / 78.1%; 0.4: 52.6% / 76.3%), so we did not change it. Any future change tuned on this bench would be tuned to our own simulated truth, and we would say so.</p>
+      </div>
+    </details>
 
-    <h3 id="assumptions">Every assumption</h3>
+    <details class="more" id="assumptions">
+      <summary>Every assumption behind the simulation (14, each labelled source or assumption) <span class="hint">14 items</span></summary>
+      <div class="more-body">
     <ol>
       <li>Age uniform from 40 to 70 (a supplementary run covers 35–39). <em>Assumption.</em></li>
       <li>Accommodation follows Hofstetter's mean for age, spread 0.75 D, kept between 0 and Hofstetter's maximum.<sup><a href="#r6">6</a></sup> <em>Source, plus an assumed spread.</em> These norms come from push-up tests, which partly include depth of focus, so a lower-accommodation population is also run.</li>
@@ -208,9 +311,14 @@
       <li>Rack card: an ideal blur meter with a reserve tuned in the card's favour; letter-size changes with distance are ignored. <em>Assumption, generous to the card.</em></li>
       <li>No learning, fatigue or lighting effects; everyone follows the instructions. <em>Assumption.</em></li>
     </ol>
+      </div>
+    </details>
 
     <h2 id="field-check">3b. Checked against real programmes: published field data <span class="tag measured">Real data</span> <span class="tag sim">Simulation</span></h2>
     <p>We couldn't test Small Print on people for this hackathon. So we did the next best thing: compared our simulation with what real people needed in three published community programmes. No new participants are involved; the real numbers come from the papers.</p>
+    <details class="more">
+      <summary>Real data used: Kenya (31,474 people), India (378) and Asmara, Eritrea (1,310) <span class="hint">table</span></summary>
+      <div class="more-body">
     <div class="table-wrap">
       <table>
         <caption>Real data used (all open access)</caption>
@@ -222,6 +330,8 @@
         </tbody>
       </table>
     </div>
+      </div>
+    </details>
     <figure>
       <img src="/figures/fieldcheck-power-by-age.svg" alt="Two charts. Left: reading-glasses power by age for people handed readers. Kenya means rise from +1.50 at 40–44 to +3.05 at 70–74; India means from +1.21 to +2.78; our simulated ideal power tracks them within about 0.2 D on average; Small Print with the try-on recommends slightly weaker powers, about +1.19 at 40–44 rising to +2.55 at 65–69. Right: Asmara near additions start at +1.30 at 41–45, while our simulated population needs much less before 50; a field-calibrated version matches Asmara." loading="lazy" width="900" height="560">
       <figcaption>Points are real programme data; lines are our simulation. Sources and method: <a href="https://github.com/usv240/small-print/blob/main/web/sim/FIELDCHECK.md">sim/FIELDCHECK.md</a>.</figcaption>
@@ -237,6 +347,9 @@
       <li><strong>Too many virtual people need more than +3.00</strong> (15.3% vs 5.9% in Kenya). We re-weighted them to Kenya's share and re-ran.</li>
       <li><strong>Small Print suggests slightly weaker pairs than Kenyan programme staff handed out</strong>: 0.30–0.52 D weaker in every age band in simulation (0.02–0.36 D vs the Indian optometrist). Part is by design: it refers anyone above +3.00 and starts with the weaker of two pairs. Part is that our simulated people need less at ages 45–54. We have <em>not</em> re-tuned the algorithm to close this gap: tuning against our own simulation would be circular. It is the first thing a field pilot must measure.</li>
     </ul>
+    <details class="more">
+      <summary>Right call re-run on populations adjusted to the field data <span class="hint">table</span></summary>
+      <div class="more-body">
     <div class="table-wrap">
       <table>
         <caption>Right call over everyone, re-run on populations adjusted to the field data <span class="tag sim">Simulation</span></caption>
@@ -249,14 +362,24 @@
         </tbody>
       </table>
     </div>
+      </div>
+    </details>
     <p><strong>Bottom line.</strong> The try-on result is robust: <strong>83–85%</strong> right call whichever population is closest to the truth. Its lead over the best alternative shrinks from 34 to 22–26 points under the field-fitted populations. The starting estimate on its own is <em>not</em> robust (49–75%) and should not be trusted without the shop check. That is why the app always offers it.</p>
+    <details class="more">
+      <summary>Chart: right-call rates under the four populations <span class="hint">chart</span></summary>
+      <div class="more-body">
     <figure>
       <img src="/figures/fieldcheck-sensitivity.svg" alt="Bar chart of right-call rates for each method under the four populations; Small Print with the try-on stays between 83% and 85% while the starting estimate and age table vary widely." loading="lazy">
     </figure>
+      </div>
+    </details>
     <p class="small muted">Limitations: field "needed power" is itself chosen by screeners or optometrists with trial lenses, at their own working distance and rules, so it is a reference, not ground truth. Populations differ (Kenya, India, Eritrea vs a simulated global population). This checks plausibility at population level; it says nothing about accuracy for any one person.</p>
 
     <h2 id="not-done">4. Not done yet: field validation <span class="tag pending">Not done</span></h2>
     <p>Nobody has yet compared Small Print's result with a trained screener's result on the same real people. Until that is done, nobody (including us) knows how accurate it is in practice. This is the study we propose:</p>
+    <details class="more">
+      <summary>Proposed pilot: 200 adults, a masked trained screener with trial lenses, primary outcome within ±0.50 D <span class="hint">study design</span></summary>
+      <div class="more-body">
     <dl class="kv">
       <dt>Setting</dt><dd>A community vision screening event, run with a partner that already provides reading glasses.</dd>
       <dt>Participants</dt><dd>200 adults aged 40 or over with near-vision difficulty. People with warning signs are referred as usual and counted.</dd>
@@ -267,8 +390,12 @@
       <dt>Precision</dt><dd>With 200 people, a result near 85% has a 95% confidence interval of about ±5 percentage points.</dd>
       <dt>Ethics</dt><dd>Ethics approval and informed consent before any data collection; analysis plan registered in advance; all results published, including failures.</dd>
     </dl>
+      </div>
+    </details>
 
-    <h3 id="benchmarks">Benchmarks the pilot would be judged against</h3>
+    <details class="more" id="benchmarks">
+      <summary>Benchmarks the pilot would be judged against: Peek 99.5%, VisionApp 82.5% within ±0.50 D <span class="hint">table</span></summary>
+      <div class="more-body">
     <div class="table-wrap">
       <table>
         <thead><tr><th>Method</th><th>Who uses it</th><th class="num">Within ±0.50 D</th><th>Notes</th></tr></thead>
@@ -280,8 +407,13 @@
       </table>
     </div>
     <p>These are real-world figures. Our simulated figures above are not comparable with them and should not be read as if they were.</p>
+      </div>
+    </details>
 
     <h2 id="refs">References</h2>
+    <details class="more">
+      <summary>Show the references</summary>
+      <div class="more-body">
     <ol class="refs">
       <li id="r5" value="5">Stevens S. How to prescribe spectacles for near vision. <i>Community Eye Health Journal</i> 2019;32(107):47.</li>
       <li id="r6" value="6">Hofstetter HW. A useful age-amplitude formula. <i>Optometric World</i> 1950;38:42–45.</li>
@@ -293,12 +425,30 @@
       <li id="r15" value="15">Katibeh M, Watts E, Gichangi M, Latorre-Arteaga S, Bolster NM, Bastawrous A. Near vision data and near correction requirements from community eye health programmes in nine countries. <i>Eye</i> 2024;38:2150–2155. <a href="https://doi.org/10.1038/s41433-023-02910-4">doi:10.1038/s41433-023-02910-4</a></li>
       <li id="r16" value="16">Smret TM, Weldegergis RK, Achila OO, Tekle AM. Understanding presbyopia in Asmara: prevalence, association with refractive error, and age-based addition. <i>Clinical Optometry</i> 2023. <a href="https://doi.org/10.2147/OPTO.S421366">doi:10.2147/OPTO.S421366</a></li>
     </ol>
+      </div>
+    </details>
+    </div>
+    </div>
   </main>
 
   <footer class="site-footer">
-    <div class="wrap">
-      <p>Small Print helps you choose non-prescription reading glasses. It is not an eye exam and cannot detect eye disease. <a href="/safety.html">Safety</a> · <a href="/how-it-works.html">How it works</a> · <a href="/validation.html">Validation</a> · <a href="/evidence.html">Built on AWS</a> · <a href="/judges.html">For judges</a></p>
-      <p>Built for the AWS Builder Center “Zero to Shipped” hackathon, 2026. Open source.</p>
+    <div class="container footer-grid">
+      <div>
+        <a class="brand" href="/"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6.5" cy="14.5" r="3.5"/><circle cx="17.5" cy="14.5" r="3.5"/><path d="M10 14c.7-.8 3.3-.8 4 0M3.2 13.4 5 7.5M20.8 13.4 19 7.5"/></svg>Small <span>Print</span></a>
+        <p>Small Print helps you choose non-prescription reading glasses. It is not an eye exam and cannot detect eye disease.</p>
+      </div>
+      <nav class="footer-links" aria-label="Footer">
+        <a href="/test.html">Take the test</a>
+        <a href="/how-it-works.html">How it works</a>
+        <a href="/findings.html">Findings</a>
+        <a href="/validation.html">Validation</a>
+        <a href="/impact.html">Impact</a>
+        <a href="/safety.html">Safety</a>
+        <a href="/evidence.html">Built on AWS</a>
+        <a href="/poster.html">Rack poster</a>
+        <a href="/judges.html">For judges</a>
+      </nav>
+      <p class="footer-meta">Built for the AWS Builder Center “Zero to Shipped” hackathon, 2026. <a href="https://github.com/usv240/small-print">Open source</a>.</p>
     </div>
   </footer>
 </body>

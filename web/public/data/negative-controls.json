@@ -1,0 +1,2129 @@
+{
+  "title": "Negative controls: how often Small Print correctly refuses to give an output",
+  "generatedAt": "2026-10-02T00:38:51.677Z",
+  "headline": {
+    "noUsableFace": "0 distance outputs in 2,712 frames with no usable face (6 scenes: wall, printed text, E chart, 25 px blur, mouth and chin only, 3% brightness; 3 runs × 5 s each).",
+    "eyesCovered": "With the eye-visibility check: 0 of 907 frames gave a distance with the eyes covered (black bars, dark sunglasses, a hand over the eyes). Before the check: 652 of 907 (71.9%).",
+    "realEyesKept": "Real eyes still accepted on 3583 of 3583 frames (100.0%) across 12 scenes: 22–70 cm, 30% and 50% light, warm and cool tint, 3 px blur, turned 90°. Before the check: 3602 of 3602.",
+    "drawnFaceLimit": "Measured limit: a cartoon smiley with drawn eyes still gives a distance on 302 of 302 frames. Its eyes are a dark disc in a white circle, which is what the check looks for.",
+    "threshold": "EYE_MIN_CONTRAST = 0.25. Real eyes 0.452 or more, covered eyes 0.121 or less (better eye per check), so the threshold sits 1.8× below the lowest real eye and 2.1× above the highest covered one.",
+    "realFaceRotated": "A real face rotated 90° or 180° is still tracked (791 of 901 frames). At 90° the distance is correct (30.0 cm vs 30.0 cm upright), and at 180° the working-distance gate locked in 0 of 3 runs.",
+    "allNegatives": "1245 of 4520 frames in the first negative-control set showed a distance (10 scenes, including the cartoon and the two rotated real faces); 7 of 10 scenes never did.",
+    "positiveControl": "Reference portrait: distance shown on 452 of 452 frames (100.0%), threshold 95%.",
+    "logic": "myopia-40plus: 0 violations in 200,989 cases; myopia-all-ages: 0 violations in 240,608 cases; out-of-range-never-readers: 0 violations in 96,601 cases; out-of-range-refer: 7343 violations in 96,601 cases; out-of-range-refer-unless-myopia: 0 violations in 89,258 cases; readers-in-stock-range: 0 violations in 223,338 cases",
+    "beforeEyeCheck": "Before the eye check (shipped pipeline): 1792 of 4506 frames in the same set showed a distance; blacked-out eyes 453 of 453, cartoon 454 of 454."
+  },
+  "cameraGroups": {
+    "noUsableFace": {
+      "scenes": [
+        "wall",
+        "text-page",
+        "e-chart",
+        "blurred",
+        "lower-half",
+        "dark"
+      ],
+      "frames": 2712,
+      "falseOutputs": 0,
+      "rate": 0,
+      "workingGateLockedRuns": "0 of 18"
+    },
+    "faceLikeOrEyesHidden": {
+      "scenes": [
+        "smiley",
+        "eyes-blacked"
+      ],
+      "frames": 907,
+      "falseOutputs": 454,
+      "rate": 0.5006,
+      "workingGateLockedRuns": "3 of 6"
+    },
+    "realFaceRotated": {
+      "scenes": [
+        "rot90",
+        "rot180"
+      ],
+      "frames": 901,
+      "falseOutputs": 791,
+      "rate": 0.8779,
+      "workingGateLockedRuns": "3 of 6"
+    }
+  },
+  "findings": [
+    "No usable face, no guess: 0 distance outputs on blank, text, chart, heavily blurred, chin-only and near-black frames, before and after the eye-visibility check.",
+    "Before the eye check, MediaPipe Face Landmarker hallucinated. A portrait with both eyes painted black and a three-shape cartoon smiley each gave a distance on 100% of frames, and dark sunglasses did too (304 of 304; hand over the eyes: 47 of 302). The invented output is as steady as a real face, so the working-distance gate (±3% for 1.5 s, reset by \"no face\") accepted it in about 2.5 s.",
+    "After the eye check (src/camera/distance.ts, EYE_MIN_CONTRAST = 0.25): covered eyes (black bars, sunglasses, hand) give 0 distances, and real eyes are still accepted on 100% of frames at 22–70 cm, 30% light, tinted light, slight blur and turned 90°. The person sees the \"no face\" message, now worded \"Can't see your eyes … without sunglasses\", in all 4 languages.",
+    "Measured limit: a drawn cartoon face still passes, because its drawn eyes have the same dark-centre pattern as real ones. Cartoons are not a realistic use; blocking drawings and photos needs a liveness or blink check.",
+    "Limits of the evidence: one real face (MediaPipe's test portrait, dark brown irises), synthetic occluders, and a fake camera with clean noise. Light (blue or grey) irises have less contrast against the white of the eye, and real sunglasses can have reflections. Both should be checked on real people before claiming more."
+  ],
+  "recommendedFixes": [
+    "DONE: eye-visibility check (fix #1). Relative iris-vs-surround contrast of a 24×24 patch per eye, every 3rd frame; if neither eye passes, the frame counts as \"no face\".",
+    "Refinement: when only one eye passes, measure the iris size from that eye alone. irisWidthNorm still averages in the invented iris of the covered eye.",
+    "Liveness or blink check over the test, to catch cartoons and photos: enable outputFaceBlendshapes and require at least one blink (eyeBlinkLeft/Right above about 0.5) before accepting the working distance. It needs a dev/bench bypass, because the fake-camera e2e tests and these benches use a still portrait.",
+    "Show the tracked eye points on the live camera preview, so the person can see what is being tracked.",
+    "Check EYE_MIN_CONTRAST on real people: light irises, dark skin in dim light, reading glasses with reflections (the try-on step is done wearing readers)."
+  ],
+  "camera": [
+    {
+      "name": "Empty room / wall",
+      "id": "wall",
+      "frames": 441,
+      "falseOutputs": 0,
+      "rate": 0,
+      "notes": "No distance on any of 441 frames: the page showed \"no face\" throughout. Blank wall with texture: no face found on any frame.",
+      "description": "Plain warm-grey wall with a lighting gradient and a fine static noise texture; no face.",
+      "irisReportedFrames": 0,
+      "distanceCm": null,
+      "irisNormMedian": null,
+      "workingGateLockedRuns": 0,
+      "runs": [
+        {
+          "repeat": 0,
+          "frames": 137,
+          "withDistance": 0,
+          "firstDistanceMs": null,
+          "longestStreakFrames": 0,
+          "workingGateLockedAtMs": null,
+          "workingGateLockedCm": null,
+          "startupMs": 6366,
+          "errors": []
+        },
+        {
+          "repeat": 1,
+          "frames": 152,
+          "withDistance": 0,
+          "firstDistanceMs": null,
+          "longestStreakFrames": 0,
+          "workingGateLockedAtMs": null,
+          "workingGateLockedCm": null,
+          "startupMs": 6632,
+          "errors": []
+        },
+        {
+          "repeat": 2,
+          "frames": 152,
+          "withDistance": 0,
+          "firstDistanceMs": null,
+          "longestStreakFrames": 0,
+          "workingGateLockedAtMs": null,
+          "workingGateLockedCm": null,
+          "startupMs": 5888,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "Printed page of text",
+      "id": "text-page",
+      "frames": 454,
+      "falseOutputs": 0,
+      "rate": 0,
+      "notes": "No distance on any of 454 frames: the page showed \"no face\" throughout. Dense printed text: no face found on any frame.",
+      "description": "Off-white page filling the frame: heading and paragraphs of black serif text (15 px).",
+      "irisReportedFrames": 0,
+      "distanceCm": null,
+      "irisNormMedian": null,
+      "workingGateLockedRuns": 0,
+      "runs": [
+        {
+          "repeat": 0,
+          "frames": 151,
+          "withDistance": 0,
+          "firstDistanceMs": null,
+          "longestStreakFrames": 0,
+          "workingGateLockedAtMs": null,
+          "workingGateLockedCm": null,
+          "startupMs": 6503,
+          "errors": []
+        },
+        {
+          "repeat": 1,
+          "frames": 152,
+          "withDistance": 0,
+          "firstDistanceMs": null,
+          "longestStreakFrames": 0,
+          "workingGateLockedAtMs": null,
+          "workingGateLockedCm": null,
+          "startupMs": 6487,
+          "errors": []
+        },
+        {
+          "repeat": 2,
+          "frames": 151,
+          "withDistance": 0,
+          "firstDistanceMs": null,
+          "longestStreakFrames": 0,
+          "workingGateLockedAtMs": null,
+          "workingGateLockedCm": null,
+          "startupMs": 6398,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "Tumbling-E chart",
+      "id": "e-chart",
+      "frames": 455,
+      "falseOutputs": 0,
+      "rate": 0,
+      "notes": "No distance on any of 455 frames: the page showed \"no face\" throughout. Tumbling-E chart (the app's own optotype): no face found on any frame.",
+      "description": "White chart with 8 rows of tumbling E optotypes, 70 px down to 10 px, random orientations.",
+      "irisReportedFrames": 0,
+      "distanceCm": null,
+      "irisNormMedian": null,
+      "workingGateLockedRuns": 0,
+      "runs": [
+        {
+          "repeat": 0,
+          "frames": 151,
+          "withDistance": 0,
+          "firstDistanceMs": null,
+          "longestStreakFrames": 0,
+          "workingGateLockedAtMs": null,
+          "workingGateLockedCm": null,
+          "startupMs": 6358,
+          "errors": []
+        },
+        {
+          "repeat": 1,
+          "frames": 152,
+          "withDistance": 0,
+          "firstDistanceMs": null,
+          "longestStreakFrames": 0,
+          "workingGateLockedAtMs": null,
+          "workingGateLockedCm": null,
+          "startupMs": 5876,
+          "errors": []
+        },
+        {
+          "repeat": 2,
+          "frames": 152,
+          "withDistance": 0,
+          "firstDistanceMs": null,
+          "longestStreakFrames": 0,
+          "workingGateLockedAtMs": null,
+          "workingGateLockedCm": null,
+          "startupMs": 6668,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "Cartoon smiley face",
+      "id": "smiley",
+      "frames": 454,
+      "falseOutputs": 454,
+      "rate": 1,
+      "notes": "A distance was shown on 454 of 454 frames (MediaPipe returned iris landmarks and the eye check passed) (median 23.4 cm, range 23–24.6 cm; longest unbroken run 152 frames). Downstream: the working-distance steady gate (±3% for 1.5 s, reset by any \"no face\" frame) would have accepted a working distance in 3 of 3 runs (after 2.6, 2.4, 2.4 s, at 23.4, 23.3, 23.3 cm). MEASURED LIMIT of the eye check: the drawn eyes are a dark disc inside a white circle, which is exactly the pattern of a real eye (relative contrast 0.64–0.70, real eyes 0.45–0.87), so the cartoon still passes. Rejecting drawings and photos needs a liveness or blink check, not an eye-visibility check.",
+      "description": "Skin-coloured disc (r 115 px) with two white eye circles holding iris-sized dark discs (17 px, the size of a real iris at 30 cm) and an arc mouth, on mid-grey.",
+      "irisReportedFrames": 454,
+      "distanceCm": {
+        "median": 23.4,
+        "min": 23,
+        "max": 24.6
+      },
+      "irisNormMedian": 0.03568,
+      "workingGateLockedRuns": 3,
+      "runs": [
+        {
+          "repeat": 0,
+          "frames": 151,
+          "withDistance": 151,
+          "firstDistanceMs": 0,
+          "longestStreakFrames": 151,
+          "workingGateLockedAtMs": 2644,
+          "workingGateLockedCm": 23.4,
+          "startupMs": 6322,
+          "errors": []
+        },
+        {
+          "repeat": 1,
+          "frames": 152,
+          "withDistance": 152,
+          "firstDistanceMs": 0,
+          "longestStreakFrames": 152,
+          "workingGateLockedAtMs": 2446,
+          "workingGateLockedCm": 23.3,
+          "startupMs": 6607,
+          "errors": []
+        },
+        {
+          "repeat": 2,
+          "frames": 151,
+          "withDistance": 151,
+          "firstDistanceMs": 0,
+          "longestStreakFrames": 151,
+          "workingGateLockedAtMs": 2438,
+          "workingGateLockedCm": 23.3,
+          "startupMs": 6965,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "Portrait, both eyes blacked out",
+      "id": "eyes-blacked",
+      "frames": 453,
+      "falseOutputs": 0,
+      "rate": 0,
+      "notes": "No distance on any of 453 frames: the page showed \"no face\" throughout. Eye-visibility check: MediaPipe still invents iris points under the black bars, but the patch around them has no dark centre against a lighter ring (relative contrast 0), so every frame goes down the \"no face\" path. Before the check: 100% of frames gave a distance (about 32 cm for a face at 30 cm).",
+      "description": "Reference portrait with two solid black 74×44 px rectangles covering both eyes (lids and brows partly).",
+      "irisReportedFrames": 0,
+      "distanceCm": null,
+      "irisNormMedian": null,
+      "workingGateLockedRuns": 0,
+      "runs": [
+        {
+          "repeat": 0,
+          "frames": 151,
+          "withDistance": 0,
+          "firstDistanceMs": null,
+          "longestStreakFrames": 0,
+          "workingGateLockedAtMs": null,
+          "workingGateLockedCm": null,
+          "startupMs": 6864,
+          "errors": []
+        },
+        {
+          "repeat": 1,
+          "frames": 151,
+          "withDistance": 0,
+          "firstDistanceMs": null,
+          "longestStreakFrames": 0,
+          "workingGateLockedAtMs": null,
+          "workingGateLockedCm": null,
+          "startupMs": 7058,
+          "errors": []
+        },
+        {
+          "repeat": 2,
+          "frames": 151,
+          "withDistance": 0,
+          "firstDistanceMs": null,
+          "longestStreakFrames": 0,
+          "workingGateLockedAtMs": null,
+          "workingGateLockedCm": null,
+          "startupMs": 7043,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "Portrait, Gaussian blur 25 px",
+      "id": "blurred",
+      "frames": 455,
+      "falseOutputs": 0,
+      "rate": 0,
+      "notes": "No distance on any of 455 frames: the page showed \"no face\" throughout. With a 25 px Gaussian blur the face detector finds nothing; no landmarks are invented.",
+      "description": "Reference portrait blurred with a 25 px Gaussian (canvas filter blur(25px)); no facial detail left.",
+      "irisReportedFrames": 0,
+      "distanceCm": null,
+      "irisNormMedian": null,
+      "workingGateLockedRuns": 0,
+      "runs": [
+        {
+          "repeat": 0,
+          "frames": 152,
+          "withDistance": 0,
+          "firstDistanceMs": null,
+          "longestStreakFrames": 0,
+          "workingGateLockedAtMs": null,
+          "workingGateLockedCm": null,
+          "startupMs": 6326,
+          "errors": []
+        },
+        {
+          "repeat": 1,
+          "frames": 151,
+          "withDistance": 0,
+          "firstDistanceMs": null,
+          "longestStreakFrames": 0,
+          "workingGateLockedAtMs": null,
+          "workingGateLockedCm": null,
+          "startupMs": 5464,
+          "errors": []
+        },
+        {
+          "repeat": 2,
+          "frames": 152,
+          "withDistance": 0,
+          "firstDistanceMs": null,
+          "longestStreakFrames": 0,
+          "workingGateLockedAtMs": null,
+          "workingGateLockedCm": null,
+          "startupMs": 5931,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "Portrait rotated 90°",
+      "id": "rot90",
+      "frames": 448,
+      "falseOutputs": 448,
+      "rate": 1,
+      "notes": "A distance was shown on 448 of 448 frames (MediaPipe returned iris landmarks and the eye check passed) (median 30 cm, range 30–32.5 cm; longest unbroken run 151 frames). Downstream: the working-distance steady gate (±3% for 1.5 s, reset by any \"no face\" frame) would have accepted a working distance in 3 of 3 runs (after 2.7, 2.7, 2.7 s, at 30.1, 30, 30.1 cm). Not a hallucination: a real face with visible irises, turned sideways. It is tracked, and the iris width is measured as a length in any direction (Math.hypot), so the distance matches the upright portrait. The eye check keeps every frame (relative contrast 0.68 or more).",
+      "description": "Reference portrait rotated 90° clockwise about the frame centre (between the eyes).",
+      "irisReportedFrames": 448,
+      "distanceCm": {
+        "median": 30,
+        "min": 30,
+        "max": 32.5
+      },
+      "irisNormMedian": 0.02781,
+      "workingGateLockedRuns": 3,
+      "runs": [
+        {
+          "repeat": 0,
+          "frames": 146,
+          "withDistance": 146,
+          "firstDistanceMs": 0,
+          "longestStreakFrames": 146,
+          "workingGateLockedAtMs": 2708,
+          "workingGateLockedCm": 30.1,
+          "startupMs": 6933,
+          "errors": []
+        },
+        {
+          "repeat": 1,
+          "frames": 151,
+          "withDistance": 151,
+          "firstDistanceMs": 0,
+          "longestStreakFrames": 151,
+          "workingGateLockedAtMs": 2691,
+          "workingGateLockedCm": 30,
+          "startupMs": 6473,
+          "errors": []
+        },
+        {
+          "repeat": 2,
+          "frames": 151,
+          "withDistance": 151,
+          "firstDistanceMs": 0,
+          "longestStreakFrames": 151,
+          "workingGateLockedAtMs": 2710,
+          "workingGateLockedCm": 30.1,
+          "startupMs": 6934,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "Portrait upside down (180°)",
+      "id": "rot180",
+      "frames": 453,
+      "falseOutputs": 343,
+      "rate": 0.7572,
+      "notes": "A distance was shown on 343 of 453 frames (MediaPipe returned iris landmarks and the eye check passed) (median 31.4 cm, range 30.6–32.8 cm; longest unbroken run 40 frames). Downstream: the working-distance steady gate (±3% for 1.5 s, reset by any \"no face\" frame) would have accepted a working distance in 0 of 3 runs. With the eye check, fewer frames are accepted than before (about 96% before). In the rejected checks the relative contrast is negative (down to −0.75): upside down, the tracker puts the iris centre on lighter skin rather than on the iris, so the check rejects frames whose iris points are not on an iris. The working-distance gate never locked, before or after.",
+      "description": "Reference portrait rotated 180° about the frame centre.",
+      "irisReportedFrames": 343,
+      "distanceCm": {
+        "median": 31.4,
+        "min": 30.6,
+        "max": 32.8
+      },
+      "irisNormMedian": 0.02667,
+      "workingGateLockedRuns": 0,
+      "runs": [
+        {
+          "repeat": 0,
+          "frames": 151,
+          "withDistance": 112,
+          "firstDistanceMs": 346.5,
+          "longestStreakFrames": 23,
+          "workingGateLockedAtMs": null,
+          "workingGateLockedCm": null,
+          "startupMs": 7908,
+          "errors": []
+        },
+        {
+          "repeat": 1,
+          "frames": 151,
+          "withDistance": 114,
+          "firstDistanceMs": 67.8,
+          "longestStreakFrames": 33,
+          "workingGateLockedAtMs": null,
+          "workingGateLockedCm": null,
+          "startupMs": 6580,
+          "errors": []
+        },
+        {
+          "repeat": 2,
+          "frames": 151,
+          "withDistance": 117,
+          "firstDistanceMs": 75.4,
+          "longestStreakFrames": 40,
+          "workingGateLockedAtMs": null,
+          "workingGateLockedCm": null,
+          "startupMs": 6436,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "Portrait, lower half of face only",
+      "id": "lower-half",
+      "frames": 452,
+      "falseOutputs": 0,
+      "rate": 0,
+      "notes": "No distance on any of 452 frames: the page showed \"no face\" throughout. Mouth and chin alone are not accepted as a face: the detector needs the upper face.",
+      "description": "Reference portrait moved up 285 px: the frame starts just below the nose, so only mouth, chin and neck are visible (no eyes).",
+      "irisReportedFrames": 0,
+      "distanceCm": null,
+      "irisNormMedian": null,
+      "workingGateLockedRuns": 0,
+      "runs": [
+        {
+          "repeat": 0,
+          "frames": 150,
+          "withDistance": 0,
+          "firstDistanceMs": null,
+          "longestStreakFrames": 0,
+          "workingGateLockedAtMs": null,
+          "workingGateLockedCm": null,
+          "startupMs": 8217,
+          "errors": []
+        },
+        {
+          "repeat": 1,
+          "frames": 151,
+          "withDistance": 0,
+          "firstDistanceMs": null,
+          "longestStreakFrames": 0,
+          "workingGateLockedAtMs": null,
+          "workingGateLockedCm": null,
+          "startupMs": 8095,
+          "errors": []
+        },
+        {
+          "repeat": 2,
+          "frames": 151,
+          "withDistance": 0,
+          "firstDistanceMs": null,
+          "longestStreakFrames": 0,
+          "workingGateLockedAtMs": null,
+          "workingGateLockedCm": null,
+          "startupMs": 6238,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "Very dark frame (3% brightness)",
+      "id": "dark",
+      "frames": 455,
+      "falseOutputs": 0,
+      "rate": 0,
+      "notes": "No distance on any of 455 frames: the page showed \"no face\" throughout. At 3% brightness (pixel values about 0–8 under sensor noise) nothing is detected; the app keeps showing \"no face\" rather than guessing.",
+      "description": "Reference portrait at 3% brightness (canvas filter brightness(0.03)): pixel values 0–8 plus sensor noise.",
+      "irisReportedFrames": 0,
+      "distanceCm": null,
+      "irisNormMedian": null,
+      "workingGateLockedRuns": 0,
+      "runs": [
+        {
+          "repeat": 0,
+          "frames": 151,
+          "withDistance": 0,
+          "firstDistanceMs": null,
+          "longestStreakFrames": 0,
+          "workingGateLockedAtMs": null,
+          "workingGateLockedCm": null,
+          "startupMs": 5768,
+          "errors": []
+        },
+        {
+          "repeat": 1,
+          "frames": 152,
+          "withDistance": 0,
+          "firstDistanceMs": null,
+          "longestStreakFrames": 0,
+          "workingGateLockedAtMs": null,
+          "workingGateLockedCm": null,
+          "startupMs": 6588,
+          "errors": []
+        },
+        {
+          "repeat": 2,
+          "frames": 152,
+          "withDistance": 0,
+          "firstDistanceMs": null,
+          "longestStreakFrames": 0,
+          "workingGateLockedAtMs": null,
+          "workingGateLockedCm": null,
+          "startupMs": 5261,
+          "errors": []
+        }
+      ]
+    }
+  ],
+  "cameraBeforeEyeCheck": {
+    "label": "BEFORE the eye-visibility check: the same scenes on the shipped pipeline (first negative-control run). Kept for comparison.",
+    "runAt": "2026-10-01T23:57:43.525Z",
+    "repeatsPerScene": 3,
+    "scenes": [
+      {
+        "id": "wall",
+        "name": "Empty room / wall",
+        "frames": 441,
+        "falseOutputs": 0,
+        "rate": 0,
+        "distanceCm": null,
+        "workingGateLockedRuns": 0,
+        "notes": "No distance on any of 441 frames: the page showed \"no face\" throughout. Blank wall with texture: no face found on any frame."
+      },
+      {
+        "id": "text-page",
+        "name": "Printed page of text",
+        "frames": 454,
+        "falseOutputs": 0,
+        "rate": 0,
+        "distanceCm": null,
+        "workingGateLockedRuns": 0,
+        "notes": "No distance on any of 454 frames: the page showed \"no face\" throughout. Dense printed text: no face found on any frame."
+      },
+      {
+        "id": "e-chart",
+        "name": "Tumbling-E chart",
+        "frames": 453,
+        "falseOutputs": 0,
+        "rate": 0,
+        "distanceCm": null,
+        "workingGateLockedRuns": 0,
+        "notes": "No distance on any of 453 frames: the page showed \"no face\" throughout. Tumbling-E chart (the app's own optotype): no face found on any frame."
+      },
+      {
+        "id": "smiley",
+        "name": "Cartoon smiley face",
+        "frames": 454,
+        "falseOutputs": 454,
+        "rate": 1,
+        "distanceCm": {
+          "median": 23.5,
+          "min": 23.1,
+          "max": 24.6
+        },
+        "workingGateLockedRuns": 3,
+        "notes": "A distance was shown on 454 of 454 frames (MediaPipe returned iris landmarks) (median 23.5 cm, range 23.1–24.6 cm; longest unbroken run 152 frames). Downstream: the working-distance steady gate (±3% for 1.5 s, reset by any \"no face\" frame) would have accepted a working distance in 3 of 3 runs (after 2.6, 2.4, 2.4 s, at 23.4, 23.2, 23.6 cm). HALLUCINATION: a drawn cartoon (three shapes, no skin texture) is accepted as a face on every frame, with iris landmarks fitted to the drawn eyes. The output is as steady as a real face, so the working-distance gate locks just as fast (≈2.5 s) and nothing downstream rejects it."
+      },
+      {
+        "id": "eyes-blacked",
+        "name": "Portrait, both eyes blacked out",
+        "frames": 453,
+        "falseOutputs": 453,
+        "rate": 1,
+        "distanceCm": {
+          "median": 32,
+          "min": 31,
+          "max": 32.3
+        },
+        "workingGateLockedRuns": 3,
+        "notes": "A distance was shown on 453 of 453 frames (MediaPipe returned iris landmarks) (median 32 cm, range 31–32.3 cm; longest unbroken run 151 frames). Downstream: the working-distance steady gate (±3% for 1.5 s, reset by any \"no face\" frame) would have accepted a working distance in 3 of 3 runs (after 2.4, 2.4, 2.5 s, at 32, 32.1, 31.9 cm). HALLUCINATION: with both eyes covered by solid black, the model still returns iris landmarks on every frame. Their size is invented (iris width 0.0261 of frame vs 0.0278 for the visible eyes), so the distance reads about 32 cm instead of the 30 cm the same portrait gives, a 6–7% error, and it is steady enough for the working-distance gate to accept it. The same failure is expected for sunglasses, glare on lenses, or hair over the eyes."
+      },
+      {
+        "id": "blurred",
+        "name": "Portrait, Gaussian blur 25 px",
+        "frames": 438,
+        "falseOutputs": 0,
+        "rate": 0,
+        "distanceCm": null,
+        "workingGateLockedRuns": 0,
+        "notes": "No distance on any of 438 frames: the page showed \"no face\" throughout. With a 25 px Gaussian blur the face detector finds nothing; no landmarks are invented."
+      },
+      {
+        "id": "rot90",
+        "name": "Portrait rotated 90°",
+        "frames": 452,
+        "falseOutputs": 452,
+        "rate": 1,
+        "distanceCm": {
+          "median": 30.1,
+          "min": 30,
+          "max": 32.5
+        },
+        "workingGateLockedRuns": 3,
+        "notes": "A distance was shown on 452 of 452 frames (MediaPipe returned iris landmarks) (median 30.1 cm, range 30–32.5 cm; longest unbroken run 151 frames). Downstream: the working-distance steady gate (±3% for 1.5 s, reset by any \"no face\" frame) would have accepted a working distance in 3 of 3 runs (after 2.7, 2.7, 2.7 s, at 30, 30, 30.1 cm). Not a hallucination: this is a real face with real, visible irises, turned sideways. MediaPipe tracks it and the iris width is measured as a length in any direction (Math.hypot), so the distance (30.1 cm) matches the upright portrait (30.0 cm). Counted as an output here because the brief listed it as a negative; arguably a correct output (phone held sideways, head tilted)."
+      },
+      {
+        "id": "rot180",
+        "name": "Portrait upside down (180°)",
+        "frames": 453,
+        "falseOutputs": 433,
+        "rate": 0.9558,
+        "distanceCm": {
+          "median": 31.5,
+          "min": 30.4,
+          "max": 37.1
+        },
+        "workingGateLockedRuns": 0,
+        "notes": "A distance was shown on 433 of 453 frames (MediaPipe returned iris landmarks) (median 31.5 cm, range 30.4–37.1 cm; longest unbroken run 77 frames). Downstream: the working-distance steady gate (±3% for 1.5 s, reset by any \"no face\" frame) would have accepted a working distance in 0 of 3 runs. A real face upside down: tracked on most frames, but with dropped frames and a wider spread (up to 37 cm). The dropped frames reset the working-distance gate, which never locked in 5 s, so this one was caught downstream."
+      },
+      {
+        "id": "lower-half",
+        "name": "Portrait, lower half of face only",
+        "frames": 454,
+        "falseOutputs": 0,
+        "rate": 0,
+        "distanceCm": null,
+        "workingGateLockedRuns": 0,
+        "notes": "No distance on any of 454 frames: the page showed \"no face\" throughout. Mouth and chin alone are not accepted as a face: the detector needs the upper face."
+      },
+      {
+        "id": "dark",
+        "name": "Very dark frame (3% brightness)",
+        "frames": 454,
+        "falseOutputs": 0,
+        "rate": 0,
+        "distanceCm": null,
+        "workingGateLockedRuns": 0,
+        "notes": "No distance on any of 454 frames: the page showed \"no face\" throughout. At 3% brightness (pixel values about 0–8 under sensor noise) nothing is detected; the app keeps showing \"no face\" rather than guessing."
+      },
+      {
+        "id": "positive",
+        "name": "Positive control: reference portrait",
+        "frames": 440,
+        "falseOutputs": 440,
+        "rate": 1,
+        "distanceCm": {
+          "median": 30,
+          "min": 29.9,
+          "max": 30.9
+        },
+        "workingGateLockedRuns": 3,
+        "notes": "A distance was shown on 440 of 440 frames (MediaPipe returned iris landmarks) (median 30 cm, range 29.9–30.9 cm; longest unbroken run 151 frames). Downstream: the working-distance steady gate (±3% for 1.5 s, reset by any \"no face\" frame) would have accepted a working distance in 3 of 3 runs (after 2.4, 2.6, 2.4 s, at 30, 30.1, 30 cm)."
+      }
+    ]
+  },
+  "eyeCheck": {
+    "rule": "src/camera/distance.ts: for each eye, a square 3 iris radii wide around the iris centre (landmarks 468/473; radius from ring points 469–471 / 474–476) is drawn from the video frame into a 24×24 canvas (willReadFrequently). Relative contrast = (mean luminance of the ring beyond 1.15 iris radii − mean of the centre within 0.75 iris radii) ÷ mean luminance of the patch. The eye counts as visible when this is ≥ EYE_MIN_CONTRAST; if neither eye is visible the frame is treated as \"no face\" (distance null), the existing no-face path. Checked on every 3rd processed frame, with the verdict reused in between, and straight away when a face reappears.",
+    "threshold": {
+      "EYE_MIN_CONTRAST": 0.25,
+      "unit": "relative contrast (dimensionless): a dark iris/pupil against lighter sclera and lids gives about 0.45–0.87; a covered eye about 0"
+    },
+    "margin": {
+      "lowestRealEye": 0.452,
+      "highestCoveredEye": 0.121,
+      "ratioThresholdToHighestCovered": 2.1,
+      "ratioLowestRealToThreshold": 1.8,
+      "note": "Per check, the better of the two eyes (the rule accepts the frame if either eye is visible), from the BEFORE runs (all frames, nothing filtered). Real eyes: every positive scene (6 distances 22–70 cm, 30%/50% brightness, warm/cool tint, 3 px blur, turned 90°). Covered: blacked-out eyes, sunglasses, hand. The cartoon is reported separately."
+    },
+    "whyNotLumaSd": "Luminance SD alone (the first candidate) does not separate them: lowest real eye 12.5 (30% brightness) vs highest covered 14.4 (hand over the eyes: finger edges). Relative contrast does not depend on the light level and needs a dark centre, which a hand or lens does not have.",
+    "before": {
+      "label": "BEFORE: the shipped pipeline without the check. Measured on a build where the check ran but its threshold was 0 (accepts every frame, exactly like the shipped code), so the eye-patch statistics of every frame could be recorded.",
+      "runAt": "2026-10-02T00:17:18.807Z",
+      "repeatsPerScene": 2
+    },
+    "after": {
+      "label": "AFTER: eye-visibility check with EYE_MIN_CONTRAST = 0.25.",
+      "runAt": "2026-10-02T00:29:42.674Z",
+      "repeatsPerScene": 2
+    },
+    "table": [
+      {
+        "id": "pos-d220",
+        "name": "Portrait at 22 cm",
+        "kind": "positive",
+        "want": "accept (≥ 99% of frames)",
+        "before": {
+          "frames": 302,
+          "accepted": 302,
+          "acceptRate": 1
+        },
+        "after": {
+          "frames": 303,
+          "accepted": 303,
+          "acceptRate": 1
+        },
+        "distributionsBefore": {
+          "relativeContrastBestEye": {
+            "n": 102,
+            "min": 0.661,
+            "p1": 0.661,
+            "p5": 0.662,
+            "median": 0.667,
+            "p95": 0.673,
+            "max": 0.709
+          },
+          "relativeContrastPerEye": {
+            "n": 204,
+            "min": 0.588,
+            "p1": 0.595,
+            "p5": 0.598,
+            "median": 0.661,
+            "p95": 0.671,
+            "max": 0.709
+          },
+          "lumaSdBestEye": {
+            "n": 102,
+            "min": 51.1,
+            "p1": 51.1,
+            "p5": 51.2,
+            "median": 51.3,
+            "p95": 51.5,
+            "max": 52.2
+          },
+          "lumaMeanPerEye": {
+            "n": 204,
+            "min": 91.6,
+            "p1": 92.1,
+            "p5": 92.3,
+            "median": 103,
+            "p95": 104.4,
+            "max": 104.8
+          }
+        }
+      },
+      {
+        "id": "pos-d300",
+        "name": "Portrait at 30 cm",
+        "kind": "positive",
+        "want": "accept (≥ 99% of frames)",
+        "before": {
+          "frames": 296,
+          "accepted": 296,
+          "acceptRate": 1
+        },
+        "after": {
+          "frames": 304,
+          "accepted": 304,
+          "acceptRate": 1
+        },
+        "distributionsBefore": {
+          "relativeContrastBestEye": {
+            "n": 100,
+            "min": 0.675,
+            "p1": 0.676,
+            "p5": 0.678,
+            "median": 0.683,
+            "p95": 0.69,
+            "max": 0.698
+          },
+          "relativeContrastPerEye": {
+            "n": 200,
+            "min": 0.599,
+            "p1": 0.602,
+            "p5": 0.603,
+            "median": 0.675,
+            "p95": 0.688,
+            "max": 0.698
+          },
+          "lumaSdBestEye": {
+            "n": 100,
+            "min": 50.2,
+            "p1": 50.3,
+            "p5": 50.5,
+            "median": 50.7,
+            "p95": 50.9,
+            "max": 51.1
+          },
+          "lumaMeanPerEye": {
+            "n": 200,
+            "min": 91.9,
+            "p1": 92,
+            "p5": 92.1,
+            "median": 103.1,
+            "p95": 104.3,
+            "max": 104.4
+          }
+        }
+      },
+      {
+        "id": "pos-d400",
+        "name": "Portrait at 40 cm",
+        "kind": "positive",
+        "want": "accept (≥ 99% of frames)",
+        "before": {
+          "frames": 302,
+          "accepted": 302,
+          "acceptRate": 1
+        },
+        "after": {
+          "frames": 303,
+          "accepted": 303,
+          "acceptRate": 1
+        },
+        "distributionsBefore": {
+          "relativeContrastBestEye": {
+            "n": 102,
+            "min": 0.645,
+            "p1": 0.651,
+            "p5": 0.66,
+            "median": 0.675,
+            "p95": 0.682,
+            "max": 0.7
+          },
+          "relativeContrastPerEye": {
+            "n": 203,
+            "min": 0.581,
+            "p1": 0.581,
+            "p5": 0.584,
+            "median": 0.645,
+            "p95": 0.681,
+            "max": 0.7
+          },
+          "lumaSdBestEye": {
+            "n": 102,
+            "min": 49.3,
+            "p1": 49.3,
+            "p5": 49.4,
+            "median": 49.6,
+            "p95": 49.9,
+            "max": 49.9
+          },
+          "lumaMeanPerEye": {
+            "n": 203,
+            "min": 90.5,
+            "p1": 91.6,
+            "p5": 91.8,
+            "median": 102.1,
+            "p95": 103.3,
+            "max": 103.4
+          }
+        }
+      },
+      {
+        "id": "pos-d500",
+        "name": "Portrait at 50 cm",
+        "kind": "positive",
+        "want": "accept (≥ 99% of frames)",
+        "before": {
+          "frames": 303,
+          "accepted": 303,
+          "acceptRate": 1
+        },
+        "after": {
+          "frames": 296,
+          "accepted": 296,
+          "acceptRate": 1
+        },
+        "distributionsBefore": {
+          "relativeContrastBestEye": {
+            "n": 102,
+            "min": 0.647,
+            "p1": 0.648,
+            "p5": 0.65,
+            "median": 0.658,
+            "p95": 0.667,
+            "max": 0.686
+          },
+          "relativeContrastPerEye": {
+            "n": 204,
+            "min": 0.617,
+            "p1": 0.619,
+            "p5": 0.622,
+            "median": 0.647,
+            "p95": 0.666,
+            "max": 0.686
+          },
+          "lumaSdBestEye": {
+            "n": 102,
+            "min": 46.3,
+            "p1": 46.3,
+            "p5": 46.3,
+            "median": 46.6,
+            "p95": 46.9,
+            "max": 47
+          },
+          "lumaMeanPerEye": {
+            "n": 204,
+            "min": 91.9,
+            "p1": 92,
+            "p5": 92,
+            "median": 102.3,
+            "p95": 103.4,
+            "max": 104.2
+          }
+        }
+      },
+      {
+        "id": "pos-d600",
+        "name": "Portrait at 60 cm",
+        "kind": "positive",
+        "want": "accept (≥ 99% of frames)",
+        "before": {
+          "frames": 303,
+          "accepted": 303,
+          "acceptRate": 1
+        },
+        "after": {
+          "frames": 303,
+          "accepted": 303,
+          "acceptRate": 1
+        },
+        "distributionsBefore": {
+          "relativeContrastBestEye": {
+            "n": 102,
+            "min": 0.662,
+            "p1": 0.665,
+            "p5": 0.667,
+            "median": 0.673,
+            "p95": 0.683,
+            "max": 0.71
+          },
+          "relativeContrastPerEye": {
+            "n": 204,
+            "min": 0.581,
+            "p1": 0.583,
+            "p5": 0.589,
+            "median": 0.662,
+            "p95": 0.68,
+            "max": 0.71
+          },
+          "lumaSdBestEye": {
+            "n": 102,
+            "min": 43.8,
+            "p1": 44.3,
+            "p5": 44.4,
+            "median": 44.7,
+            "p95": 44.9,
+            "max": 45
+          },
+          "lumaMeanPerEye": {
+            "n": 204,
+            "min": 91.4,
+            "p1": 91.5,
+            "p5": 91.6,
+            "median": 101.9,
+            "p95": 103,
+            "max": 103.5
+          }
+        }
+      },
+      {
+        "id": "pos-d700",
+        "name": "Portrait at 70 cm",
+        "kind": "positive",
+        "want": "accept (≥ 99% of frames)",
+        "before": {
+          "frames": 300,
+          "accepted": 300,
+          "acceptRate": 1
+        },
+        "after": {
+          "frames": 302,
+          "accepted": 302,
+          "acceptRate": 1
+        },
+        "distributionsBefore": {
+          "relativeContrastBestEye": {
+            "n": 101,
+            "min": 0.623,
+            "p1": 0.624,
+            "p5": 0.626,
+            "median": 0.634,
+            "p95": 0.644,
+            "max": 0.656
+          },
+          "relativeContrastPerEye": {
+            "n": 202,
+            "min": 0.591,
+            "p1": 0.596,
+            "p5": 0.602,
+            "median": 0.623,
+            "p95": 0.641,
+            "max": 0.656
+          },
+          "lumaSdBestEye": {
+            "n": 101,
+            "min": 41.7,
+            "p1": 41.8,
+            "p5": 42.2,
+            "median": 42.5,
+            "p95": 42.8,
+            "max": 42.9
+          },
+          "lumaMeanPerEye": {
+            "n": 202,
+            "min": 91,
+            "p1": 91.2,
+            "p5": 91.3,
+            "median": 101.2,
+            "p95": 102.4,
+            "max": 102.6
+          }
+        }
+      },
+      {
+        "id": "bright30",
+        "name": "Portrait at 30% brightness",
+        "kind": "positive",
+        "want": "accept (≥ 99% of frames)",
+        "before": {
+          "frames": 301,
+          "accepted": 301,
+          "acceptRate": 1
+        },
+        "after": {
+          "frames": 302,
+          "accepted": 302,
+          "acceptRate": 1
+        },
+        "distributionsBefore": {
+          "relativeContrastBestEye": {
+            "n": 101,
+            "min": 0.794,
+            "p1": 0.794,
+            "p5": 0.797,
+            "median": 0.813,
+            "p95": 0.828,
+            "max": 0.866
+          },
+          "relativeContrastPerEye": {
+            "n": 202,
+            "min": 0.627,
+            "p1": 0.638,
+            "p5": 0.648,
+            "median": 0.794,
+            "p95": 0.826,
+            "max": 0.866
+          },
+          "lumaSdBestEye": {
+            "n": 101,
+            "min": 12.5,
+            "p1": 12.5,
+            "p5": 12.5,
+            "median": 12.6,
+            "p95": 12.7,
+            "max": 12.8
+          },
+          "lumaMeanPerEye": {
+            "n": 202,
+            "min": 15.2,
+            "p1": 15.2,
+            "p5": 15.2,
+            "median": 18.5,
+            "p95": 18.8,
+            "max": 19.1
+          }
+        }
+      },
+      {
+        "id": "bright50",
+        "name": "Portrait at 50% brightness",
+        "kind": "positive",
+        "want": "accept (≥ 99% of frames)",
+        "before": {
+          "frames": 291,
+          "accepted": 291,
+          "acceptRate": 1
+        },
+        "after": {
+          "frames": 299,
+          "accepted": 299,
+          "acceptRate": 1
+        },
+        "distributionsBefore": {
+          "relativeContrastBestEye": {
+            "n": 98,
+            "min": 0.731,
+            "p1": 0.731,
+            "p5": 0.735,
+            "median": 0.741,
+            "p95": 0.749,
+            "max": 0.79
+          },
+          "relativeContrastPerEye": {
+            "n": 196,
+            "min": 0.64,
+            "p1": 0.644,
+            "p5": 0.649,
+            "median": 0.731,
+            "p95": 0.748,
+            "max": 0.79
+          },
+          "lumaSdBestEye": {
+            "n": 98,
+            "min": 23.6,
+            "p1": 23.6,
+            "p5": 23.7,
+            "median": 23.8,
+            "p95": 23.9,
+            "max": 24
+          },
+          "lumaMeanPerEye": {
+            "n": 196,
+            "min": 36.7,
+            "p1": 36.7,
+            "p5": 36.8,
+            "median": 42.4,
+            "p95": 43,
+            "max": 43.2
+          }
+        }
+      },
+      {
+        "id": "warm",
+        "name": "Portrait, warm tint",
+        "kind": "positive",
+        "want": "accept (≥ 99% of frames)",
+        "before": {
+          "frames": 301,
+          "accepted": 301,
+          "acceptRate": 1
+        },
+        "after": {
+          "frames": 273,
+          "accepted": 273,
+          "acceptRate": 1
+        },
+        "distributionsBefore": {
+          "relativeContrastBestEye": {
+            "n": 101,
+            "min": 0.674,
+            "p1": 0.677,
+            "p5": 0.678,
+            "median": 0.682,
+            "p95": 0.689,
+            "max": 0.7
+          },
+          "relativeContrastPerEye": {
+            "n": 202,
+            "min": 0.601,
+            "p1": 0.602,
+            "p5": 0.606,
+            "median": 0.674,
+            "p95": 0.687,
+            "max": 0.7
+          },
+          "lumaSdBestEye": {
+            "n": 101,
+            "min": 43.8,
+            "p1": 44.1,
+            "p5": 44.3,
+            "median": 44.5,
+            "p95": 44.6,
+            "max": 44.7
+          },
+          "lumaMeanPerEye": {
+            "n": 202,
+            "min": 79.1,
+            "p1": 79.1,
+            "p5": 79.2,
+            "median": 88.7,
+            "p95": 89.3,
+            "max": 89.6
+          }
+        }
+      },
+      {
+        "id": "cool",
+        "name": "Portrait, cool tint",
+        "kind": "positive",
+        "want": "accept (≥ 99% of frames)",
+        "before": {
+          "frames": 302,
+          "accepted": 302,
+          "acceptRate": 1
+        },
+        "after": {
+          "frames": 301,
+          "accepted": 301,
+          "acceptRate": 1
+        },
+        "distributionsBefore": {
+          "relativeContrastBestEye": {
+            "n": 102,
+            "min": 0.706,
+            "p1": 0.707,
+            "p5": 0.709,
+            "median": 0.714,
+            "p95": 0.719,
+            "max": 0.724
+          },
+          "relativeContrastPerEye": {
+            "n": 204,
+            "min": 0.609,
+            "p1": 0.609,
+            "p5": 0.613,
+            "median": 0.706,
+            "p95": 0.718,
+            "max": 0.724
+          },
+          "lumaSdBestEye": {
+            "n": 102,
+            "min": 41.7,
+            "p1": 42.1,
+            "p5": 42.3,
+            "median": 42.5,
+            "p95": 42.6,
+            "max": 42.6
+          },
+          "lumaMeanPerEye": {
+            "n": 204,
+            "min": 73.7,
+            "p1": 73.9,
+            "p5": 74,
+            "median": 83.5,
+            "p95": 84.8,
+            "max": 85
+          }
+        }
+      },
+      {
+        "id": "blur3",
+        "name": "Portrait, slight blur (3 px)",
+        "kind": "positive",
+        "want": "accept (≥ 99% of frames)",
+        "before": {
+          "frames": 300,
+          "accepted": 300,
+          "acceptRate": 1
+        },
+        "after": {
+          "frames": 295,
+          "accepted": 295,
+          "acceptRate": 1
+        },
+        "distributionsBefore": {
+          "relativeContrastBestEye": {
+            "n": 101,
+            "min": 0.452,
+            "p1": 0.453,
+            "p5": 0.454,
+            "median": 0.46,
+            "p95": 0.473,
+            "max": 0.492
+          },
+          "relativeContrastPerEye": {
+            "n": 202,
+            "min": 0.431,
+            "p1": 0.431,
+            "p5": 0.433,
+            "median": 0.452,
+            "p95": 0.468,
+            "max": 0.492
+          },
+          "lumaSdBestEye": {
+            "n": 101,
+            "min": 27.6,
+            "p1": 27.6,
+            "p5": 27.7,
+            "median": 27.9,
+            "p95": 28.1,
+            "max": 29.4
+          },
+          "lumaMeanPerEye": {
+            "n": 202,
+            "min": 88.2,
+            "p1": 88.3,
+            "p5": 88.4,
+            "median": 95.9,
+            "p95": 96.7,
+            "max": 100.3
+          }
+        }
+      },
+      {
+        "id": "rot90",
+        "name": "Portrait rotated 90°",
+        "kind": "positive",
+        "want": "accept (≥ 99% of frames)",
+        "before": {
+          "frames": 301,
+          "accepted": 301,
+          "acceptRate": 1
+        },
+        "after": {
+          "frames": 302,
+          "accepted": 302,
+          "acceptRate": 1
+        },
+        "distributionsBefore": {
+          "relativeContrastBestEye": {
+            "n": 101,
+            "min": 0.679,
+            "p1": 0.679,
+            "p5": 0.681,
+            "median": 0.686,
+            "p95": 0.695,
+            "max": 0.768
+          },
+          "relativeContrastPerEye": {
+            "n": 202,
+            "min": 0.348,
+            "p1": 0.592,
+            "p5": 0.603,
+            "median": 0.679,
+            "p95": 0.691,
+            "max": 0.768
+          },
+          "lumaSdBestEye": {
+            "n": 101,
+            "min": 50.4,
+            "p1": 50.5,
+            "p5": 50.6,
+            "median": 50.8,
+            "p95": 50.9,
+            "max": 51.7
+          },
+          "lumaMeanPerEye": {
+            "n": 202,
+            "min": 82.8,
+            "p1": 91.3,
+            "p5": 91.8,
+            "median": 103.3,
+            "p95": 104.6,
+            "max": 106.3
+          }
+        }
+      },
+      {
+        "id": "eyes-blacked",
+        "name": "Portrait, both eyes blacked out",
+        "kind": "negative",
+        "want": "reject",
+        "before": {
+          "frames": 301,
+          "accepted": 301,
+          "acceptRate": 1
+        },
+        "after": {
+          "frames": 303,
+          "accepted": 0,
+          "acceptRate": 0
+        },
+        "distributionsBefore": {
+          "relativeContrastBestEye": {
+            "n": 101,
+            "min": 0,
+            "p1": 0,
+            "p5": 0,
+            "median": 0,
+            "p95": 0,
+            "max": 0
+          },
+          "relativeContrastPerEye": {
+            "n": 202,
+            "min": 0,
+            "p1": 0,
+            "p5": 0,
+            "median": 0,
+            "p95": 0,
+            "max": 0
+          },
+          "lumaSdBestEye": {
+            "n": 101,
+            "min": 0,
+            "p1": 0,
+            "p5": 0,
+            "median": 0,
+            "p95": 0,
+            "max": 0
+          },
+          "lumaMeanPerEye": {
+            "n": 202,
+            "min": 0,
+            "p1": 0,
+            "p5": 0,
+            "median": 0,
+            "p95": 0,
+            "max": 0
+          }
+        }
+      },
+      {
+        "id": "sunglasses",
+        "name": "Portrait wearing dark sunglasses",
+        "kind": "negative",
+        "want": "reject",
+        "before": {
+          "frames": 304,
+          "accepted": 304,
+          "acceptRate": 1
+        },
+        "after": {
+          "frames": 301,
+          "accepted": 0,
+          "acceptRate": 0
+        },
+        "distributionsBefore": {
+          "relativeContrastBestEye": {
+            "n": 102,
+            "min": -0.019,
+            "p1": -0.019,
+            "p5": -0.009,
+            "median": 0.013,
+            "p95": 0.032,
+            "max": 0.041
+          },
+          "relativeContrastPerEye": {
+            "n": 204,
+            "min": -0.036,
+            "p1": -0.03,
+            "p5": -0.023,
+            "median": 0.005,
+            "p95": 0.027,
+            "max": 0.041
+          },
+          "lumaSdBestEye": {
+            "n": 102,
+            "min": 6.3,
+            "p1": 6.3,
+            "p5": 6.3,
+            "median": 6.4,
+            "p95": 6.6,
+            "max": 7
+          },
+          "lumaMeanPerEye": {
+            "n": 204,
+            "min": 15.3,
+            "p1": 16.4,
+            "p5": 17,
+            "median": 17.4,
+            "p95": 17.7,
+            "max": 17.8
+          }
+        }
+      },
+      {
+        "id": "hand",
+        "name": "Hand over the eyes",
+        "kind": "negative",
+        "want": "reject",
+        "before": {
+          "frames": 302,
+          "accepted": 47,
+          "acceptRate": 0.1556
+        },
+        "after": {
+          "frames": 303,
+          "accepted": 0,
+          "acceptRate": 0
+        },
+        "distributionsBefore": {
+          "relativeContrastBestEye": {
+            "n": 43,
+            "min": -0.083,
+            "p1": -0.083,
+            "p5": -0.074,
+            "median": 0.106,
+            "p95": 0.121,
+            "max": 0.121
+          },
+          "relativeContrastPerEye": {
+            "n": 86,
+            "min": -0.129,
+            "p1": -0.128,
+            "p5": -0.127,
+            "median": -0.009,
+            "p95": 0.113,
+            "max": 0.121
+          },
+          "lumaSdBestEye": {
+            "n": 43,
+            "min": 12.6,
+            "p1": 12.6,
+            "p5": 12.7,
+            "median": 13.3,
+            "p95": 14.2,
+            "max": 14.4
+          },
+          "lumaMeanPerEye": {
+            "n": 86,
+            "min": 160.4,
+            "p1": 160.7,
+            "p5": 160.8,
+            "median": 162.8,
+            "p95": 164.9,
+            "max": 166.2
+          }
+        }
+      },
+      {
+        "id": "smiley",
+        "name": "Cartoon smiley face",
+        "kind": "negative",
+        "want": "reject",
+        "before": {
+          "frames": 302,
+          "accepted": 302,
+          "acceptRate": 1
+        },
+        "after": {
+          "frames": 302,
+          "accepted": 302,
+          "acceptRate": 1
+        },
+        "distributionsBefore": {
+          "relativeContrastBestEye": {
+            "n": 101,
+            "min": 0.641,
+            "p1": 0.654,
+            "p5": 0.658,
+            "median": 0.674,
+            "p95": 0.697,
+            "max": 0.704
+          },
+          "relativeContrastPerEye": {
+            "n": 202,
+            "min": 0.368,
+            "p1": 0.385,
+            "p5": 0.398,
+            "median": 0.641,
+            "p95": 0.692,
+            "max": 0.704
+          },
+          "lumaSdBestEye": {
+            "n": 101,
+            "min": 79.3,
+            "p1": 79.3,
+            "p5": 79.5,
+            "median": 80.5,
+            "p95": 81.5,
+            "max": 83.8
+          },
+          "lumaMeanPerEye": {
+            "n": 202,
+            "min": 162.9,
+            "p1": 163.2,
+            "p5": 163.8,
+            "median": 166.4,
+            "p95": 169.2,
+            "max": 169.9
+          }
+        }
+      },
+      {
+        "id": "wall",
+        "name": "Empty room / wall",
+        "kind": "no-face",
+        "want": "reject",
+        "before": null,
+        "after": {
+          "frames": 303,
+          "accepted": 0,
+          "acceptRate": 0
+        },
+        "distributionsBefore": {
+          "relativeContrastBestEye": null,
+          "relativeContrastPerEye": null,
+          "lumaSdBestEye": null,
+          "lumaMeanPerEye": null
+        }
+      },
+      {
+        "id": "text-page",
+        "name": "Printed page of text",
+        "kind": "no-face",
+        "want": "reject",
+        "before": null,
+        "after": {
+          "frames": 289,
+          "accepted": 0,
+          "acceptRate": 0
+        },
+        "distributionsBefore": {
+          "relativeContrastBestEye": null,
+          "relativeContrastPerEye": null,
+          "lumaSdBestEye": null,
+          "lumaMeanPerEye": null
+        }
+      },
+      {
+        "id": "e-chart",
+        "name": "Tumbling-E chart",
+        "kind": "no-face",
+        "want": "reject",
+        "before": null,
+        "after": {
+          "frames": 304,
+          "accepted": 0,
+          "acceptRate": 0
+        },
+        "distributionsBefore": {
+          "relativeContrastBestEye": null,
+          "relativeContrastPerEye": null,
+          "lumaSdBestEye": null,
+          "lumaMeanPerEye": null
+        }
+      },
+      {
+        "id": "blurred",
+        "name": "Portrait, Gaussian blur 25 px",
+        "kind": "no-face",
+        "want": "reject",
+        "before": null,
+        "after": {
+          "frames": 286,
+          "accepted": 0,
+          "acceptRate": 0
+        },
+        "distributionsBefore": {
+          "relativeContrastBestEye": null,
+          "relativeContrastPerEye": null,
+          "lumaSdBestEye": null,
+          "lumaMeanPerEye": null
+        }
+      },
+      {
+        "id": "lower-half",
+        "name": "Portrait, lower half of face only",
+        "kind": "no-face",
+        "want": "reject",
+        "before": null,
+        "after": {
+          "frames": 302,
+          "accepted": 0,
+          "acceptRate": 0
+        },
+        "distributionsBefore": {
+          "relativeContrastBestEye": null,
+          "relativeContrastPerEye": null,
+          "lumaSdBestEye": null,
+          "lumaMeanPerEye": null
+        }
+      },
+      {
+        "id": "dark",
+        "name": "Very dark frame (3% brightness)",
+        "kind": "no-face",
+        "want": "reject",
+        "before": null,
+        "after": {
+          "frames": 303,
+          "accepted": 0,
+          "acceptRate": 0
+        },
+        "distributionsBefore": {
+          "relativeContrastBestEye": null,
+          "relativeContrastPerEye": null,
+          "lumaSdBestEye": null,
+          "lumaMeanPerEye": null
+        }
+      }
+    ]
+  },
+  "positiveControl": {
+    "name": "Positive control: reference portrait",
+    "description": "MediaPipe test portrait at the distance bench reference scale (about 30 cm), same noise as the negatives.",
+    "frames": 452,
+    "framesWithDistance": 452,
+    "rate": 1,
+    "threshold": 0.95,
+    "pass": true,
+    "distanceCm": {
+      "median": 30,
+      "min": 29.9,
+      "max": 30.9
+    },
+    "irisNormMedian": 0.02784,
+    "workingGateLockedRuns": 3,
+    "workingGateLockedAtMs": [
+      2455,
+      2632,
+      2556
+    ],
+    "runs": [
+      {
+        "repeat": 0,
+        "frames": 151,
+        "withDistance": 151,
+        "firstDistanceMs": 0,
+        "longestStreakFrames": 151,
+        "workingGateLockedAtMs": 2455,
+        "workingGateLockedCm": 30,
+        "startupMs": 7121,
+        "errors": []
+      },
+      {
+        "repeat": 1,
+        "frames": 150,
+        "withDistance": 150,
+        "firstDistanceMs": 0,
+        "longestStreakFrames": 150,
+        "workingGateLockedAtMs": 2632,
+        "workingGateLockedCm": 30,
+        "startupMs": 6425,
+        "errors": []
+      },
+      {
+        "repeat": 2,
+        "frames": 151,
+        "withDistance": 151,
+        "firstDistanceMs": 0,
+        "longestStreakFrames": 151,
+        "workingGateLockedAtMs": 2556,
+        "workingGateLockedCm": 30,
+        "startupMs": 6245,
+        "errors": []
+      }
+    ],
+    "notes": "Uncalibrated distance (no camera calibration in a fresh browser profile, 70° field of view assumed), so the absolute cm value is not the point; the point is that a real face gives a distance on nearly every frame in the same harness."
+  },
+  "logic": [
+    {
+      "id": "myopia-40plus",
+      "property": "Possible myopia (measured amplitude > Hofstetter max for age + 1.5 D), ages 40–90 → outcome is never readers",
+      "cases": 200989,
+      "violations": 0,
+      "status": "holds"
+    },
+    {
+      "id": "myopia-all-ages",
+      "property": "Possible myopia (measured amplitude > Hofstetter max for age + 1.5 D), every age the app accepts (18–90) → outcome is never readers",
+      "cases": 240608,
+      "violations": 0,
+      "status": "holds"
+    },
+    {
+      "id": "out-of-range-never-readers",
+      "property": "Out of range (starting estimate rounds above +3.00) → outcome is never readers",
+      "cases": 96601,
+      "violations": 0,
+      "status": "holds"
+    },
+    {
+      "id": "out-of-range-refer",
+      "property": "Out of range (starting estimate rounds above +3.00) → outcome is exactly 'refer' with the out-of-range flag",
+      "cases": 96601,
+      "violations": 7343,
+      "status": "VIOLATED",
+      "examples": [
+        {
+          "input": {
+            "age": 60,
+            "workingDistanceMm": 100,
+            "nearPointMm": 332,
+            "nearPointBeyondReach": false,
+            "reachMm": 450,
+            "smallPrintAtWorkingDistance": true
+          },
+          "outcome": "no-readers",
+          "strength": null,
+          "flags": [
+            "possible-myopia",
+            "inconsistent"
+          ]
+        },
+        {
+          "input": {
+            "age": 60,
+            "workingDistanceMm": 100,
+            "nearPointMm": 332,
+            "nearPointBeyondReach": false,
+            "reachMm": 1000,
+            "smallPrintAtWorkingDistance": true
+          },
+          "outcome": "no-readers",
+          "strength": null,
+          "flags": [
+            "possible-myopia",
+            "inconsistent"
+          ]
+        },
+        {
+          "input": {
+            "age": 60,
+            "workingDistanceMm": 100,
+            "nearPointMm": 332,
+            "nearPointBeyondReach": false,
+            "reachMm": 450,
+            "smallPrintAtWorkingDistance": false
+          },
+          "outcome": "no-readers",
+          "strength": null,
+          "flags": [
+            "possible-myopia",
+            "inconsistent"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "out-of-range-refer-unless-myopia",
+      "property": "Out of range and no possible-myopia flag → outcome 'refer' with the out-of-range flag",
+      "cases": 89258,
+      "violations": 0,
+      "status": "holds"
+    },
+    {
+      "id": "readers-in-stock-range",
+      "property": "Whenever the outcome is readers: strength and every try-first pair are within +1.00…+3.00 and on 0.25 D steps",
+      "cases": 223338,
+      "violations": 0,
+      "status": "holds"
+    }
+  ],
+  "logicDetail": {
+    "test": "tests/negative.test.ts (vitest), checker bench-camera/negative-logic.ts",
+    "inputs": 612732,
+    "inputsBySource": {
+      "grid": 312732,
+      "random-general": 100000,
+      "random-myopia": 100000,
+      "random-out-of-range": 100000
+    },
+    "seed": 20261003,
+    "randomPerTarget": 100000,
+    "ageRange": "18–90 (the app's age slider)",
+    "runtimeMs": 285,
+    "grid": "ages 18–90 (every year) × working distance 100–900 mm (50 mm steps) × near point {beyond reach, not measured, 40 log-spaced values 50–2000 mm} × small-print result {pass, fail, not tested} × reach {max(wd, 450), 1000} mm",
+    "preconditions": "Computed from the raw inputs and the published formulas (src/core/optics.ts), not from recommend()'s own flags: amplitude = 1000/nearPoint − DOF/2; estimate = 0.6 × near-point estimate + 0.4 × age table at the working distance (or the max of the two when the near point is out of reach); out of range = estimate rounded to 0.25 D above +3.00.",
+    "knownGaps": {
+      "myopia-all-ages": {
+        "violations": 0,
+        "strengths": {},
+        "flags": {},
+        "maxNearPointMm": 0,
+        "status": "FIXED in src/core/recommend.ts (MYOPIA_CHECK_MIN_AGE = 35): 0 violations now; was 4,252 violations in 240,608 cases (ages 35–39) when first measured.",
+        "explanation": "Before the fix, recommend() only raised 'possible-myopia' from age 40, but its '+1.00 starter pair' rule (strength < +1.00, failed small print, age ≥ 35) fires from 35. All violations are ages 35–39, near point ≤ 9 cm, outcome readers +1.00 flagged only 'inconsistent' (result screen: 'check the pair in the shop with the try-on test'). In the simulation's 35–39 population the try-on step hands readers to 0% of myopes (spTry050), so the try-on catches it there; the start recommendation alone does not.",
+        "recommendedFix": "Run the possible-myopia check whenever the starter pair can fire (age ≥ 35), or never give the starter pair when the near-point estimate is negative / 'inconsistent' is set."
+      },
+      "out-of-range-refer": {
+        "explanation": "Not a safety failure: every one of these cases is also flagged possible-myopia (ages 59+, where Hofstetter's maximum is ≤ 1.4 D so the threshold is low), and the myopia check runs first, so the outcome is 'no-readers' + 'possible-myopia' (screen: 'you may be short-sighted… an eye exam can tell you for sure'), never readers. The logged outcome is 'no-readers', not 'refer'.",
+        "recommendedFix": "Optional: when both flags apply, return outcome 'refer' (keeping both flags) so dashboards count it as a referral."
+      }
+    },
+    "safetyScreens": "The safety-question stop screens live in src/app.ts (SAFETY list: 'sudden change' and 'pain/redness' stop the test; diabetes, family glaucoma, distance blur, distance glasses advise an exam). e2e/safety.spec.ts tests: urgent answer ('sudden change') → stop screen with no Continue button, 0 results posted; diabetes only → advise screen with 'Continue anyway', 0 results posted. The 'pain/redness' stop answer is not separately covered by an e2e test."
+  },
+  "simulation": {
+    "label": "SIMULATION (copied, not re-run): SIMULATION: virtual people generated from published norms and stated assumptions. Not clinical validation; no real participants.",
+    "source": "public/data/bench.json",
+    "benchVersion": "bench 1.0.0 · core sha256:345c07e2c4e5",
+    "benchGeneratedAt": "2026-10-01T21:47:23.890Z",
+    "definitions": {
+      "myopesHandedReadersPct": "myopiaMissedPct: % of people with myopia below -1.00 D who were handed readers",
+      "notYetNeedingHandedReadersPct": "noneGivenReadersPct: % of people whose ideal add is below +0.75 D (don't need readers yet) who were handed readers",
+      "referralSensitivityPct": "referSafePct: % of people who should be referred (myopia < −1.00 D, or ideal add above +3.00) who were NOT handed readers",
+      "aboveRangeHandedReadersPct": "aboveRangeMissedPct: % of people whose ideal add is above +3.00 who were handed readers anyway"
+    },
+    "mainPopulation": {
+      "n": 20000,
+      "ages": "40–70",
+      "strategies": [
+        {
+          "id": "spStart",
+          "label": "Small Print start",
+          "source": "public/data/bench.json → strategies[id=spStart].overall",
+          "myopesHandedReadersPct": 33,
+          "myopesN": 2036,
+          "notYetNeedingHandedReadersPct": 18.4,
+          "notYetNeedingN": 3233,
+          "referralSensitivityPct": 41,
+          "referN": 6004,
+          "aboveRangeHandedReadersPct": 72.4,
+          "aboveRangeN": 3968
+        },
+        {
+          "id": "spTry050",
+          "label": "Small Print + try-on (0.50 stock)",
+          "source": "public/data/bench.json → strategies[id=spTry050].overall",
+          "myopesHandedReadersPct": 11.1,
+          "myopesN": 2036,
+          "notYetNeedingHandedReadersPct": 17,
+          "notYetNeedingN": 3233,
+          "referralSensitivityPct": 80,
+          "referN": 6004,
+          "aboveRangeHandedReadersPct": 24.6,
+          "aboveRangeN": 3968
+        },
+        {
+          "id": "spTry025",
+          "label": "Small Print + try-on (0.25 stock)",
+          "source": "public/data/bench.json → strategies[id=spTry025].overall",
+          "myopesHandedReadersPct": 10.9,
+          "myopesN": 2036,
+          "notYetNeedingHandedReadersPct": 17.2,
+          "notYetNeedingN": 3233,
+          "referralSensitivityPct": 80.4,
+          "referN": 6004,
+          "aboveRangeHandedReadersPct": 24,
+          "aboveRangeN": 3968
+        },
+        {
+          "id": "age40",
+          "label": "Age table (40 cm)",
+          "source": "public/data/bench.json → strategies[id=age40].overall",
+          "myopesHandedReadersPct": 100,
+          "myopesN": 2036,
+          "notYetNeedingHandedReadersPct": 100,
+          "notYetNeedingN": 3233,
+          "referralSensitivityPct": 0,
+          "referN": 6004,
+          "aboveRangeHandedReadersPct": 100,
+          "aboveRangeN": 3968
+        },
+        {
+          "id": "ageW",
+          "label": "Age table + measured distance",
+          "source": "public/data/bench.json → strategies[id=ageW].overall",
+          "myopesHandedReadersPct": 88.7,
+          "myopesN": 2036,
+          "notYetNeedingHandedReadersPct": 87.1,
+          "notYetNeedingN": 3233,
+          "referralSensitivityPct": 22.3,
+          "referN": 6004,
+          "aboveRangeHandedReadersPct": 72,
+          "aboveRangeN": 3968
+        },
+        {
+          "id": "card14",
+          "label": "Rack card at 14 in",
+          "source": "public/data/bench.json → strategies[id=card14].overall",
+          "myopesHandedReadersPct": 99.9,
+          "myopesN": 2036,
+          "notYetNeedingHandedReadersPct": 100,
+          "notYetNeedingN": 3233,
+          "referralSensitivityPct": 42.4,
+          "referN": 6004,
+          "aboveRangeHandedReadersPct": 35.9,
+          "aboveRangeN": 3968
+        },
+        {
+          "id": "cardOwn",
+          "label": "Rack card where they read",
+          "source": "public/data/bench.json → strategies[id=cardOwn].overall",
+          "myopesHandedReadersPct": 99.9,
+          "myopesN": 2036,
+          "notYetNeedingHandedReadersPct": 100,
+          "notYetNeedingN": 3233,
+          "referralSensitivityPct": 45.8,
+          "referN": 6004,
+          "aboveRangeHandedReadersPct": 30.7,
+          "aboveRangeN": 3968
+        }
+      ]
+    },
+    "under40Population": {
+      "n": 5000,
+      "ages": "35–39",
+      "strategies": [
+        {
+          "id": "spStart",
+          "label": "Small Print start",
+          "source": "public/data/bench.json → under40.metrics.spStart",
+          "myopesHandedReadersPct": 26.7,
+          "myopesN": 536,
+          "notYetNeedingHandedReadersPct": 2.3,
+          "notYetNeedingN": 3883,
+          "referralSensitivityPct": 71.8,
+          "referN": 547,
+          "aboveRangeHandedReadersPct": 100,
+          "aboveRangeN": 11
+        },
+        {
+          "id": "spTry050",
+          "label": "Small Print + try-on (0.50 stock)",
+          "source": "public/data/bench.json → under40.metrics.spTry050",
+          "myopesHandedReadersPct": 0,
+          "myopesN": 536,
+          "notYetNeedingHandedReadersPct": 2.3,
+          "notYetNeedingN": 3883,
+          "referralSensitivityPct": 98,
+          "referN": 547,
+          "aboveRangeHandedReadersPct": 100,
+          "aboveRangeN": 11
+        },
+        {
+          "id": "spTry025",
+          "label": "Small Print + try-on (0.25 stock)",
+          "source": "public/data/bench.json → under40.metrics.spTry025",
+          "myopesHandedReadersPct": 0,
+          "myopesN": 536,
+          "notYetNeedingHandedReadersPct": 2.2,
+          "notYetNeedingN": 3883,
+          "referralSensitivityPct": 98,
+          "referN": 547,
+          "aboveRangeHandedReadersPct": 100,
+          "aboveRangeN": 11
+        },
+        {
+          "id": "age40",
+          "label": "Age table (40 cm)",
+          "source": "public/data/bench.json → under40.metrics.age40",
+          "myopesHandedReadersPct": 100,
+          "myopesN": 536,
+          "notYetNeedingHandedReadersPct": 100,
+          "notYetNeedingN": 3883,
+          "referralSensitivityPct": 0,
+          "referN": 547,
+          "aboveRangeHandedReadersPct": 100,
+          "aboveRangeN": 11
+        },
+        {
+          "id": "ageW",
+          "label": "Age table + measured distance",
+          "source": "public/data/bench.json → under40.metrics.ageW",
+          "myopesHandedReadersPct": 82.1,
+          "myopesN": 536,
+          "notYetNeedingHandedReadersPct": 82.6,
+          "notYetNeedingN": 3883,
+          "referralSensitivityPct": 17.6,
+          "referN": 547,
+          "aboveRangeHandedReadersPct": 100,
+          "aboveRangeN": 11
+        },
+        {
+          "id": "card14",
+          "label": "Rack card at 14 in",
+          "source": "public/data/bench.json → under40.metrics.card14",
+          "myopesHandedReadersPct": 100,
+          "myopesN": 536,
+          "notYetNeedingHandedReadersPct": 100,
+          "notYetNeedingN": 3883,
+          "referralSensitivityPct": 0,
+          "referN": 547,
+          "aboveRangeHandedReadersPct": 100,
+          "aboveRangeN": 11
+        },
+        {
+          "id": "cardOwn",
+          "label": "Rack card where they read",
+          "source": "public/data/bench.json → under40.metrics.cardOwn",
+          "myopesHandedReadersPct": 100,
+          "myopesN": 536,
+          "notYetNeedingHandedReadersPct": 100,
+          "notYetNeedingN": 3883,
+          "referralSensitivityPct": 0,
+          "referN": 547,
+          "aboveRangeHandedReadersPct": 100,
+          "aboveRangeN": 11
+        }
+      ]
+    }
+  },
+  "environment": {
+    "os": "Microsoft Windows 11 Home",
+    "cpu": "Intel(R) Core(TM) Ultra 9 185H",
+    "gpu": "NVIDIA GeForce RTX 4070 Laptop GPU, Intel(R) Arc(TM) Graphics",
+    "node": "v24.13.1",
+    "chrome": "153.0.8010.54",
+    "headless": true,
+    "cameraRunAt": "2026-10-02T00:37:12.647Z",
+    "build": "vite build of the current src/ (camera.json and eyecheck-before.json: before the eye-visibility check; camera-after.json and eyecheck-after.json: with it), served by vite preview on port 4190; lab.html runs src/camera/distance.ts unchanged by the harness",
+    "harness": "Playwright, Chrome channel \"chrome\", headless, --use-fake-ui-for-media-stream --use-fake-device-for-media-stream --use-file-for-fake-video-capture=<scene>.y4m; fresh browser profile per run (no camera calibration)",
+    "video": {
+      "width": 640,
+      "height": 480,
+      "fps": 30,
+      "frames": 150,
+      "lumaNoiseSd": 2,
+      "referenceScale": 1.0257
+    },
+    "collectMsPerRun": 5000,
+    "repeatsPerScene": 3,
+    "eyeBoxesPx": [
+      {
+        "x": 242,
+        "y": 203,
+        "w": 74,
+        "h": 44
+      },
+      {
+        "x": 334,
+        "y": 203,
+        "w": 74,
+        "h": 44
+      }
+    ],
+    "lowerHalfShiftPx": 285,
+    "counting": "Every frame lab.ts processes writes #live once (\"no face\" or \"NN.N cm\"); an init script records each write. Counting starts at the first processed frame, nothing is discarded as warm-up.",
+    "scripts": [
+      "bench-camera/negative.ts",
+      "bench-camera/negative-report.ts",
+      "bench-camera/negative-logic.ts",
+      "tests/negative.test.ts"
+    ]
+  },
+  "timestamp": "2026-10-02T00:38:51.787Z"
+}

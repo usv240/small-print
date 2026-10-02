@@ -82,7 +82,7 @@ export const en = {
   camera_allow: 'Allow camera',
   camera_denied: 'We could not use the camera. You can still try the test without one.',
   camera_loading: 'Starting the camera…',
-  no_face: 'Can’t see your face. Hold the phone in front of you, in good light.',
+  no_face: 'Can’t see your eyes. Hold the phone in front of you, in good light, without sunglasses.',
 
   calscreen_h: 'Match a card to the screen',
   calscreen_p: 'Hold any bank card, ID card or library card against the screen. Drag the slider until the box is exactly as wide as the card.',

@@ -87,7 +87,7 @@ export const es: Partial<Strings> = {
   camera_allow: 'Permitir la cámara',
   camera_denied: 'No pudimos usar la cámara. Aun así, puede hacer la prueba sin ella.',
   camera_loading: 'Encendiendo la cámara…',
-  no_face: 'No vemos su cara. Sostenga el celular frente a usted, con buena luz.',
+  no_face: 'No vemos sus ojos. Sostenga el celular frente a usted, con buena luz y sin lentes de sol.',
 
   calscreen_h: 'Iguale una tarjeta con la pantalla',
   calscreen_p: 'Ponga cualquier tarjeta bancaria, de identidad o de biblioteca contra la pantalla. Mueva el control deslizante hasta que el recuadro tenga exactamente el ancho de la tarjeta.',

@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>try{var t=localStorage.getItem('small-print.theme');if(t==='dark'||t==='light')document.documentElement.dataset.theme=t}catch(e){}document.documentElement.classList.add('js')</script>
   <title>Impact: live counts, an honest projection and the path to scale · Small Print</title>
   <meta name="description" content="Live anonymous counts of Small Print screenings (real use kept separate from judge, demo and development traffic), a transparent projection based on two randomised trials of reading glasses, and how Small Print could reach people at scale.">
   <meta property="og:title" content="Small Print impact: what we can count, and what we can only project">
@@ -13,35 +14,59 @@
   <link rel="stylesheet" href="/src/styles/base.css">
   <link rel="stylesheet" href="/src/styles/pages.css">
   <script type="module" src="/src/impact.ts"></script>
+  <script type="module" src="/src/ui/site.ts"></script>
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
-    <div class="wrap">
-      <a class="brand" href="/">Small <span>Print</span></a>
-      <nav class="nav" aria-label="Site">
+    <div class="header-inner">
+      <a class="brand" href="/"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6.5" cy="14.5" r="3.5"/><circle cx="17.5" cy="14.5" r="3.5"/><path d="M10 14c.7-.8 3.3-.8 4 0M3.2 13.4 5 7.5M20.8 13.4 19 7.5"/></svg>Small <span>Print</span></a>
+      <nav class="site-nav" id="site-nav" aria-label="Site">
+        <a href="/test.html">Test</a>
         <a href="/how-it-works.html">How it works</a>
-        <a href="/findings.html">Findings</a>
+        <a href="/validation.html">Evidence</a>
         <a href="/impact.html" aria-current="page">Impact</a>
         <a href="/judges.html">For judges</a>
       </nav>
+      <div class="header-actions">
+        <button type="button" class="icon-btn theme-toggle" data-theme-toggle aria-label="Switch to dark mode" title="Switch to dark mode"><svg class="icon i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.6A8 8 0 1 1 9.4 4a6.4 6.4 0 0 0 10.6 10.6z"/></svg><svg class="icon i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg></button>
+        <a class="btn btn-primary btn-sm header-cta" href="/test.html">Take the test</a>
+        <button type="button" class="icon-btn menu-btn" aria-expanded="false" aria-controls="site-nav" aria-label="Menu"><svg class="icon i-menu" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><svg class="icon i-close" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+      </div>
     </div>
   </header>
 
-  <main class="wrap">
+  <main id="main" class="doc">
+    <div class="doc-layout">
     <div class="page-head">
       <p class="eyebrow">Impact</p>
       <h1>What we can count, and what we can only project</h1>
       <p class="lead">This page keeps three things apart: the size of the problem (from published studies), what Small Print has actually done (live counts), and what it might do (a projection, with every assumption shown).</p>
     </div>
+    <section class="glance" aria-labelledby="glance-h">
+      <h2 class="glance-title" id="glance-h"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3.5h6v3H9z"/><path d="M9 5H6.5a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1H15"/><path d="M8.5 11h7M8.5 14.5h7M8.5 18h4"/></svg>At a glance</h2>
+      <ul>
+<li><strong>826 million</strong> people have near-vision impairment from uncorrected presbyopia. Effective near-vision coverage is <strong>1.4%</strong> in sub-Saharan Africa, against 64.7% in high-income countries.</li>
+        <li><strong>Live counts</strong> come straight from the public API, with real use kept apart from judge, demo and development traffic.</li>
+        <li><strong>A projection, not an outcome:</strong> of 1,000 people who need readers and take the test, about 751 would end up using a suitable pair, if every stated assumption holds.</li>
+        <li><strong>Ready for organisations:</strong> camp mode and a printable rack poster are built; running cost is about <strong>US$0.59 per 1,000 screenings</strong>. No partners yet.</li>
+      </ul>
+    </section>
+    <nav class="toc-nav" aria-label="On this page">
+      <details class="toc-box">
+        <summary>On this page</summary>
+        <ol>
+          <li><a href="#problem">The problem</a></li>
+          <li><a href="#live">Live counts</a></li>
+          <li><a href="#counting">How we count</a></li>
+          <li><a href="#projection">Projection, not a measured outcome</a></li>
+          <li><a href="#scale">Path to scale</a></li>
+          <li><a href="#refs">References</a></li>
+        </ol>
+      </details>
+    </nav>
+    <div class="doc-body">
 
-    <ol class="toc">
-      <li><a href="#problem">The problem</a></li>
-      <li><a href="#live">Live counts</a></li>
-      <li><a href="#counting">How we count</a></li>
-      <li><a href="#projection">Projection, not a measured outcome</a></li>
-      <li><a href="#scale">Path to scale</a></li>
-      <li><a href="#refs">References</a></li>
-    </ol>
 
     <h2 id="problem">The problem</h2>
     <div class="stats" aria-label="The size of the problem">
@@ -78,20 +103,29 @@
       <h4>Starting strength suggested</h4>
       <div class="bars wide" id="real-strength"><p class="empty-note">Live data appears here when JavaScript runs.</p></div>
 
-      <h4>Age band</h4>
+      <details class="more">
+      <summary>More breakdowns: age band, and why people were referred or advised</summary>
+      <div class="more-body">
+    <h4>Age band</h4>
       <div class="bars wide" id="real-ages"><p class="empty-note">Live data appears here when JavaScript runs.</p></div>
 
       <h4>Why people were referred or advised</h4>
       <div class="bars wide" id="real-reasons"><p class="empty-note">Live data appears here when JavaScript runs.</p></div>
       <p class="small muted">One screening can have several reasons, so these don't add up to the referral count. "Possible short sight" leads to "no readers" with an exam suggested; "estimates disagree" leads to a try-on suggestion. Urgent warning signs (sudden change, flashes, pain, redness) stop the test before any result exists, so they never appear here.</p>
+      </div>
+    </details>
 
       <h4 id="agreement">Agreement with readers people already own</h4>
       <div class="bars wide" id="real-agreement"><p class="empty-note">Live data appears here when JavaScript runs.</p></div>
       <p id="real-agreement-summary"></p>
       <p class="small muted">After the result, people can tell us the strength printed on readers they already own. We compare it with Small Print's suggestion: the same strength, within 0.50, or further apart. This is a real-world signal, not validation: people's existing readers may not be right for them either, and the numbers are small.</p>
 
-      <h4>Devices, languages and calibration</h4>
-      <ul id="real-details" class="small"><li>Live data appears here when JavaScript runs.</li></ul>
+      <details class="more">
+      <summary>Devices, languages and calibration</summary>
+      <div class="more-body">
+    <ul id="real-details" class="small"><li>Live data appears here when JavaScript runs.</li></ul>
+      </div>
+    </details>
     </section>
 
     <section class="panel" aria-labelledby="other-h">
@@ -110,12 +144,17 @@
     </section>
 
     <h2 id="counting">How we count</h2>
+    <details class="more">
+      <summary>How we count: one record per test, four kinds of traffic kept apart, anonymous, and not a count of people helped <span class="hint">4 rules</span></summary>
+      <div class="more-body">
     <ul>
       <li><strong>One record per test.</strong> Each test gets a random ID. If the person later checks a pair or tells us about their existing readers, the same record is updated, so nobody is counted twice.</li>
       <li><strong>Four kinds of traffic, kept apart.</strong> <em>Development</em>: our own testing (local machines, or a <code>?dev</code> link). <em>Judge</em>: anyone who opened a <code>?judge</code> link in that browser tab. <em>Demo</em>: the slider instead of the camera. <em>Real</em>: everyone else, using the camera on the public site.</li>
       <li><strong>Anonymous by design.</strong> No names, images, IP addresses or exact ages; see <a href="/safety.html#privacy">exactly what is stored</a>.</li>
       <li><strong>What these numbers are not.</strong> A count of screenings is not a count of people helped. We don't know whether anyone bought or wore readers afterwards.</li>
     </ul>
+      </div>
+    </details>
 
     <h2 id="projection">Projection, not a measured outcome <span class="tag pending">Projection</span></h2>
     <div class="callout warn">
@@ -134,6 +173,9 @@
       </table>
     </div>
     <p><strong>How to read C1 and C2.</strong> If all 751 people did work like the trial participants, their combined extra output would equal the output of about <strong>164 additional workers</strong> (PROSPER-like work), or their combined extra income would equal the income of about <strong>249 additional earners</strong> (THRIVE-like work). These are two alternative readings, not a sum.</p>
+    <details class="more">
+      <summary>Lower uptake (50%, 25%), and why this could be wrong in both directions <span class="hint">table + 4 caveats</span></summary>
+      <div class="more-body">
     <div class="table-wrap">
       <table>
         <caption>The same arithmetic with lower uptake. 50% and 25% are illustrative values, not sourced.</caption>
@@ -152,6 +194,8 @@
       <li>THRIVE's income effect was analysed by intention to treat: it already averages over everyone offered glasses, including people who didn't wear them.<sup><a href="#r4">4</a></sup> Applying an uptake factor on top counts non-use twice, so this projection leans low on that point.</li>
       <li>The effects were measured in specific jobs that depend on close-up work. Many people who need readers don't do such work, and effects may differ elsewhere or fade over time.</li>
     </ul>
+      </div>
+    </details>
 
     <h2 id="scale">Path to scale</h2>
     <p>Small Print is free for individuals and will stay free. Two pieces for organisations are already built and tested: <a href="/test.html?camp&amp;demo">camp mode</a> and the <a href="/poster.html">printable rack poster</a>. The plan is for organisations that sell or distribute reading glasses to pay for, or adopt, versions that fit their setting. <strong>We have no partners yet</strong>; these are the kinds of organisations the product is designed for.</p>
@@ -164,6 +208,9 @@
     <p><strong>Running cost.</strong> About <strong>US$0.59 per 1,000 screenings</strong>, almost all of it delivering the on-device face model and runtime (about 6.6 MB per first visit). AWS's CloudFront free tier (1 TB a month) covers roughly 150,000 screenings a month. The full cost table and assumptions are on <a href="/evidence.html#cost">Built on AWS</a>.</p>
 
     <h2 id="refs">References</h2>
+    <details class="more">
+      <summary>Show the references</summary>
+      <div class="more-body">
     <ol class="refs">
       <li id="r1" value="1">Fricke TR, et al. Global prevalence of presbyopia and vision impairment from uncorrected presbyopia. <i>Ophthalmology</i> 2018;125(10):1492–1499 (1.8 billion with presbyopia and 826 million with near-vision impairment from uncorrected presbyopia, 2015). The 2020 estimate of 510 million aged 50 and over is from the Vision Loss Expert Group of the Global Burden of Disease study.</li>
       <li id="r2" value="2">Global uncorrected refractive error and presbyopia: the size of the problem. <i>Community Eye Health Journal</i> 2024 (effective near-vision coverage by region, adults 50+, 2021; about 90% of those affected live in low- and middle-income countries; one optometrist per 1.2 million people in central sub-Saharan Africa).</li>
@@ -172,12 +219,30 @@
       <li id="r11" value="11">World Health Organization. Training in Assistive Products (TAP), reading-glasses content based on VisionSpring's community screening method. <a href="https://invisionmag.com/visionsprings-screening-methodology-adopted-by-who/">report</a></li>
       <li id="r14" value="14">Queen's University Belfast, lead institution of the PROSPER trial: reported reach of the workplace reading-glasses approach (about 750,000 workers). <a href="https://www.qub.ac.uk/Research/case-studies/prosper-value-glasses-worker-productivity.html">qub.ac.uk case study</a></li>
     </ol>
+      </div>
+    </details>
+    </div>
+    </div>
   </main>
 
   <footer class="site-footer">
-    <div class="wrap">
-      <p>Small Print helps you choose non-prescription reading glasses. It is not an eye exam and cannot detect eye disease. <a href="/safety.html">Safety</a> · <a href="/how-it-works.html">How it works</a> · <a href="/validation.html">Validation</a> · <a href="/evidence.html">Built on AWS</a> · <a href="/judges.html">For judges</a></p>
-      <p>Built for the AWS Builder Center “Zero to Shipped” hackathon, 2026. Open source.</p>
+    <div class="container footer-grid">
+      <div>
+        <a class="brand" href="/"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6.5" cy="14.5" r="3.5"/><circle cx="17.5" cy="14.5" r="3.5"/><path d="M10 14c.7-.8 3.3-.8 4 0M3.2 13.4 5 7.5M20.8 13.4 19 7.5"/></svg>Small <span>Print</span></a>
+        <p>Small Print helps you choose non-prescription reading glasses. It is not an eye exam and cannot detect eye disease.</p>
+      </div>
+      <nav class="footer-links" aria-label="Footer">
+        <a href="/test.html">Take the test</a>
+        <a href="/how-it-works.html">How it works</a>
+        <a href="/findings.html">Findings</a>
+        <a href="/validation.html">Validation</a>
+        <a href="/impact.html">Impact</a>
+        <a href="/safety.html">Safety</a>
+        <a href="/evidence.html">Built on AWS</a>
+        <a href="/poster.html">Rack poster</a>
+        <a href="/judges.html">For judges</a>
+      </nav>
+      <p class="footer-meta">Built for the AWS Builder Center “Zero to Shipped” hackathon, 2026. <a href="https://github.com/usv240/small-print">Open source</a>.</p>
     </div>
   </footer>
 </body>

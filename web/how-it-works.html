@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>try{var t=localStorage.getItem('small-print.theme');if(t==='dark'||t==='light')document.documentElement.dataset.theme=t}catch(e){}document.documentElement.classList.add('js')</script>
   <title>How Small Print works: the method, every formula and its source</title>
   <meta name="description" content="How Small Print measures distance with the iris, keeps a letter E at a constant angular size, finds your near point and reading distance, picks a starting strength of ready-made reading glasses, and checks the pair at the shop. Every formula and source.">
   <meta property="og:title" content="How Small Print works">
@@ -12,43 +13,66 @@
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/src/styles/base.css">
   <link rel="stylesheet" href="/src/styles/pages.css">
+  <script type="module" src="/src/ui/site.ts"></script>
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
-    <div class="wrap">
-      <a class="brand" href="/">Small <span>Print</span></a>
-      <nav class="nav" aria-label="Site">
+    <div class="header-inner">
+      <a class="brand" href="/"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6.5" cy="14.5" r="3.5"/><circle cx="17.5" cy="14.5" r="3.5"/><path d="M10 14c.7-.8 3.3-.8 4 0M3.2 13.4 5 7.5M20.8 13.4 19 7.5"/></svg>Small <span>Print</span></a>
+      <nav class="site-nav" id="site-nav" aria-label="Site">
+        <a href="/test.html">Test</a>
         <a href="/how-it-works.html" aria-current="page">How it works</a>
-        <a href="/findings.html">Findings</a>
+        <a href="/validation.html">Evidence</a>
         <a href="/impact.html">Impact</a>
         <a href="/judges.html">For judges</a>
       </nav>
+      <div class="header-actions">
+        <button type="button" class="icon-btn theme-toggle" data-theme-toggle aria-label="Switch to dark mode" title="Switch to dark mode"><svg class="icon i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.6A8 8 0 1 1 9.4 4a6.4 6.4 0 0 0 10.6 10.6z"/></svg><svg class="icon i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg></button>
+        <a class="btn btn-primary btn-sm header-cta" href="/test.html">Take the test</a>
+        <button type="button" class="icon-btn menu-btn" aria-expanded="false" aria-controls="site-nav" aria-label="Menu"><svg class="icon i-menu" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><svg class="icon i-close" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+      </div>
     </div>
   </header>
 
-  <main class="wrap">
+  <main id="main" class="doc">
+    <div class="doc-layout">
     <div class="page-head">
       <p class="eyebrow">The method</p>
       <h1>How Small Print works</h1>
       <p class="lead">Small Print helps you choose a strength of ready-made (non-prescription) reading glasses. It is not an eye exam. This page explains every step in plain words, with the maths and where each number comes from.</p>
     </div>
-
-    <nav aria-label="On this page">
-      <ol class="toc">
-        <li><a href="#idea">The idea in one paragraph</a></li>
-        <li><a href="#distance">Measuring distance with the iris</a></li>
-        <li><a href="#screen">Making the screen draw true millimetres</a></li>
-        <li><a href="#letter">A letter E that never changes size to your eye</a></li>
-        <li><a href="#steps">The test, step by step</a></li>
-        <li><a href="#strength">From measurements to a starting strength</a></li>
-        <li><a href="#rules">When it says "no readers" or "see a professional"</a></li>
-        <li><a href="#tryon">The try-on check at the shop</a></li>
-        <li><a href="#eyeage">"Eye age", for fun</a></li>
-        <li><a href="#dont">What we deliberately don't do</a></li>
-        <li><a href="#prior">Prior art</a></li>
-        <li><a href="#refs">References</a></li>
-      </ol>
+    <section class="glance" aria-labelledby="glance-h">
+      <h2 class="glance-title" id="glance-h"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3.5h6v3H9z"/><path d="M9 5H6.5a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1H15"/><path d="M8.5 11h7M8.5 14.5h7M8.5 18h4"/></svg>At a glance</h2>
+      <ul>
+<li><strong>Distance from the iris.</strong> The iris is about 11.7 mm wide in every adult, so its size on camera gives your distance. One 30 cm calibration cancels the unknowns.</li>
+        <li><strong>True millimetres on screen.</strong> A bank or ID card (85.60 mm, ISO/IEC 7810 ID-1) held against the screen calibrates the pixel size.</li>
+        <li><strong>A constant-angle letter E.</strong> The N6 target is redrawn up to 30 times a second at 9.4 arcminutes, so only focus changes as you move.</li>
+        <li><strong>Strength = 0.6 × near-point estimate + 0.4 × age table</strong>, rounded to 0.25 D and kept within +1.00 to +3.00. Worked example: age 52 gives +2.00.</li>
+        <li><strong>Try-on at the shop.</strong> A pair is a good fit when your reading distance is within ±0.375 D of the middle of your clear range.</li>
+      </ul>
+    </section>
+    <nav class="toc-nav" aria-label="On this page">
+      <details class="toc-box">
+        <summary>On this page</summary>
+        <ol>
+          <li><a href="#idea">The idea in one paragraph</a></li>
+          <li><a href="#distance">Measuring distance with the iris</a></li>
+          <li><a href="#screen">Making the screen draw true millimetres</a></li>
+          <li><a href="#letter">A letter E that never changes size to your eye</a></li>
+          <li><a href="#steps">The test, step by step</a></li>
+          <li><a href="#strength">From measurements to a starting strength</a></li>
+          <li><a href="#rules">When it says "no readers" or "see a professional"</a></li>
+          <li><a href="#tryon">The try-on check at the shop</a></li>
+          <li><a href="#eyeage">"Eye age", for fun</a></li>
+          <li><a href="#dont">What we deliberately don't do</a></li>
+          <li><a href="#prior">Prior art</a></li>
+          <li><a href="#refs">References</a></li>
+        </ol>
+      </details>
     </nav>
+    <div class="doc-body">
+
 
     <h2 id="idea">1. The idea in one paragraph</h2>
     <p>From about 40, the lens inside the eye stiffens and can no longer focus as close. This is presbyopia, and it affects about 1.8 billion people.<sup><a href="#r1">1</a></sup> Ready-made reading glasses add the missing focusing power. The standard rule for choosing their strength is that <strong>your usual reading distance should sit in the middle of the range where you see clearly</strong> with the glasses on.<sup><a href="#r5">5</a></sup> Small Print measures the things that rule depends on: how far away you actually read, and how close you can still focus. The phone's front camera measures the distances, so nothing has to be held at a fixed distance and nothing has to be read aloud.</p>
@@ -59,6 +83,9 @@
     <p>The coloured ring of the eye (the iris) is about the same width in every adult: about 11.7 mm, give or take 0.5 mm.<sup><a href="#r7">7</a></sup> A camera works like a pinhole: the farther away something is, the smaller it looks. So the iris's width in the picture tells us how far away the face is.</p>
     <p>Google's MediaPipe Face Landmarker finds 478 points on the face, including four on the edge of each iris. It runs inside your browser, on your device. We take the width of both irises, give more weight to the larger one (a turned head shrinks the other), and convert:</p>
     <div class="formula">distance = focal length × 11.7 mm ÷ iris width in the image</div>
+    <details class="more">
+      <summary>Calibration, smoothing, and what a distance error costs <span class="hint">2 formulas</span></summary>
+      <div class="more-body">
     <p>Two things in that formula are uncertain. The camera's focal length differs between devices and browsers don't report it. And your own iris may be a little bigger or smaller than 11.7 mm (±0.5 mm is about ±4%). Before calibration we assume a 70° horizontal field of view, which is typical of front cameras. If your camera's real field of view is 60° or 80°, distances read about 18% too short or 20% too long.</p>
     <p><strong>Calibration removes both unknowns.</strong> You hold the screen 30 cm from your eyes once, measured with a ruler or the long side of an A4 sheet (29.7 cm). At that moment we record the iris width. Because distance × iris width is a constant for one camera and one person:</p>
     <div class="formula">k = 300 mm × iris width at 30 cm
@@ -66,6 +93,8 @@ distance now = k ÷ iris width now</div>
     <p>The focal length and your iris size both cancel out. The constant is stored only in your browser's local storage. If someone else uses the same phone, their iris size is slightly different again (about ±4%).</p>
     <p>To steady the reading, we take the median of the last five frames (this removes single-frame glitches) and then apply light smoothing. Google measured iris-based depth at 4.3% mean relative error against an iPhone depth sensor.<sup><a href="#r7">7</a></sup> We are measuring our own devices against a ruler; see <a href="/validation.html#measured">Validation</a>.</p>
     <p><strong>What a distance error costs.</strong> Because demand is 1/<i>d</i>, a relative distance error <i>e</i> shifts the demand by about <i>e</i> × 1/<i>d</i>. At 40 cm (2.50 D), a 4% error is 0.10 D. A 10% error is 0.25 D, which is half the 0.50 D step between common reader strengths.</p>
+      </div>
+    </details>
 
     <h2 id="screen">3. Making the screen draw true millimetres</h2>
     <p>To show a letter of a known physical size, we need to know how big a pixel really is. Browsers don't know. They assume one CSS pixel is 1/96 inch (0.2646 mm), but on many phones the real size is different, so an on-screen chart can be drawn noticeably too small or too large. <a href="/findings.html#screen">Finding 2</a> explains why and how big the effect is.</p>
@@ -76,6 +105,9 @@ distance now = k ÷ iris width now</div>
     <h2 id="letter">4. A letter E that never changes size to your eye</h2>
     <p>The target is a "tumbling E": a letter E that points up, down, left or right. You swipe or tap the arrow in the direction its prongs point, so you don't need to read or know the alphabet. The E is drawn on a 5 × 5 grid, so its strokes are one fifth of its height, as on standard eye charts.</p>
     <p>The size is <strong>N6</strong>, the standard "small print" target for near vision.<sup><a href="#r5">5</a></sup> N6 print is about 1.09 mm tall. At 40 cm that letter covers about 9.4 arcminutes of your view, which is logMAR 0.27 in eye-chart units.</p>
+    <details class="more">
+      <summary>The constant-angle formula, and the letter height at each distance <span class="hint">formula + table</span></summary>
+      <div class="more-body">
     <p>For the near-point and try-on steps, the E is redrawn every time the camera gives a new distance (up to about 30 times a second) so that it always covers that same angle:</p>
     <div class="formula">letter height = 2 × distance × tan(9.37 arcmin ÷ 2)</div>
     <div class="table-wrap">
@@ -91,8 +123,13 @@ distance now = k ÷ iris width now</div>
       </table>
     </div>
     <p>This matters because with a fixed-size chart, moving it closer makes the letters look bigger, which helps you read them even as focus gets worse. With a constant-angle E, the only thing that changes as you move the phone is focus. So the moment it blurs is a clean measure of where your focusing runs out.</p>
+      </div>
+    </details>
 
     <h2 id="steps">5. The test, step by step</h2>
+    <details class="more">
+      <summary>The six steps: safety questions, age, calibration, reading distance, small-print check, near point <span class="hint">6 steps</span></summary>
+      <div class="more-body">
     <ol class="steps">
       <li><strong>Safety questions.</strong> Six yes/no questions. Some answers stop the test and point you to urgent care; others recommend an eye exam first. See <a href="/safety.html">Safety and scope</a>.</li>
       <li><strong>Age.</strong> Used for the age table below, and only stored as a five-year band.</li>
@@ -101,9 +138,14 @@ distance now = k ÷ iris width now</div>
       <li><strong>Small-print check.</strong> Five E's at the true physical size of N6 print (like a medicine label), at your reading distance, without glasses. Four or more right is a pass. Someone guessing would pass less than 4% of the time.</li>
       <li><strong>Near point.</strong> The constant-angle E appears. If it looks sharp, you bring the phone slowly closer and tap the moment it blurs. If it looks blurry, you move it away and tap the moment it becomes sharp. That distance is your near point. If it never gets sharp within arm's length, we record that instead.</li>
     </ol>
+      </div>
+    </details>
 
     <h2 id="strength">6. From measurements to a starting strength</h2>
     <p>Small Print makes two independent estimates and blends them.</p>
+    <details class="more">
+      <summary>Estimate A (from your near point) and estimate B (from your age), with the age table <span class="hint">2 formulas + table</span></summary>
+      <div class="more-body">
     <h3>Estimate A: from your near point</h3>
     <p>Your <strong>amplitude of accommodation</strong> (how much focusing you have left) is the demand at your near point. A push-up test like this one slightly overstates it, because the eye's depth of focus lets a letter look sharp a little closer than true focus. We assume a total depth of focus of 0.50 D and subtract half of it:</p>
     <div class="formula">accommodation (D) = 1 ÷ near point (m) − 0.25
@@ -123,10 +165,17 @@ estimate A = 1 ÷ reading distance (m) − accommodation ÷ 2</div>
       </table>
     </div>
     <p>We shift it to your own reading distance by the difference in demand: estimate B = table value + (1 ÷ reading distance − 2.50). This matches the clinical rule of about +0.50 more at 33 cm and −0.50 less at 50 cm.</p>
+      </div>
+    </details>
     <h3>Blending them</h3>
     <div class="formula">starting strength = 0.6 × estimate A + 0.4 × estimate B, rounded to 0.25 D</div>
+    <details class="more">
+      <summary>Why blend the two estimates, and what happens if the E never gets sharp</summary>
+      <div class="more-body">
     <p>Why blend instead of trusting one? A 2019 study compared both approaches against measured reading additions. On average the age table differed by +0.29 D and an accommodation-based calculation by −0.65 D, and individuals varied widely around both.<sup><a href="#r8">8</a></sup> The measurement is personal but noisy; the table is steady but ignores the individual. The 0.6/0.4 weighting is our design choice. In our simulation it scored close to the best weighting we tried (<a href="/validation.html#simulated">Validation</a>).</p>
     <p>If the E never got sharp within arm's length, your near point is farther than your reach, so estimate A is only a lower limit. In that case we use whichever is larger: that lower limit or estimate B.</p>
+      </div>
+    </details>
     <div class="callout">
       <p><strong>Worked example</strong> (the one in our <a href="/judges.html">judge demo</a>). Age 52, reading at 38 cm (2.63 D), near point 60 cm (1.67 D).</p>
       <p>Accommodation = 1.67 − 0.25 = 1.42 D. Estimate A = 2.63 − 1.42 ÷ 2 = +1.92. Estimate B = +2.00 + (2.63 − 2.50) = +2.13. Blend = 0.6 × 1.92 + 0.4 × 2.13 = +2.01, so the result is <strong>+2.00</strong>.</p>
@@ -134,6 +183,9 @@ estimate A = 1 ÷ reading distance (m) − accommodation ÷ 2</div>
     <p>The result card also names one or two strengths to try first, in the 0.50 D steps most shops stock (a +1.75 estimate means "try +1.50 or +2.00").</p>
 
     <h2 id="rules">7. When it says "no readers" or "see a professional"</h2>
+    <details class="more">
+      <summary>The five rules: below +1.00, above +3.00, possible short sight, estimates disagree, safety answers first <span class="hint">5 rules</span></summary>
+      <div class="more-body">
     <ul>
       <li><strong>Below +1.00.</strong> If you passed the small-print check, the result is "you may not need reading glasses yet". If you failed it and are 35 or older, it suggests starting with +1.00, the weakest common strength.</li>
       <li><strong>Above +3.00.</strong> Most people with presbyopia need between +1.00 and +3.00.<sup><a href="#r5">5</a></sup> Small Print keeps its suggestions inside that range and refers anything above it to an eye-care professional.</li>
@@ -141,6 +193,8 @@ estimate A = 1 ÷ reading distance (m) − accommodation ÷ 2</div>
       <li><strong>Estimates disagree.</strong> If estimates A and B differ by more than 1.00 D, the result says so and recommends the try-on check.</li>
       <li><strong>Safety answers</strong> always take priority (<a href="/safety.html#red-flags">list</a>).</li>
     </ul>
+      </div>
+    </details>
 
     <h2 id="tryon">8. The try-on check at the shop</h2>
     <p>The starting strength only needs to be close. The try-on step checks the actual pair in your hand, which is where most of the accuracy comes from in our simulation (<a href="/findings.html#bench">Finding 3</a>).</p>
@@ -150,12 +204,17 @@ offset   = 1 ÷ reading distance − middle
 |offset| ≤ 0.375 D  →  good fit
 offset  &gt; 0.375 D  →  too weak: try about "offset" stronger (in 0.25 D steps)
 offset  &lt; −0.375 D →  too strong: try about "offset" weaker</div>
+    <details class="more">
+      <summary>Edge cases: outside the clear range, far end out of reach, and a worked example</summary>
+      <div class="more-body">
     <p>If your reading distance is outside the clear range altogether, the pair is clearly too weak or too strong, and the suggestion is the gap plus 0.25 D.</p>
     <p>Two properties make this robust. First, depth of focus widens both ends of the clear range equally, so it cancels out of the middle: we don't need to know it. Second, readers shift the clear range as a whole, so one well-measured pair tells you about every other strength.</p>
     <p><strong>When the far end is out of reach.</strong> With weak readers, the E may still be sharp at arm's length, so the far end can't be measured. The best case for the middle is then halfway between the near limit and your reach. If the pair is too weak even in that best case, the app says so. Otherwise it says the pair looks good and asks you to also try one pair <strong>0.50 stronger</strong>: that pair's far end will come within reach. If the stronger pair is reported as too strong, keep the first one.</p>
     <div class="callout">
       <p><strong>Example.</strong> A +2.00 pair, sharp from 25 cm to 60 cm, reading at 38 cm. Near limit 4.00 D, far limit 1.67 D, middle 2.83 D. Reading distance 2.63 D. Offset −0.20 D, inside ±0.375 D: <strong>good fit</strong>.</p>
     </div>
+      </div>
+    </details>
 
     <h2 id="eyeage">9. "Eye age", for fun</h2>
     <p>The result also says which age your focusing is typical of. We invert Hofstetter's mean curve:<sup><a href="#r6">6</a></sup></p>
@@ -163,6 +222,9 @@ offset  &lt; −0.375 D →  too strong: try about "offset" weaker</div>
     <p>In the worked example, 1.42 D of accommodation gives (18.5 − 1.42) ÷ 0.3 = 56.9, shown as 57. Below 35 it says "34 or younger". If the E never got sharp within arm's length, it says your focus is beyond what we can measure, which is typical after about 55. This number is a curiosity, not a health measure: individual variation is large.</p>
 
     <h2 id="dont">10. What we deliberately don't do</h2>
+    <details class="more">
+      <summary>Five things we deliberately don’t do: no AI in the decision, no images uploaded, no prescriptions, no astigmatism or distance glasses, one strength for both eyes <span class="hint">5 points</span></summary>
+      <div class="more-body">
     <ul>
       <li><strong>No AI in the decision.</strong> The only machine-learning model is MediaPipe's face-landmark model, which finds the iris so we can measure distance. The strength comes from the arithmetic on this page, which is deterministic and covered by unit tests against published values.</li>
       <li><strong>No images uploaded.</strong> Video frames are processed in your browser and thrown away. The only thing sent is a small anonymous result (under 4 KB): see <a href="/safety.html#privacy">Privacy</a>.</li>
@@ -170,9 +232,14 @@ offset  &lt; −0.375 D →  too strong: try about "offset" weaker</div>
       <li><strong>No astigmatism, no distance glasses.</strong> Ready-made readers correct neither, so we don't measure them.</li>
       <li><strong>One strength for both eyes.</strong> Ready-made readers have the same lens on both sides, and the test is done with both eyes open. If your eyes differ a lot, an eye exam is the right route.</li>
     </ul>
+      </div>
+    </details>
 
     <h2 id="prior">11. Prior art</h2>
     <p>Others have worked on this problem, and Small Print builds on their ideas:</p>
+    <details class="more">
+      <summary>Five related approaches: rack charts, EyeQue, Peek, VisionApp and WHO community screening <span class="hint">5 approaches</span></summary>
+      <div class="more-body">
     <ul>
       <li><strong>Rack charts and printable charts.</strong> Shops and online sellers (ThinOptics and Readers.com, for example) offer small charts: find the smallest line you can read at 14 inches, and it tells you a strength. They depend on the right holding distance, the right print size and being able to read. <a href="/findings.html#card">Finding 1</a> shows what a few centimetres do.</li>
       <li><strong>EyeQue MyReaderNumber.</strong> A paid iPhone app that uses the camera (augmented reality) to measure distance while you choose a reader strength.</li>
@@ -180,9 +247,14 @@ offset  &lt; −0.375 D →  too strong: try about "offset" weaker</div>
       <li><strong>VisionApp.</strong> A smartphone near-point method for reading addition; a 2025 preliminary study found 82.5% within 0.50 D of clinical values in presbyopes over 52.<sup><a href="#r10">10</a></sup></li>
       <li><strong>Community screening.</strong> The World Health Organization's Training in Assistive Products adopted VisionSpring's community screening method, so trained health workers can provide reading glasses outside a doctor's office.<sup><a href="#r11">11</a></sup></li>
     </ul>
+      </div>
+    </details>
     <p>What Small Print combines: it runs in any modern phone or laptop browser with no install; the E keeps a constant angle live, so the holding distance doesn't matter; it uses your own measured reading distance instead of assuming 14 inches; it checks the actual pair at the rack with the middle-of-the-range rule; and the test needs no reading, with a spoken guide. It is free and open source. It has not yet been validated in a field study (<a href="/validation.html">Validation</a>).</p>
 
     <h2 id="refs">References</h2>
+    <details class="more">
+      <summary>Show the 7 references and the standards used</summary>
+      <div class="more-body">
     <ol class="refs">
       <li id="r1" value="1">Fricke TR, et al. Global prevalence of presbyopia and vision impairment from uncorrected presbyopia. <i>Ophthalmology</i> 2018;125(10):1492–1499.</li>
       <li id="r5" value="5">Stevens S. How to prescribe spectacles for near vision. <i>Community Eye Health Journal</i> 2019;32(107):47. (Age table; N6 target; usual reading distance in the middle of the range of clear vision; most people need +1.00 to +3.00.)</li>
@@ -194,12 +266,30 @@ offset  &lt; −0.375 D →  too strong: try about "offset" weaker</div>
       <li id="r11" value="11">World Health Organization. Training in Assistive Products (TAP), reading-glasses content based on VisionSpring's community screening method. <a href="https://invisionmag.com/visionsprings-screening-methodology-adopted-by-who/">report</a></li>
     </ol>
     <p class="small muted">Standards used: ISO/IEC 7810 ID-1 card size (85.60 × 53.98 mm); the CSS reference pixel (1 inch = 96 CSS pixels); the M-unit (a 1.454 mm letter subtends 5 arcminutes at 1 m) with 8-point print ≈ 1M. The code for every formula above is in <code>web/src/core/</code> and <code>web/src/camera/</code> in the <a href="https://github.com/usv240/small-print">open-source repository</a>.</p>
+      </div>
+    </details>
+    </div>
+    </div>
   </main>
 
   <footer class="site-footer">
-    <div class="wrap">
-      <p>Small Print helps you choose non-prescription reading glasses. It is not an eye exam and cannot detect eye disease. <a href="/safety.html">Safety</a> · <a href="/how-it-works.html">How it works</a> · <a href="/validation.html">Validation</a> · <a href="/evidence.html">Built on AWS</a> · <a href="/judges.html">For judges</a></p>
-      <p>Built for the AWS Builder Center “Zero to Shipped” hackathon, 2026. Open source.</p>
+    <div class="container footer-grid">
+      <div>
+        <a class="brand" href="/"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6.5" cy="14.5" r="3.5"/><circle cx="17.5" cy="14.5" r="3.5"/><path d="M10 14c.7-.8 3.3-.8 4 0M3.2 13.4 5 7.5M20.8 13.4 19 7.5"/></svg>Small <span>Print</span></a>
+        <p>Small Print helps you choose non-prescription reading glasses. It is not an eye exam and cannot detect eye disease.</p>
+      </div>
+      <nav class="footer-links" aria-label="Footer">
+        <a href="/test.html">Take the test</a>
+        <a href="/how-it-works.html">How it works</a>
+        <a href="/findings.html">Findings</a>
+        <a href="/validation.html">Validation</a>
+        <a href="/impact.html">Impact</a>
+        <a href="/safety.html">Safety</a>
+        <a href="/evidence.html">Built on AWS</a>
+        <a href="/poster.html">Rack poster</a>
+        <a href="/judges.html">For judges</a>
+      </nav>
+      <p class="footer-meta">Built for the AWS Builder Center “Zero to Shipped” hackathon, 2026. <a href="https://github.com/usv240/small-print">Open source</a>.</p>
     </div>
   </footer>
 </body>
